@@ -148,6 +148,157 @@
         .activity-time { font-size:.75rem; color:var(--text-muted); margin-top:3px; }
         .btn-outline { width:100%; padding:10px; background:transparent; border:1px solid var(--border-color); border-radius:8px; color:var(--text-secondary); font-weight:500; font-size:.8125rem; font-family:'Inter',sans-serif; cursor:pointer; margin-top:16px; transition:all .2s; }
         .btn-outline:hover { background:var(--bg-elevated); border-color:var(--primary-dim); color:var(--primary); }
+
+        /* Notif Dropdown */
+        .notif-wrapper { position:relative; }
+        .notif-dropdown {
+            position:absolute;
+            top:calc(100% + 12px);
+            right:0;
+            width:320px;
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:14px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(52,211,153,0.05);
+            display:none;
+            flex-direction:column;
+            z-index:1000;
+            overflow:hidden;
+            transform-origin: top right;
+            animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes dropdownFadeIn {
+            from { opacity:0; transform:scale(0.95) translateY(-10px); }
+            to { opacity:1; transform:scale(1) translateY(0); }
+        }
+        .notif-dropdown.show { display:flex; }
+        .notif-header { padding:16px 18px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; background:rgba(52,211,153,0.02); }
+        .notif-header h3 { font-size:.875rem; font-weight:600; color:var(--text-primary); }
+        .notif-list { max-height:350px; overflow-y:auto; scrollbar-width: thin; scrollbar-color: var(--border-color) transparent; }
+        .notif-list::-webkit-scrollbar { width: 5px; }
+        .notif-list::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+        .notif-item { padding:14px 18px; border-bottom:1px solid var(--border-light); display:flex; gap:12px; cursor:pointer; transition:all .2s; }
+        .notif-item:hover { background:var(--bg-card-hover); padding-left: 20px; }
+        .notif-item:last-child { border-bottom:none; }
+        .notif-item-icon { width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem; }
+        .notif-item-content { flex:1; }
+        .notif-item-text { font-size:.8125rem; color:var(--text-secondary); line-height:1.4; margin-bottom:4px; }
+        .notif-item-text strong { color: var(--text-primary); font-weight: 600; }
+        .notif-item-time { font-size:.7rem; color:var(--text-muted); display:flex; align-items:center; gap:4px; }
+        .notif-footer { padding:14px; border-top:1px solid var(--border-color); text-align:center; background:rgba(52,211,153,0.02); }
+        .notif-footer-link { font-size:.8125rem; color:var(--primary); text-decoration:none; font-weight:600; transition: color .2s; }
+        .notif-footer-link:hover { color: var(--primary-bright); }
+
+        /* User Dropdown */
+        .user-wrapper { position:relative; }
+        .user-dropdown {
+            position:absolute;
+            top:calc(100% + 12px);
+            right:0;
+            width:220px;
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:14px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(52,211,153,0.05);
+            display:none;
+            flex-direction:column;
+            z-index:1000;
+            overflow:hidden;
+            transform-origin: top right;
+            animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .user-dropdown.show { display:flex; }
+        .user-dropdown-header {
+            padding:16px;
+            border-bottom:1px solid var(--border-color);
+            background:rgba(52,211,153,0.02);
+            display: none; /* Mobile only usually, but good to have */
+        }
+        .user-dropdown-item {
+            padding:12px 16px;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            color:var(--text-secondary);
+            text-decoration:none;
+            font-size:.8125rem;
+            font-weight:500;
+            transition:all .2s;
+            cursor:pointer;
+        }
+        .user-dropdown-item:hover {
+            background:var(--bg-card-hover);
+            color:var(--primary);
+            padding-left: 20px;
+        }
+        .user-dropdown-item i {
+            width:18px;
+            font-size:0.95rem;
+            text-align:center;
+            color: var(--text-muted);
+            transition: color .2s;
+        }
+        .user-dropdown-item:hover i {
+            color: var(--primary);
+        }
+        .user-dropdown-divider {
+            height:1px;
+            background:var(--border-color);
+            margin:4px 0;
+        }
+        .user-dropdown-item.logout {
+            color:#f87171;
+        }
+        .user-dropdown-item.logout i {
+            color:#f87171;
+        }
+        .user-dropdown-item.logout:hover {
+            background:rgba(248,113,113,0.08);
+            color:#f87171;
+        }
+
+        /* Search Results Dropdown */
+        .search-results {
+            position:absolute;
+            top:calc(100% + 8px);
+            left:0;
+            width:100%;
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:12px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(52,211,153,0.05);
+            display:none;
+            flex-direction:column;
+            z-index:900;
+            overflow:hidden;
+            animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .search-results.show { display:flex; }
+        .search-result-category {
+            padding:10px 14px 6px;
+            font-size:.65rem;
+            font-weight:700;
+            color:var(--primary);
+            text-transform:uppercase;
+            letter-spacing: .5px;
+            background:rgba(52,211,153,0.02);
+            border-bottom:1px solid var(--border-light);
+        }
+        .search-result-item {
+            padding:12px 14px;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            color:var(--text-secondary);
+            text-decoration:none;
+            font-size:.8125rem;
+            transition:all .2s;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-item:hover { background:var(--bg-card-hover); color:var(--text-primary); padding-left: 18px; }
+        .search-result-item i { width:16px; text-align:center; color:var(--text-muted); font-size: .875rem; }
+        .search-result-item:hover i { color: var(--primary); }
     </style>
 </head>
 <body>
@@ -195,21 +346,96 @@
         <header class="top-header">
             <div class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="search-input" placeholder="Cari naskah, penulis, atau ISBN...">
+                <input type="text" class="search-input" id="searchInput" placeholder="Cari naskah, penulis, atau ISBN...">
+                <div class="search-results" id="searchResults">
+                    <div class="search-result-category">Naskah Terpopuler</div>
+                    <a href="#" class="search-result-item">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <span>Analisis Perubahan Iklim 2024</span>
+                    </a>
+                    <a href="#" class="search-result-item">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <span>Metodologi Medan Kuantum</span>
+                    </a>
+                    <div class="search-result-category">Penulis Terkait</div>
+                    <a href="#" class="search-result-item">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Julian Smith</span>
+                    </a>
+                    <a href="#" class="search-result-item">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Sarah Connor</span>
+                    </a>
+                </div>
             </div>
             <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </button>
-                <div class="header-divider"></div>
-                <div class="user-header">
-                    <div class="user-avatar">P</div>
-                    <div class="user-header-info">
-                        <div class="user-header-name">Pradama</div>
-                        <div class="user-header-role">Kontributor</div>
+                <div class="notif-wrapper">
+                    <button class="header-icon-btn" id="notifToggle" title="Notifikasi">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notif-dot"></span>
+                    </button>
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-header">
+                            <h3>Notifikasi</h3>
+                            <span class="status-badge status-published" style="padding:2px 8px; font-size:.65rem; border-radius:20px;">3 Baru</span>
+                        </div>
+                        <div class="notif-list">
+                            <div class="notif-item">
+                                <div class="notif-item-icon icon-teal"><i class="fa-regular fa-comment-dots"></i></div>
+                                <div class="notif-item-content">
+                                    <div class="notif-item-text"><strong>Editor Julian</strong> menambahkan komentar pada naskah anda.</div>
+                                    <div class="notif-item-time"><i class="fa-regular fa-clock"></i> 2 jam yang lalu</div>
+                                </div>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-item-icon icon-blue"><i class="fa-solid fa-check"></i></div>
+                                <div class="notif-item-content">
+                                    <div class="notif-item-text">Naskah <strong>"Metodologi Medan Kuantum"</strong> telah resmi diterbitkan.</div>
+                                    <div class="notif-item-time"><i class="fa-regular fa-clock"></i> 5 jam yang lalu</div>
+                                </div>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-item-icon icon-orange"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                                <div class="notif-item-content">
+                                    <div class="notif-item-text">Peninjauan tahap ke-2 dimulai untuk <strong>"Kerangka Keberlanjutan"</strong>.</div>
+                                    <div class="notif-item-time"><i class="fa-regular fa-clock"></i> Kemarin</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notif-footer">
+                            <a href="#" class="notif-footer-link">Lihat Semua Notifikasi</a>
+                        </div>
                     </div>
-                    <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                </div>
+                <div class="header-divider"></div>
+                <div class="user-wrapper">
+                    <div class="user-header" id="userToggle">
+                        <div class="user-avatar">P</div>
+                        <div class="user-header-info">
+                            <div class="user-header-name">Pradama</div>
+                            <div class="user-header-role">Kontributor</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" class="user-dropdown-item">
+                            <i class="fa-regular fa-user"></i>
+                            <span>Profil Saya</span>
+                        </a>
+                        <a href="#" class="user-dropdown-item">
+                            <i class="fa-regular fa-id-badge"></i>
+                            <span>Informasi Akun</span>
+                        </a>
+                        <a href="#" class="user-dropdown-item">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Pengaturan</span>
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#" class="user-dropdown-item logout">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <span>Keluar</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </header>
@@ -219,9 +445,9 @@
                 <h1>Selamat datang kembali, Pradama 👋</h1>
                 <p>Berikut ringkasan aktivitas naskah Anda hari ini.</p>
             </div>
-            <button class="btn-primary">
+            <a href="/pengajuan" class="btn-primary" style="text-decoration: none;">
                 <i class="fa-solid fa-plus"></i> Pengajuan Baru
-            </button>
+            </a>
         </section>
 
         <section class="stats-grid">
@@ -355,9 +581,62 @@
     <script>
         const sidebar = document.getElementById('sidebar');
         const mainContent = document.getElementById('mainContent');
+        const notifToggle = document.getElementById('notifToggle');
+        const notifDropdown = document.getElementById('notifDropdown');
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        // Sidebar Toggle
         document.getElementById('sidebarToggle').addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
+        });
+
+        // Search Bar Logic
+        searchInput.addEventListener('input', (e) => {
+            if (e.target.value.length > 0) {
+                searchResults.classList.add('show');
+            } else {
+                searchResults.classList.remove('show');
+            }
+        });
+
+        // Notification Toggle
+        notifToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notifDropdown.classList.toggle('show');
+            userDropdown.classList.remove('show');
+            searchResults.classList.remove('show');
+        });
+
+        // User Dropdown Toggle
+        userToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+            notifDropdown.classList.remove('show');
+            searchResults.classList.remove('show');
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!notifDropdown.contains(e.target) && !notifToggle.contains(e.target)) {
+                notifDropdown.classList.remove('show');
+            }
+            if (!userDropdown.contains(e.target) && !userToggle.contains(e.target)) {
+                userDropdown.classList.remove('show');
+            }
+            if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                searchResults.classList.remove('show');
+            }
+        });
+
+        // Search on Enter
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                alert('Mencari: ' + searchInput.value);
+            }
         });
     </script>
 
