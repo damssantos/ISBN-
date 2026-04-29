@@ -10,22 +10,31 @@
 
     <style>
         :root {
-            --primary-color: #00796b;
-            --primary-light: #e0f2f1;
-            --text-dark: #1f2937;
-            --text-gray: #6b7280;
-            --text-light: #9ca3af;
-            --bg-body: #f9fafb;
-            --bg-card: #ffffff;
-            --border-color: #f3f4f6;
+            --primary: #2dd4bf;
+            --primary-bright: #5eead4;
+            --primary-dim: #14b8a6;
+            --accent: #99f6e4;
 
-            /* Status Colors */
-            --status-review-bg: #fffbeb;
-            --status-review-text: #b45309;
-            --status-published-bg: #ecfdf5;
-            --status-published-text: #047857;
-            --status-draft-bg: #f3f4f6;
-            --status-draft-text: #374151;
+            --bg-body: #0c1513;
+            --bg-sidebar: #081210;
+            --bg-card: #1a2f2a;
+            --bg-card-hover: #243d36;
+            --bg-input: #1a2f2a;
+            --bg-elevated: #243d36;
+
+            --border-color: #2a4a42;
+            --border-light: #223d36;
+
+            --text-primary: #f0fdf9;
+            --text-secondary: #a7d7cd;
+            --text-muted: #5f9b8e;
+
+            --status-review-bg: rgba(251, 191, 36, 0.1);
+            --status-review-text: #fbbf24;
+            --status-published-bg: rgba(52, 211, 153, 0.1);
+            --status-published-text: #6ee7b7;
+            --status-draft-bg: rgba(148, 163, 184, 0.08);
+            --status-draft-text: #cbd5e1;
         }
 
         * {
@@ -37,15 +46,17 @@
 
         body {
             background-color: var(--bg-body);
-            color: var(--text-dark);
+            color: var(--text-primary);
             display: flex;
             min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
-        /* Sidebar Styles */
+        /* ========== Sidebar ========== */
         .sidebar {
-            width: 260px;
-            background-color: var(--bg-card);
+            width: 250px;
+            background-color: var(--bg-sidebar);
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
@@ -54,80 +65,56 @@
         }
 
         .brand {
-            padding: 24px;
-            font-size: 1.1rem;
+            padding: 28px 24px;
+            font-size: 1rem;
             font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .user-profile-sidebar {
-            padding: 0 24px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .avatar-initial {
-            width: 40px;
-            height: 40px;
-            background-color: #fde68a;
-            color: var(--primary-color);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .user-info .name {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .user-info .role {
-            font-size: 0.8rem;
-            color: var(--text-gray);
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .nav-menu {
             list-style: none;
-            padding: 0 12px;
+            padding: 16px 12px;
             flex: 1;
         }
 
         .nav-item {
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 12px;
+            gap: 12px;
+            padding: 11px 14px;
             text-decoration: none;
-            color: var(--text-gray);
+            color: var(--text-muted);
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             font-weight: 500;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .nav-link i {
-            width: 24px;
-            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
         }
 
         .nav-link.active {
-            background-color: var(--primary-light);
-            color: var(--primary-color);
+            background-color: rgba(38, 166, 154, 0.15);
+            color: var(--primary-bright);
+            font-weight: 600;
         }
 
         .nav-link:hover:not(.active) {
-            background-color: var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-secondary);
         }
 
-        .logout {
-            padding: 24px;
+        .sidebar-footer {
+            padding: 20px 24px;
             border-top: 1px solid var(--border-color);
         }
 
@@ -135,20 +122,25 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: var(--text-gray);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
+            transition: color 0.2s;
         }
 
-        /* Main Content Styles */
+        .logout-btn:hover {
+            color: #f87171;
+        }
+
+        /* ========== Main Content ========== */
         .main-content {
             flex: 1;
-            margin-left: 260px;
-            padding: 0 40px 40px;
+            margin-left: 250px;
+            padding: 0 36px 48px;
         }
 
-        /* Top Header */
+        /* ========== Top Header ========== */
         .top-header {
             display: flex;
             justify-content: space-between;
@@ -162,201 +154,330 @@
 
         .search-container {
             position: relative;
-            width: 400px;
+            width: 360px;
         }
 
         .search-container i {
             position: absolute;
-            left: 16px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-light);
+            color: var(--text-muted);
+            font-size: 0.875rem;
         }
 
         .search-input {
             width: 100%;
-            padding: 10px 10px 10px 40px;
-            border: none;
-            background-color: #f9fafb;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            padding: 10px 14px 10px 38px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-input);
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
             outline: none;
+            color: var(--text-primary);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.15);
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 8px;
         }
 
-        .notification {
-            color: var(--text-gray);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .avatar-img {
-            width: 36px;
-            height: 36px;
-            background-color: #d1d5db;
-            border-radius: 50%;
+        .header-icon-btn {
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-        }
-
-        /* Welcome Section */
-        .welcome-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 30px 0 40px;
-        }
-
-        .welcome-section h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #111827;
-            line-height: 1.2;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 500;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
             cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .header-icon-btn:hover {
+            background-color: var(--bg-elevated);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .notif-dot {
+            position: absolute;
+            top: 9px;
+            right: 10px;
+            width: 7px;
+            height: 7px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            border: 1.5px solid var(--bg-card);
+        }
+
+        .header-divider {
+            width: 1px;
+            height: 28px;
+            background-color: var(--border-color);
+            margin: 0 8px;
+        }
+
+        .user-header {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            padding: 6px 10px 6px 6px;
+            border-radius: 10px;
+            cursor: pointer;
             transition: background-color 0.2s;
         }
 
-        .btn-primary:hover {
-            background-color: #00695c;
+        .user-header:hover {
+            background-color: var(--bg-card);
         }
 
-        /* Stats Grid */
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dim));
+            color: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .user-header-info .user-header-name {
+            font-weight: 600;
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .user-header-info .user-header-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* ========== Welcome Section ========== */
+        .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin: 16px 0 28px;
+            background: linear-gradient(135deg, #0d4a3e 0%, #147a68 50%, #1a9480 100%);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.1);
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 220px;
+            height: 220px;
+            background: rgba(38, 166, 154, 0.08);
+            border-radius: 50%;
+        }
+
+        .welcome-section::after {
+            content: '';
+            position: absolute;
+            bottom: -70px;
+            right: 60px;
+            width: 160px;
+            height: 160px;
+            background: rgba(38, 166, 154, 0.05);
+            border-radius: 50%;
+        }
+
+        .welcome-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .welcome-text p {
+            font-size: 0.875rem;
+            color: var(--accent);
+            margin-top: 6px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-bright);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(38, 166, 154, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* ========== Stats Grid ========== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 16px;
+            margin-bottom: 28px;
         }
 
         .stat-card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
+            border-radius: 14px;
+            padding: 20px;
             position: relative;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(45, 212, 191, 0.12), 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-dim);
         }
 
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
+        .stat-card-top {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
+            justify-content: space-between;
             margin-bottom: 16px;
         }
 
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
         .icon-teal {
-            background-color: #e0f2f1;
-            color: #00796b;
+            background-color: rgba(38, 166, 154, 0.15);
+            color: var(--primary-bright);
         }
 
         .icon-orange {
-            background-color: #fff7ed;
-            color: #ea580c;
+            background-color: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
         }
 
         .icon-blue {
-            background-color: #eff6ff;
-            color: #2563eb;
+            background-color: rgba(59, 130, 246, 0.12);
+            color: #60a5fa;
         }
 
         .icon-gray {
-            background-color: #f3f4f6;
-            color: #4b5563;
-        }
-
-        .stat-title {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-dark);
+            background-color: rgba(148, 163, 184, 0.12);
+            color: #94a3b8;
         }
 
         .stat-badge {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background-color: #ecfdf5;
-            color: #047857;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
+            background-color: rgba(52, 211, 153, 0.12);
+            color: #34d399;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.6875rem;
             font-weight: 600;
         }
 
-        /* Content Layout */
-        .content-layout {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
+        .stat-title {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 4px;
         }
 
-        /* Card Common */
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        /* ========== Content Layout ========== */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 20px;
+        }
+
+        /* ========== Card Common ========== */
         .card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .card-title {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
+            color: var(--text-primary);
         }
 
         .link-teal {
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.8125rem;
             font-weight: 500;
+            transition: color 0.2s;
         }
 
-        /* Table Styles */
+        .link-teal:hover {
+            color: var(--primary-bright);
+        }
+
+        /* ========== Table Styles ========== */
         .table-container {
             width: 100%;
             overflow-x: auto;
@@ -369,17 +490,20 @@
 
         th {
             text-align: left;
-            padding-bottom: 16px;
-            font-size: 0.8rem;
-            color: var(--text-gray);
+            padding: 0 0 14px 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
             border-bottom: 1px solid var(--border-color);
         }
 
         td {
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border-color);
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
             vertical-align: middle;
+            font-size: 0.875rem;
         }
 
         tr:last-child td {
@@ -387,24 +511,38 @@
             padding-bottom: 0;
         }
 
+        tr:hover td {
+            background-color: var(--bg-card-hover);
+        }
+
         .ms-title {
             font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--text-dark);
+            font-size: 0.875rem;
+            color: var(--text-primary);
         }
 
         .ms-id {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-top: 4px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
         }
 
         .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
             font-weight: 500;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
         }
 
         .status-review {
@@ -412,9 +550,17 @@
             color: var(--status-review-text);
         }
 
+        .status-review::before {
+            background-color: var(--status-review-text);
+        }
+
         .status-published {
             background-color: var(--status-published-bg);
             color: var(--status-published-text);
+        }
+
+        .status-published::before {
+            background-color: var(--status-published-text);
         }
 
         .status-draft {
@@ -422,39 +568,51 @@
             color: var(--status-draft-text);
         }
 
+        .status-draft::before {
+            background-color: var(--status-draft-text);
+        }
+
         .date-text {
-            font-size: 0.9rem;
-            color: var(--text-gray);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
         }
 
-        .date-year {
-            font-size: 0.8rem;
-            color: var(--text-light);
-        }
-
-        .action-link {
-            color: var(--primary-color);
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background-color: rgba(38, 166, 154, 0.12);
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
+            transition: all 0.2s;
         }
 
-        /* Activity Feed Styles */
+        .action-btn:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* ========== Activity Feed ========== */
         .activity-feed {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
 
         .activity-item {
             display: flex;
-            gap: 16px;
+            gap: 14px;
+            align-items: flex-start;
         }
 
         .activity-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -462,42 +620,52 @@
             flex-shrink: 0;
         }
 
+        .activity-body {
+            flex: 1;
+            min-width: 0;
+        }
+
         .activity-content {
-            font-size: 0.9rem;
-            color: var(--text-dark);
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
             line-height: 1.5;
         }
 
         .activity-content strong {
             font-weight: 600;
+            color: var(--text-primary);
         }
 
         .activity-content .highlight {
-            color: var(--primary-color);
+            color: var(--primary-bright);
             font-weight: 600;
         }
 
         .activity-time {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-top: 4px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 3px;
         }
 
         .btn-outline {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background-color: transparent;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: var(--text-dark);
+            color: var(--text-secondary);
             font-weight: 500;
+            font-size: 0.8125rem;
+            font-family: 'Inter', sans-serif;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.2s;
+            margin-top: 16px;
+            transition: all 0.2s;
         }
 
         .btn-outline:hover {
-            background-color: #f9fafb;
+            background-color: var(--bg-elevated);
+            border-color: var(--primary-dim);
+            color: var(--primary);
         }
     </style>
 </head>
@@ -507,22 +675,14 @@
     <aside class="sidebar">
         <div class="brand">ISBN TIRTA JAYA</div>
 
-        <div class="user-profile-sidebar">
-            <div class="avatar-initial">P</div>
-            <div class="user-info">
-                <div class="name">Pradama</div>
-                <div class="role">Contributor</div>
-            </div>
-        </div>
-
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="/" class="nav-link active">
                     <i class="fa-solid fa-border-all"></i> Dashboard
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/pengajuan" class="nav-link">
                     <i class="fa-regular fa-file-lines"></i> Pengajuan
                 </a>
             </li>
@@ -533,9 +693,9 @@
             </li>
         </ul>
 
-        <div class="logout">
+        <div class="sidebar-footer">
             <a href="#" class="logout-btn">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar
             </a>
         </div>
     </aside>
@@ -545,47 +705,69 @@
         <header class="top-header">
             <div class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="search-input" placeholder="Cari">
+                <input type="text" class="search-input" placeholder="Cari naskah, penulis, atau ISBN...">
             </div>
             <div class="header-actions">
-                <i class="fa-regular fa-bell notification"></i>
-                <div class="avatar-img"><i class="fa-solid fa-user"></i></div>
+                <button class="header-icon-btn" title="Notifikasi">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notif-dot"></span>
+                </button>
+                <div class="header-divider"></div>
+                <div class="user-header">
+                    <div class="user-avatar">P</div>
+                    <div class="user-header-info">
+                        <div class="user-header-name">Pradama</div>
+                        <div class="user-header-role">Kontributor</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 0.625rem; color: var(--text-muted); margin-left: 4px;"></i>
+                </div>
             </div>
         </header>
 
         <section class="welcome-section">
-            <h1>Selamat datang kembali,<br>Pradama</h1>
+            <div class="welcome-text">
+                <h1>Selamat datang kembali, Pradama 👋</h1>
+                <p>Berikut ringkasan aktivitas naskah Anda hari ini.</p>
+            </div>
             <button class="btn-primary">
-                <i class="fa-solid fa-plus"></i> Mulai pengajuan baru
+                <i class="fa-solid fa-plus"></i> Pengajuan Baru
             </button>
         </section>
 
         <section class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon icon-teal">
-                    <i class="fa-regular fa-file-alt"></i>
+                <div class="stat-card-top">
+                    <div class="stat-icon icon-teal">
+                        <i class="fa-regular fa-file-alt"></i>
+                    </div>
+                    <span class="stat-badge">+2 minggu ini</span>
                 </div>
-                <span class="stat-badge">+2 this week</span>
-                <div class="stat-title">Active Manuscripts</div>
+                <div class="stat-title">Naskah Aktif</div>
                 <div class="stat-value">12</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon icon-orange">
-                    <i class="fa-regular fa-eye"></i>
+                <div class="stat-card-top">
+                    <div class="stat-icon icon-orange">
+                        <i class="fa-regular fa-eye"></i>
+                    </div>
                 </div>
                 <div class="stat-title">Dalam Peninjauan</div>
                 <div class="stat-value">04</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon icon-blue">
-                    <i class="fa-regular fa-circle-check"></i>
+                <div class="stat-card-top">
+                    <div class="stat-icon icon-blue">
+                        <i class="fa-regular fa-circle-check"></i>
+                    </div>
                 </div>
                 <div class="stat-title">Diterbitkan</div>
                 <div class="stat-value">08</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon icon-gray">
-                    <i class="fa-solid fa-inbox"></i>
+                <div class="stat-card-top">
+                    <div class="stat-icon icon-gray">
+                        <i class="fa-solid fa-inbox"></i>
+                    </div>
                 </div>
                 <div class="stat-title">Draf</div>
                 <div class="stat-value">03</div>
@@ -597,7 +779,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">Naskah Terbaru</h2>
-                    <a href="#" class="link-teal">Lihat semua</a>
+                    <a href="#" class="link-teal">Lihat semua →</a>
                 </div>
                 <div class="table-container">
                     <table>
@@ -606,45 +788,54 @@
                                 <th>Judul Naskah</th>
                                 <th>Status</th>
                                 <th>Terakhir Diperbarui</th>
-                                <th>Aksi</th>
+                                <th style="text-align: center;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <div class="ms-title">Climate Shift Analysis 2024</div>
+                                    <div class="ms-title">Analisis Perubahan Iklim 2024</div>
                                     <div class="ms-id">ID: MS-8829</div>
                                 </td>
-                                <td><span class="status-badge status-review">Dalam peninjauan</span></td>
+                                <td><span class="status-badge status-review">Dalam Peninjauan</span></td>
                                 <td>
-                                    <div class="date-text">Oct 12,</div>
-                                    <div class="date-year">2023</div>
+                                    <div class="date-text">12 Okt 2023</div>
                                 </td>
-                                <td><a href="#" class="action-link">Lihat</a></td>
+                                <td style="text-align: center;">
+                                    <a href="#" class="action-btn" title="Lihat detail">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <div class="ms-title">Quantum Field Methodology</div>
+                                    <div class="ms-title">Metodologi Medan Kuantum</div>
                                     <div class="ms-id">ID: MS-7741</div>
                                 </td>
                                 <td><span class="status-badge status-published">Diterbitkan</span></td>
                                 <td>
-                                    <div class="date-text">Sep 28,</div>
-                                    <div class="date-year">2023</div>
+                                    <div class="date-text">28 Sep 2023</div>
                                 </td>
-                                <td><a href="#" class="action-link">Lihat</a></td>
+                                <td style="text-align: center;">
+                                    <a href="#" class="action-btn" title="Lihat detail">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <div class="ms-title">Urban Planning Dynamics</div>
+                                    <div class="ms-title">Dinamika Perencanaan Kota</div>
                                     <div class="ms-id">ID: MS-4122</div>
                                 </td>
                                 <td><span class="status-badge status-draft">Draf</span></td>
                                 <td>
-                                    <div class="date-text">Sep 15,</div>
-                                    <div class="date-year">2023</div>
+                                    <div class="date-text">15 Sep 2023</div>
                                 </td>
-                                <td><a href="#" class="action-link">Lihat</a></td>
+                                <td style="text-align: center;">
+                                    <a href="#" class="action-btn" title="Lihat detail">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -653,7 +844,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Activity Feed</h2>
+                    <h2 class="card-title">Aktivitas Terbaru</h2>
                 </div>
                 <div class="activity-feed">
 
@@ -661,10 +852,11 @@
                         <div class="activity-icon icon-teal">
                             <i class="fa-regular fa-comment-dots"></i>
                         </div>
-                        <div class="activity-content">
-                            <div><strong>Editor Julian Smith</strong> added a comment to <span class="highlight">Climate
-                                    Shift Analysis.</span></div>
-                            <div class="activity-time">2 hours ago</div>
+                        <div class="activity-body">
+                            <div class="activity-content">
+                                <strong>Editor Julian Smith</strong> menambahkan komentar pada <span class="highlight">Analisis Perubahan Iklim.</span>
+                            </div>
+                            <div class="activity-time">2 jam yang lalu</div>
                         </div>
                     </div>
 
@@ -672,9 +864,11 @@
                         <div class="activity-icon icon-blue">
                             <i class="fa-solid fa-check"></i>
                         </div>
-                        <div class="activity-content">
-                            <div>Your manuscript Quantum Field Methodology has been officially published.</div>
-                            <div class="activity-time">Yesterday</div>
+                        <div class="activity-body">
+                            <div class="activity-content">
+                                Naskah <span class="highlight">Metodologi Medan Kuantum</span> telah resmi diterbitkan.
+                            </div>
+                            <div class="activity-time">Kemarin</div>
                         </div>
                     </div>
 
@@ -682,15 +876,16 @@
                         <div class="activity-icon icon-orange">
                             <i class="fa-solid fa-clock-rotate-left"></i>
                         </div>
-                        <div class="activity-content">
-                            <div>Peer review round #2 started for <span class="highlight">Sustainability
-                                    Frameworks.</span></div>
-                            <div class="activity-time">Oct 10, 2023</div>
+                        <div class="activity-body">
+                            <div class="activity-content">
+                                Peninjauan tahap ke-2 dimulai untuk <span class="highlight">Kerangka Keberlanjutan.</span>
+                            </div>
+                            <div class="activity-time">10 Okt 2023</div>
                         </div>
                     </div>
 
                 </div>
-                <button class="btn-outline">Clear Notifications</button>
+                <button class="btn-outline">Hapus Semua Notifikasi</button>
             </div>
 
         </section>
