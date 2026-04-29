@@ -65,7 +65,7 @@
         .main-content.expanded { margin-left:var(--sidebar-collapsed-width); }
 
         /* Header */
-        .top-header { display:flex; justify-content:space-between; align-items:center; padding:20px 0; background:var(--bg-body); position:sticky; top:0; z-index:10; }
+        .top-header { display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
         .search-container { position:relative; width:340px; }
         .search-container i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:.875rem; }
         .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:var(--bg-card); border-radius:10px; font-size:.875rem; font-family:'Inter',sans-serif; outline:none; color:var(--text-primary); transition:border-color .2s,box-shadow .2s; }
@@ -88,7 +88,7 @@
         .welcome-section::after  { content:''; position:absolute; bottom:-80px; right:80px; width:180px; height:180px; background:rgba(52,211,153,.04); border-radius:50%; }
         .welcome-text h1 { font-size:1.5rem; font-weight:700; color:#fff; line-height:1.3; }
         .welcome-text p  { font-size:.875rem; color:var(--accent); margin-top:6px; opacity:.85; }
-        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#0a1814; border:none; padding:11px 22px; border-radius:10px; font-size:.875rem; font-weight:700; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; position:relative; z-index:1; box-shadow:0 4px 15px rgba(52,211,153,.25); }
+        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:11px 22px; border-radius:10px; font-size:.875rem; font-weight:700; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; position:relative; z-index:1; box-shadow:0 4px 15px rgba(52,211,153,.25); }
         .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(52,211,153,.35); }
 
         /* Stats */

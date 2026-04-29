@@ -59,7 +59,7 @@
         .main-content.expanded { margin-left:var(--sidebar-collapsed-width); }
 
         /* Header */
-        .top-header { display:flex; justify-content:space-between; align-items:center; padding:20px 0; background:var(--bg-body); position:sticky; top:0; z-index:10; }
+        .top-header { display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
         .search-container { position:relative; width:340px; }
         .search-container i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:.875rem; }
         .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:var(--bg-card); border-radius:10px; font-size:.875rem; font-family:'Inter',sans-serif; outline:none; color:var(--text-primary); transition:border-color .2s,box-shadow .2s; }
