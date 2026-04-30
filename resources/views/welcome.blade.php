@@ -327,7 +327,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/informasi-penulis" class="nav-link">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-link-text">Informasi Penulis</span>
                 </a>
@@ -418,11 +418,11 @@
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="#" class="user-dropdown-item">
+                        <a href="/informasi-penulis" class="user-dropdown-item">
                             <i class="fa-regular fa-user"></i>
                             <span>Profil Saya</span>
                         </a>
-                        <a href="#" class="user-dropdown-item">
+                        <a href="/informasi-penulis" class="user-dropdown-item">
                             <i class="fa-regular fa-id-badge"></i>
                             <span>Informasi Akun</span>
                         </a>
