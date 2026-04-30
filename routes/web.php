@@ -12,4 +12,6 @@ Route::get('/pengajuan', function () {
 
 Route::get('/informasi-penulis', function () {
     return view('informasi-penulis');
+Route::get('/informasi', function () {
+    return view('informasi');
 });
