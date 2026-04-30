@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISBN Tirta Jaya - Pengajuan</title>
+    <title>ISBN Tirta Jaya - Informasi Penulis</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -87,32 +87,34 @@
         .page-title-section { display:flex; flex-direction:column; gap:6px; margin:0; }
         .page-title-section h1 { font-size:2rem; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px; line-height:1; margin:0; }
         .page-subtitle { font-size:.875rem; color:var(--text-muted); margin:0; max-width:none; line-height:1.4; }
-        .page-actions { display:flex; gap:12px; align-items:center; }
         
-        /* Buttons */
-        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; box-shadow:0 4px 12px rgba(52,211,153,.2); }
-        .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(52,211,153,.3); }
-        .btn-outline-action { background:transparent; color:var(--text-secondary); border:1px solid var(--border-color); padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:500; font-family:'Inter',sans-serif; cursor:pointer; transition:all .2s; }
-        .btn-outline-action:hover { border-color:var(--primary-dim); color:var(--primary); background:var(--bg-elevated); }
-
-        /* Form Layout */
-        .form-layout { display:grid; grid-template-columns:1fr 340px; gap:24px; align-items:stretch; }
-        .form-main { display:flex; flex-direction:column; gap:24px; height:100%; }
-        .form-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:12px; padding:28px; position:relative; transition:transform .25s,box-shadow .25s; box-shadow:0 4px 16px rgba(0,0,0,.15); overflow:hidden; }
-        .form-card::after { content:''; position:absolute; inset:0; border-radius:12px; background:linear-gradient(145deg,rgba(52,211,153,.03),transparent 60%); pointer-events:none; }
-        .form-card:hover { transform:translateY(-2px); border-top-color:var(--primary); box-shadow:0 8px 24px rgba(0,0,0,.25),0 0 0 1px rgba(52,211,153,.08); }
+        /* Layout specific for this page */
+        .content-container { max-width: 960px; }
+        .section-title { font-size:1.125rem; font-weight:600; color:var(--text-primary); display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+        .mt-8 { margin-top:32px; }
         
-        .form-sidebar { display:flex; flex-direction:column; height:100%; }
-        .form-sidebar .form-card { flex:1; display:flex; flex-direction:column; }
+        /* Author Card */
+        .author-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; padding:20px 24px; display:flex; align-items:center; gap:24px; box-shadow:0 4px 16px rgba(0,0,0,.15); position:relative; transition:transform .25s,box-shadow .25s; overflow:hidden; margin-bottom:24px; border-left:3px solid var(--primary-dim); }
+        .author-card:hover { transform:translateY(-2px); border-left-color:var(--primary); box-shadow:0 8px 24px rgba(0,0,0,.25),0 0 0 1px rgba(52,211,153,.08); }
+        .author-card::after { content:''; position:absolute; inset:0; border-radius:12px; background:linear-gradient(145deg,rgba(52,211,153,.03),transparent 60%); pointer-events:none; }
         
-        .section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; position:relative; z-index:1; }
-        .section-title { font-size:1.125rem; font-weight:600; color:var(--text-primary); display:flex; align-items:center; gap:10px; margin-bottom:24px; position:relative; z-index:1; }
-        .section-header .section-title { margin-bottom:0; }
-        .title-bar { width:4px; height:18px; background:var(--primary); border-radius:2px; }
+        .author-avatar { width:64px; height:64px; border-radius:12px; background:var(--bg-elevated); overflow:hidden; flex-shrink:0; border:1px solid var(--border-color); display:flex; align-items:center; justify-content:center; }
+        .author-avatar img { width:100%; height:100%; object-fit:cover; }
+        .author-avatar i { font-size: 2rem; color: var(--text-muted); }
         
-        .link-teal { color:var(--primary); text-decoration:none; font-size:.8125rem; font-weight:500; transition:color .2s; display:flex; align-items:center; gap:6px; }
-        .link-teal:hover { color:var(--primary-bright); }
-
+        .author-info { display:flex; flex:1; gap:40px; align-items:center; position:relative; z-index:1; }
+        .info-group { display:flex; flex-direction:column; gap:6px; }
+        .info-group label { font-size:.7rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin:0; }
+        .info-value { font-size:.95rem; font-weight:600; color:var(--text-primary); }
+        
+        .badge-order { width:30px; height:30px; border-radius:50%; background:rgba(52,211,153,0.15); color:var(--primary); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.875rem; border:1px solid rgba(52,211,153,0.3); }
+        
+        .author-action { position:relative; z-index:1; font-size:1.1rem; }
+        
+        /* Dashed Form Card */
+        .dashed-card { border:1px dashed var(--border-color); border-radius:12px; padding:24px; background:rgba(26,46,40,0.4); margin-bottom:24px; transition:all .2s; }
+        .dashed-card:hover { border-color:var(--primary-dim); background:rgba(52,211,153,0.02); }
+        
         /* Form Controls */
         .form-group { margin-bottom:20px; }
         .form-row { display:flex; gap:20px; margin-bottom:20px; }
@@ -120,22 +122,30 @@
         label { display:block; font-size:.8125rem; font-weight:500; color:var(--text-secondary); margin-bottom:8px; }
         .form-control { width:100%; padding:10px 14px; background:var(--bg-body); border:1px solid var(--border-color); border-radius:8px; color:var(--text-primary); font-family:'Inter',sans-serif; font-size:.875rem; transition:all .2s; }
         .form-control:focus { outline:none; border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
-        textarea.form-control { resize:vertical; min-height:80px; }
         select.form-control { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236ba898'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; background-size:14px; padding-right:36px; }
 
-        /* Upload Areas */
-        .upload-area { border:1px dashed var(--border-color); border-radius:10px; padding:40px 20px; text-align:center; background:rgba(26,46,40,0.4); cursor:pointer; transition:all .2s; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-        .upload-area:hover { border-color:var(--primary-dim); background:rgba(52,211,153,0.03); }
-        .upload-icon { font-size:2rem; color:var(--text-muted); margin-bottom:12px; }
-        .upload-text { font-size:.875rem; color:var(--text-secondary); margin-bottom:4px; }
+        /* Buttons */
+        .btn-text { background:transparent; border:none; font-size:.875rem; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:8px; padding:8px 0; transition:color .2s; font-family:'Inter',sans-serif; }
+        .btn-text:hover { color:var(--primary-bright); }
         .text-primary { color:var(--primary); }
-        .font-semibold { font-weight:600; }
-        .upload-hint { font-size:.75rem; color:var(--text-muted); }
+        .text-muted { color:var(--text-muted); }
+
+        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; box-shadow:0 4px 12px rgba(52,211,153,.2); }
+        .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(52,211,153,.3); }
+        .btn-outline-action { background:transparent; color:var(--text-secondary); border:1px solid var(--border-color); padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:500; font-family:'Inter',sans-serif; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:8px; }
+        .btn-outline-action:hover { border-color:var(--primary-dim); color:var(--primary); background:var(--bg-elevated); }
         
-        .upload-area-primary { border-color:rgba(52,211,153,0.3); background:rgba(52,211,153,0.02); }
-        .upload-area-primary:hover { border-color:var(--primary); background:rgba(52,211,153,0.05); }
-        .upload-icon-circle { width:48px; height:48px; background:var(--primary-dim); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.25rem; margin:0 auto 12px; box-shadow:0 4px 12px rgba(5,150,105,.3); }
-        .mt-4 { margin-top:24px; }
+        /* Info Alert */
+        .info-alert { background:rgba(96,165,250,.08); border:1px solid rgba(96,165,250,.2); border-radius:12px; padding:20px; display:flex; gap:16px; margin-top:24px; position:relative; overflow:hidden; }
+        .info-alert::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:#60a5fa; }
+        .alert-icon { font-size:1.25rem; color:#93c5fd; flex-shrink:0; }
+        .alert-content strong { display:block; font-size:.9rem; color:#bfdbfe; font-weight:600; margin-bottom:6px; }
+        .alert-content p { font-size:.875rem; color:#93c5fd; margin:0; line-height:1.5; opacity:0.9; }
+        
+        /* Divider & Footer */
+        .divider { border:none; height:1px; background:var(--border-color); margin:32px 0; }
+        .action-footer { display:flex; justify-content:space-between; align-items:center; }
+        .action-right { display:flex; gap:12px; }
     </style>
 </head>
 <body>
@@ -158,13 +168,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/pengajuan" class="nav-link active">
+                <a href="/pengajuan" class="nav-link">
                     <i class="fa-regular fa-file-lines"></i>
                     <span class="nav-link-text">Pengajuan</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/informasi" class="nav-link active">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-link-text">Informasi Penulis</span>
                 </a>
@@ -179,7 +189,6 @@
     </aside>
 
     <main class="main-content" id="mainContent">
-
         <header class="top-header">
             <div class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -203,103 +212,85 @@
         </header>
 
         <div class="breadcrumb">
-            <a href="#">Portal</a> <span>/</span> <span class="active">Pengajuan</span>
+            <a href="#">Portal</a> <span>/</span> <span class="active">Informasi Penulis</span>
         </div>
 
         <div class="page-header">
             <div class="page-title-section">
-                <h1>Detail Naskah</h1>
-                <p class="page-subtitle">Lengkapi informasi di bawah ini untuk mendaftarkan draf Anda ke dalam sistem.</p>
-            </div>
-            <div class="page-actions">
-                <button class="btn-outline-action">Simpan sebagai Draf</button>
-                <button class="btn-primary">Terbitkan</button>
+                <h1>Informasi Penulis</h1>
+                <p class="page-subtitle">Lengkapi detail informasi penulis dan kolaborator untuk naskah ini.</p>
             </div>
         </div>
 
-        <div class="form-layout">
-            <div class="form-main">
-                <!-- Informasi Naskah -->
-                <div class="form-card">
-                    <h2 class="section-title"><span class="title-bar"></span>Informasi Naskah</h2>
-                    
-                    <div class="form-group">
-                        <label>Judul Naskah</label>
-                        <input type="text" class="form-control" placeholder="Masukkan judul naskah...">
+        <div class="content-container">
+            <!-- Penulis Utama -->
+            <h2 class="section-title"><i class="fa-solid fa-shield text-primary"></i> Penulis Utama</h2>
+            <div class="author-card">
+                <div class="author-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="author-info">
+                    <div class="info-group">
+                        <label>Nama Lengkap</label>
+                        <div class="info-value">Pradama</div>
                     </div>
-
-                    <div class="form-group">
-                        <label>Sub Judul Naskah</label>
-                        <input type="text" class="form-control" placeholder="Masukkan sub judul naskah...">
+                    <div class="info-group">
+                        <label>Email</label>
+                        <div class="info-value">pradama@institution.edu</div>
                     </div>
-
-                    <div class="form-group" style="margin-bottom:0; position:relative; z-index:1;">
-                        <label>Sinopsis</label>
-                        <textarea class="form-control" rows="8" placeholder="Tuliskan sinopsis singkat mengenai naskah Anda..."></textarea>
+                    <div class="info-group">
+                        <label>Urutan Penulis</label>
+                        <div class="badge-order">1</div>
                     </div>
                 </div>
-
-                <!-- Informasi Penulis -->
-                <div class="form-card">
-                    <div class="section-header">
-                        <h2 class="section-title"><span class="title-bar"></span>Informasi Penulis</h2>
-                        <a href="#" class="link-teal"><i class="fa-solid fa-plus-circle"></i> Tambahkan Penulis Lainnya</a>
-                    </div>
-                    
-                    <div class="form-row" style="position:relative; z-index:1;">
-                        <div class="form-group">
-                            <label>Nama Lengkap</label>
-                            <input type="text" class="form-control" placeholder="Masukkan nama lengkap penulis...">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" placeholder="Masukkan alamat email aktif...">
-                        </div>
-                    </div>
-
-                    <div class="form-row" style="margin-bottom:0; position:relative; z-index:1;">
-                        <div class="form-group" style="flex: 0 0 160px;">
-                            <label>Urutan Penulis</label>
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="flex: 1;">
-                            <label>Biodata Narasi</label>
-                            <textarea class="form-control" rows="4" placeholder="Tuliskan biodata narasi singkat..."></textarea>
-                        </div>
-                    </div>
+                <div class="author-action">
+                    <i class="fa-solid fa-lock text-muted" title="Penulis utama tidak dapat diubah"></i>
                 </div>
             </div>
 
-            <div class="form-sidebar">
-                <!-- Lampiran -->
-                <div class="form-card" style="padding:28px 24px;">
-                    <h2 class="section-title"><span class="title-bar"></span>Lampiran</h2>
-                    
-                    <div class="form-group" style="position:relative; z-index:1; flex:1; display:flex; flex-direction:column;">
-                        <label>Foto Cover</label>
-                        <div class="upload-area" style="min-height:240px; flex:1;">
-                            <div class="upload-icon"><i class="fa-regular fa-image"></i></div>
-                            <div class="upload-text" style="line-height: 1.6;">Seret & lepas foto sampul atau<br><span class="text-primary font-semibold">Cari File</span></div>
-                            <div class="upload-hint mt-2">Format JPEG, PNG (Maks 10MB)</div>
-                        </div>
+            <!-- Penulis Lainnya -->
+            <h2 class="section-title mt-8"><i class="fa-solid fa-users text-primary"></i> Penulis Lainnya / Kolaborator</h2>
+            <div class="dashed-card">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" class="form-control" placeholder="Masukkan nama lengkap">
                     </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="contoh@email.com">
+                    </div>
+                    <div class="form-group" style="flex: 0 0 160px;">
+                        <label>Urutan Penulis</label>
+                        <select class="form-control">
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-text text-primary" style="margin-top:-8px;"><i class="fa-solid fa-circle-plus"></i> Tambah Penulis Lain</button>
+            </div>
 
-                    <div class="form-group mt-4" style="margin-bottom:0; position:relative; z-index:1;">
-                        <label>Unggah Naskah</label>
-                        <div class="upload-area upload-area-primary" style="border-style:dashed; padding:32px 20px;">
-                            <div class="upload-icon-circle"><i class="fa-solid fa-file-arrow-up"></i></div>
-                            <div class="upload-text text-primary font-semibold" style="font-size:1rem;">Unggah Naskah</div>
-                            <div class="upload-hint mt-2">Format PDF, DOCX, EPUB (Maks 50MB)</div>
-                        </div>
-                    </div>
+            <!-- Info Box -->
+            <div class="info-alert">
+                <div class="alert-icon"><i class="fa-solid fa-circle-info"></i></div>
+                <div class="alert-content">
+                    <strong>Informasi Penting</strong>
+                    <p>Pastikan urutan penulis sesuai dengan urutan yang akan dipublikasikan. Anda dapat menarik dan melepas (drag and drop) kartu penulis untuk mengubah urutan setelah menambahkannya.</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Footer Actions -->
+            <div class="action-footer">
+                <button class="btn-outline-action"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button>
+                <div class="action-right">
+                    <button class="btn-outline-action text-primary" style="border-color: var(--primary);">Simpan Draft</button>
+                    <button class="btn-primary">Simpan dan Lanjut <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
         </div>
-
     </main>
 
     <script>
@@ -310,6 +301,5 @@
             mainContent.classList.toggle('expanded');
         });
     </script>
-
 </body>
 </html>
