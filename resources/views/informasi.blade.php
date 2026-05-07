@@ -27,6 +27,7 @@
             --sidebar-width:           250px;
             --sidebar-collapsed-width: 64px;
         }
+
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
         body { background:var(--bg-body); color:var(--text-primary); display:flex; min-height:100vh; font-size:14px; line-height:1.5; }
 
@@ -40,6 +41,7 @@
         .sidebar.collapsed .brand-text { opacity:0; width:0; }
         .sidebar-toggle { width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; color:var(--text-muted); border-radius:7px; cursor:pointer; flex-shrink:0; font-size:.95rem; transition:background .2s,color .2s; }
         .sidebar-toggle:hover { background:var(--bg-card); color:var(--primary); }
+
         .nav-menu { list-style:none; padding:12px 8px; flex:1; overflow-y:auto; overflow-x:hidden; }
         .nav-item { margin-bottom:2px; }
         .nav-link { display:flex; align-items:center; gap:12px; padding:10px 12px; text-decoration:none; color:var(--text-muted); border-radius:10px; font-size:.875rem; font-weight:500; transition:all .2s; white-space:nowrap; overflow:hidden; }
@@ -70,82 +72,80 @@
         .header-icon-btn:hover { background:var(--bg-elevated); border-color:var(--primary-dim); color:var(--primary); }
         .notif-dot { position:absolute; top:9px; right:10px; width:7px; height:7px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
         .header-divider { width:1px; height:28px; background:var(--border-color); margin:0 8px; }
+        .user-wrapper { position:relative; }
         .user-header { display:flex; align-items:center; gap:10px; padding:6px 10px 6px 6px; border-radius:10px; cursor:pointer; transition:background .2s; }
         .user-header:hover { background:var(--bg-card); }
         .user-avatar { width:36px; height:36px; background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.875rem; }
         .user-header-name { font-weight:600; font-size:.8125rem; color:var(--text-primary); line-height:1.3; }
         .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.3; }
+        .user-dropdown {
+            position:absolute;
+            top:calc(100% + 12px);
+            right:0;
+            width:240px;
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(52,211,153,0.08);
+            display:none;
+            flex-direction:column;
+            z-index:1000;
+            overflow:hidden;
+            transform-origin: top right;
+            animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .user-dropdown.show { display:flex; }
+        .user-dropdown-item { padding:14px 20px; display:flex; align-items:center; gap:16px; color:var(--text-secondary); text-decoration:none; font-size:.875rem; font-weight:500; transition:all .2s; cursor:pointer; }
+        .user-dropdown-item:hover { background:var(--bg-card-hover); color:var(--primary); padding-left:24px; }
+        .user-dropdown-item i { width:20px; font-size:1.1rem; text-align:center; color:var(--text-muted); transition:color .2s; }
+        .user-dropdown-item:hover i { color:var(--primary); }
+        .user-dropdown-divider { height:1px; background:var(--border-color); margin:8px 0; }
+        .user-dropdown-item.logout { color:#f87171; }
+        .user-dropdown-item.logout i { color:#f87171; }
+        .user-dropdown-item.logout:hover { background:rgba(248,113,113,0.08); color:#f87171; }
 
-        /* Breadcrumb */
-        .breadcrumb { display:flex; align-items:center; gap:8px; font-size:.8125rem; color:var(--text-muted); margin-bottom:16px; }
-        .breadcrumb a { color:var(--text-muted); text-decoration:none; transition:color .2s; }
-        .breadcrumb a:hover { color:var(--primary); }
-        .breadcrumb .active { color:var(--primary); font-weight:500; }
+        /* Profile Header */
+        .profile-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; }
+        .profile-header-left { display:flex; align-items:center; gap:16px; }
+        .profile-avatar { width:56px; height:56px; background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#fff; border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.5rem; border:2px solid rgba(52,211,153,0.3); box-shadow:0 4px 16px rgba(52,211,153,0.2); }
+        .profile-name { font-size:1.5rem; font-weight:700; color:var(--text-primary); }
+        .profile-role { font-size:.875rem; color:var(--text-muted); margin-top:2px; }
+        .btn-save { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#fff; border:none; padding:10px 22px; border-radius:10px; font-size:.875rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; box-shadow:0 4px 15px rgba(52,211,153,.25); }
+        .btn-save:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(52,211,153,.35); }
 
-        /* Page Header */
-        .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; }
-        .page-title-section { display:flex; flex-direction:column; gap:6px; margin:0; }
-        .page-title-section h1 { font-size:2rem; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px; line-height:1; margin:0; }
-        .page-subtitle { font-size:.875rem; color:var(--text-muted); margin:0; max-width:none; line-height:1.4; }
-        
-        /* Layout specific for this page */
-        .content-container { max-width: 960px; }
-        .section-title { font-size:1.125rem; font-weight:600; color:var(--text-primary); display:flex; align-items:center; gap:10px; margin-bottom:16px; }
-        .mt-8 { margin-top:32px; }
-        
-        /* Author Card */
-        .author-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; padding:20px 24px; display:flex; align-items:center; gap:24px; box-shadow:0 4px 16px rgba(0,0,0,.15); position:relative; transition:transform .25s,box-shadow .25s; overflow:hidden; margin-bottom:24px; border-left:3px solid var(--primary-dim); }
-        .author-card:hover { transform:translateY(-2px); border-left-color:var(--primary); box-shadow:0 8px 24px rgba(0,0,0,.25),0 0 0 1px rgba(52,211,153,.08); }
-        .author-card::after { content:''; position:absolute; inset:0; border-radius:12px; background:linear-gradient(145deg,rgba(52,211,153,.03),transparent 60%); pointer-events:none; }
-        
-        .author-avatar { width:64px; height:64px; border-radius:12px; background:var(--bg-elevated); overflow:hidden; flex-shrink:0; border:1px solid var(--border-color); display:flex; align-items:center; justify-content:center; }
-        .author-avatar img { width:100%; height:100%; object-fit:cover; }
-        .author-avatar i { font-size: 2rem; color: var(--text-muted); }
-        
-        .author-info { display:flex; flex:1; gap:40px; align-items:center; position:relative; z-index:1; }
-        .info-group { display:flex; flex-direction:column; gap:6px; }
-        .info-group label { font-size:.7rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin:0; }
-        .info-value { font-size:.95rem; font-weight:600; color:var(--text-primary); }
-        
-        .badge-order { width:30px; height:30px; border-radius:50%; background:rgba(52,211,153,0.15); color:var(--primary); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.875rem; border:1px solid rgba(52,211,153,0.3); }
-        
-        .author-action { position:relative; z-index:1; font-size:1.1rem; }
-        
-        /* Dashed Form Card */
-        .dashed-card { border:1px dashed var(--border-color); border-radius:12px; padding:24px; background:rgba(26,46,40,0.4); margin-bottom:24px; transition:all .2s; }
-        .dashed-card:hover { border-color:var(--primary-dim); background:rgba(52,211,153,0.02); }
-        
-        /* Form Controls */
-        .form-group { margin-bottom:20px; }
-        .form-row { display:flex; gap:20px; margin-bottom:20px; }
-        .form-row .form-group { margin-bottom:0; flex:1; }
-        label { display:block; font-size:.8125rem; font-weight:500; color:var(--text-secondary); margin-bottom:8px; }
+        /* Section Cards */
+        .profile-section { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:14px; padding:28px; margin-bottom:24px; box-shadow:0 4px 20px rgba(0,0,0,.2); position:relative; overflow:hidden; transition:transform .25s, box-shadow .25s; }
+        .profile-section::after { content:''; position:absolute; inset:0; border-radius:14px; background:linear-gradient(145deg,rgba(52,211,153,0.03),transparent 60%); pointer-events:none; }
+        .profile-section:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(52,211,153,0.1); }
+        .section-title { font-size:1.125rem; font-weight:600; color:var(--text-primary); display:flex; align-items:center; gap:10px; margin-bottom:24px; position:relative; z-index:1; }
+        .section-title i { color:var(--primary); font-size:1rem; }
+
+        /* Form */
+        .form-grid { display:grid; gap:20px; position:relative; z-index:1; }
+        .form-grid-2 { grid-template-columns:1fr 1fr; }
+        .form-grid-3 { grid-template-columns:1fr 1fr 1fr; }
+        .form-grid-1 { grid-template-columns:1fr; }
+        .form-group { display:flex; flex-direction:column; gap:8px; }
+        .form-label { font-size:.75rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; }
         .form-control { width:100%; padding:10px 14px; background:var(--bg-body); border:1px solid var(--border-color); border-radius:8px; color:var(--text-primary); font-family:'Inter',sans-serif; font-size:.875rem; transition:all .2s; }
         .form-control:focus { outline:none; border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
         select.form-control { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236ba898'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; background-size:14px; padding-right:36px; }
 
-        /* Buttons */
-        .btn-text { background:transparent; border:none; font-size:.875rem; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:8px; padding:8px 0; transition:color .2s; font-family:'Inter',sans-serif; }
-        .btn-text:hover { color:var(--primary-bright); }
-        .text-primary { color:var(--primary); }
-        .text-muted { color:var(--text-muted); }
+        /* Upload Area */
+        .upload-group { display:flex; flex-direction:column; gap:8px; }
+        .upload-area { border:1px dashed var(--border-color); border-radius:10px; padding:16px; background:rgba(26,46,40,0.4); cursor:pointer; transition:all .2s; text-align:center; }
+        .upload-area:hover { border-color:var(--primary-dim); background:rgba(52,211,153,0.03); }
+        .upload-link { color:var(--primary); font-weight:600; font-size:.8125rem; }
+        .upload-hint { font-size:.7rem; color:var(--text-muted); }
+        .upload-preview { width:100%; height:120px; border-radius:8px; background:var(--bg-elevated); border:1px solid var(--border-color); margin-top:8px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+        .upload-preview img { width:100%; height:100%; object-fit:cover; display:block; }
+        .upload-preview i { font-size:2rem; color:var(--text-muted); }
+        .upload-preview.has-image i { display:none; }
+        .upload-file-input { display:none; }
+        .upload-filename { font-size:.75rem; color:var(--primary); margin-top:6px; text-align:center; word-break:break-all; }
+        input[type="date"]::-webkit-calendar-picker-indicator { filter:invert(0.7) sepia(1) saturate(3) hue-rotate(100deg); cursor:pointer; }
+        
 
-        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; box-shadow:0 4px 12px rgba(52,211,153,.2); }
-        .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(52,211,153,.3); }
-        .btn-outline-action { background:transparent; color:var(--text-secondary); border:1px solid var(--border-color); padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:500; font-family:'Inter',sans-serif; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:8px; }
-        .btn-outline-action:hover { border-color:var(--primary-dim); color:var(--primary); background:var(--bg-elevated); }
-        
-        /* Info Alert */
-        .info-alert { background:rgba(96,165,250,.08); border:1px solid rgba(96,165,250,.2); border-radius:12px; padding:20px; display:flex; gap:16px; margin-top:24px; position:relative; overflow:hidden; }
-        .info-alert::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:#60a5fa; }
-        .alert-icon { font-size:1.25rem; color:#93c5fd; flex-shrink:0; }
-        .alert-content strong { display:block; font-size:.9rem; color:#bfdbfe; font-weight:600; margin-bottom:6px; }
-        .alert-content p { font-size:.875rem; color:#93c5fd; margin:0; line-height:1.5; opacity:0.9; }
-        
-        /* Divider & Footer */
-        .divider { border:none; height:1px; background:var(--border-color); margin:32px 0; }
-        .action-footer { display:flex; justify-content:space-between; align-items:center; }
-        .action-right { display:flex; gap:12px; }
     </style>
 </head>
 <body>
@@ -160,6 +160,7 @@
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
+
         <ul class="nav-menu">
             <li class="nav-item">
                 <a href="/" class="nav-link">
@@ -177,6 +178,12 @@
                 <a href="/informasi" class="nav-link active">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-link-text">Informasi Penulis</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/table-penulis" class="nav-link">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                    <span class="nav-link-text">Daftar Penulis</span>
                 </a>
             </li>
         </ul>
@@ -200,97 +207,228 @@
                     <span class="notif-dot"></span>
                 </button>
                 <div class="header-divider"></div>
-                <div class="user-header">
-                    <div class="user-avatar">P</div>
-                    <div class="user-header-info">
-                        <div class="user-header-name">Pradama</div>
-                        <div class="user-header-role">Kontributor</div>
+                <div class="user-wrapper">
+                    <div class="user-header" id="userToggle">
+                        <div class="user-avatar">P</div>
+                        <div>
+                            <div class="user-header-name">Pradama</div>
+                            <div class="user-header-role">Kontributor</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
-                    <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                        <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
+                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <div class="breadcrumb">
-            <a href="#">Portal</a> <span>/</span> <span class="active">Informasi Penulis</span>
+
+
+        <!-- Page Header -->
+        <div class="profile-header">
+            <div class="profile-header-left">
+                <div class="profile-avatar">P</div>
+                <div>
+                    <div class="profile-name">Informasi Penulis</div>
+                    <div class="profile-role">Detail Lengkap Penulis</div>
+                </div>
+            </div>
+            <button class="btn-save" id="btnSave">
+                <i class="fa-solid fa-pen"></i> Simpan
+            </button>
         </div>
 
-        <div class="page-header">
-            <div class="page-title-section">
-                <h1>Informasi Penulis</h1>
-                <p class="page-subtitle">Lengkapi detail informasi penulis dan kolaborator untuk naskah ini.</p>
-            </div>
-        </div>
-
-        <div class="content-container">
-            <!-- Penulis Utama -->
-            <h2 class="section-title"><i class="fa-solid fa-shield text-primary"></i> Penulis Utama</h2>
-            <div class="author-card">
-                <div class="author-avatar">
-                    <i class="fa-solid fa-user"></i>
+        <!-- Informasi Pribadi -->
+        <div class="profile-section">
+            <h2 class="section-title"><i class="fa-solid fa-user-circle"></i> Informasi Pribadi</h2>
+            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <label class="form-label">Gelar Depan</label>
+                    <input type="text" class="form-control" value="Dr.">
                 </div>
-                <div class="author-info">
-                    <div class="info-group">
-                        <label>Nama Lengkap</label>
-                        <div class="info-value">Pradama</div>
-                    </div>
-                    <div class="info-group">
-                        <label>Email</label>
-                        <div class="info-value">pradama@institution.edu</div>
-                    </div>
-                    <div class="info-group">
-                        <label>Urutan Penulis</label>
-                        <div class="badge-order">1</div>
-                    </div>
-                </div>
-                <div class="author-action">
-                    <i class="fa-solid fa-lock text-muted" title="Penulis utama tidak dapat diubah"></i>
+                <div class="form-group">
+                    <label class="form-label">Nama Penulis</label>
+                    <input type="text" class="form-control" value="Pradama Wijaya">
                 </div>
             </div>
-
-            <!-- Penulis Lainnya -->
-            <h2 class="section-title mt-8"><i class="fa-solid fa-users text-primary"></i> Penulis Lainnya / Kolaborator</h2>
-            <div class="dashed-card">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input type="text" class="form-control" placeholder="Masukkan nama lengkap">
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" placeholder="contoh@email.com">
-                    </div>
-                    <div class="form-group" style="flex: 0 0 160px;">
-                        <label>Urutan Penulis</label>
-                        <select class="form-control">
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
+            <div class="form-grid form-grid-3" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <label class="form-label">Gelar Belakang</label>
+                    <input type="text" class="form-control" value="M.Kom">
                 </div>
-                <button class="btn-text text-primary" style="margin-top:-8px;"><i class="fa-solid fa-circle-plus"></i> Tambah Penulis Lain</button>
-            </div>
-
-            <!-- Info Box -->
-            <div class="info-alert">
-                <div class="alert-icon"><i class="fa-solid fa-circle-info"></i></div>
-                <div class="alert-content">
-                    <strong>Informasi Penting</strong>
-                    <p>Pastikan urutan penulis sesuai dengan urutan yang akan dipublikasikan. Anda dapat menarik dan melepas (drag and drop) kartu penulis untuk mengubah urutan setelah menambahkannya.</p>
+                <div class="form-group">
+                    <label class="form-label">Jenis Kelamin</label>
+                    <select class="form-control">
+                        <option selected>Laki-laki</option>
+                        <option>Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Agama</label>
+                    <select class="form-control">
+                        <option selected>Islam</option>
+                        <option>Kristen Protestan</option>
+                        <option>Katolik</option>
+                        <option>Hindu</option>
+                        <option>Buddha</option>
+                        <option>Konghucu</option>
+                    </select>
                 </div>
             </div>
-
-            <hr class="divider">
-
-            <!-- Footer Actions -->
-            <div class="action-footer">
-                <button class="btn-outline-action"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button>
-                <div class="action-right">
-                    <button class="btn-outline-action text-primary" style="border-color: var(--primary);">Simpan Draft</button>
-                    <button class="btn-primary">Simpan dan Lanjut <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="form-grid form-grid-2">
+                <div class="form-group">
+                    <label class="form-label">Tempat Lahir</label>
+                    <input type="text" class="form-control" value="Jakarta">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tanggal Lahir</label>
+                    <input type="date" class="form-control" value="1990-05-15">
                 </div>
             </div>
         </div>
+
+        <!-- Identitas & Kontak -->
+        <div class="profile-section">
+            <h2 class="section-title"><i class="fa-solid fa-id-card"></i> Identitas & Kontak</h2>
+            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <label class="form-label">NIK</label>
+                    <input type="text" class="form-control" value="3171020304900001">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nama Sesuai KTP</label>
+                    <input type="text" class="form-control" value="Pradama Wijaya">
+                </div>
+            </div>
+            <div class="form-grid form-grid-1" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <label class="form-label">Alamat Sesuai KTP</label>
+                    <input type="text" class="form-control" value="Jl. Kebon Jeruk No. 45, Jakarta Barat, DKI Jakarta 11530">
+                </div>
+            </div>
+            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" value="pradama.wijaya@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nomor HP</label>
+                    <input type="text" class="form-control" value="081234567890">
+                </div>
+            </div>
+            <div class="form-grid form-grid-2">
+                <div class="form-group">
+                    <label class="form-label">Nomor Telepon</label>
+                    <input type="text" class="form-control" value="0215550123">
+                </div>
+                <div class="form-group"></div>
+            </div>
+        </div>
+
+        <!-- Informasi Institusi & Pajak -->
+        <div class="profile-section">
+            <h2 class="section-title"><i class="fa-solid fa-building"></i> Informasi Institusi & Pajak</h2>
+            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <label class="form-label">Nama Kantor</label>
+                    <input type="text" class="form-control" value="Universitas Indonesia">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tempat Mengajar</label>
+                    <input type="text" class="form-control" value="Depok, Jawa Barat">
+                </div>
+            </div>
+            <div class="form-grid form-grid-1" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <label class="form-label">Alamat Surat Menyurat</label>
+                    <input type="text" class="form-control" value="Gedung Dekanat Lt. 2, Kampus UI Depok">
+                </div>
+            </div>
+            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <label class="form-label">NPWP</label>
+                    <input type="text" class="form-control" value="01.234.567.8-901.000">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nama NPWP</label>
+                    <input type="text" class="form-control" value="Pradama Wijaya">
+                </div>
+            </div>
+            <div class="form-grid form-grid-1">
+                <div class="form-group">
+                    <label class="form-label">Alamat NPWP</label>
+                    <input type="text" class="form-control" value="Jl. Kebon Jeruk No. 45, Jakarta Barat">
+                </div>
+            </div>
+        </div>
+
+        <!-- Informasi Rekening -->
+        <div class="profile-section">
+            <h2 class="section-title"><i class="fa-solid fa-credit-card"></i> Informasi Rekening</h2>
+            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <label class="form-label">Nomor Rekening</label>
+                    <input type="text" class="form-control" value="1234567890">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nama Rekening</label>
+                    <input type="text" class="form-control" value="Pradama Wijaya">
+                </div>
+            </div>
+            <div class="form-grid form-grid-3">
+                <div class="form-group">
+                    <label class="form-label">Nama Bank</label>
+                    <input type="text" class="form-control" value="Bank Mandiri">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Cabang Bank</label>
+                    <input type="text" class="form-control" value="Jakarta Thamrin">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Kota Bank</label>
+                    <input type="text" class="form-control" value="Jakarta Pusat">
+                </div>
+            </div>
+        </div>
+
+        <!-- Dokumen & Lampiran -->
+        <div class="profile-section">
+            <h2 class="section-title"><i class="fa-solid fa-file-arrow-up"></i> Dokumen & Lampiran</h2>
+            <div class="form-grid form-grid-2">
+                <div class="upload-group">
+                    <label class="form-label">Upload KTP</label>
+                    <input type="file" class="upload-file-input" id="uploadKtp" accept="image/jpeg,image/png">
+                    <div class="upload-area" id="uploadKtpArea">
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.25rem;color:var(--primary);margin-bottom:6px;"></i>
+                        <div><span class="upload-link">Pilih berkas atau tarik ke sini</span></div>
+                        <div class="upload-hint">Format JPG, PNG (Maks 5MB)</div>
+                    </div>
+                    <div class="upload-preview" id="previewKtp">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <div class="upload-filename" id="filenameKtp"></div>
+                </div>
+                <div class="upload-group">
+                    <label class="form-label">Upload Foto Penulis</label>
+                    <input type="file" class="upload-file-input" id="uploadFoto" accept="image/jpeg,image/png">
+                    <div class="upload-area" id="uploadFotoArea">
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.25rem;color:var(--primary);margin-bottom:6px;"></i>
+                        <div><span class="upload-link">Pilih berkas atau tarik ke sini</span></div>
+                        <div class="upload-hint">Format JPG, PNG (Maks 5MB)</div>
+                    </div>
+                    <div class="upload-preview" id="previewFoto">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <div class="upload-filename" id="filenameFoto"></div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <script>
@@ -300,6 +438,62 @@
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         });
+
+
+
+        // Upload KTP
+        function setupUpload(areaId, inputId, previewId, filenameId) {
+            const area = document.getElementById(areaId);
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const filename = document.getElementById(filenameId);
+
+            area.addEventListener('click', () => input.click());
+            area.addEventListener('dragover', (e) => { e.preventDefault(); area.style.borderColor = 'var(--primary)'; });
+            area.addEventListener('dragleave', () => { area.style.borderColor = ''; });
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.style.borderColor = '';
+                if (e.dataTransfer.files.length) {
+                    input.files = e.dataTransfer.files;
+                    handleFile(input.files[0], preview, filename);
+                }
+            });
+            input.addEventListener('change', () => {
+                if (input.files.length) handleFile(input.files[0], preview, filename);
+            });
+        }
+
+        function handleFile(file, preview, filenameEl) {
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) { alert('Ukuran file maksimal 5MB'); return; }
+            if (!['image/jpeg','image/png'].includes(file.type)) { alert('Format harus JPG atau PNG'); return; }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.classList.add('has-image');
+                preview.innerHTML = '<img src="' + e.target.result + '" alt="Preview">';
+                filenameEl.textContent = file.name;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        setupUpload('uploadKtpArea', 'uploadKtp', 'previewKtp', 'filenameKtp');
+        setupUpload('uploadFotoArea', 'uploadFoto', 'previewFoto', 'filenameFoto');
+
+        // Save and Redirect
+        document.getElementById('btnSave').addEventListener('click', () => {
+            const btn = document.getElementById('btnSave');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Menyimpan...';
+            setTimeout(() => {
+                window.location.href = '/table-penulis';
+            }, 800);
+        });
+
+        // User Dropdown
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
+        document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
     </script>
 </body>
 </html>

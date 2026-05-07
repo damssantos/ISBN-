@@ -33,6 +33,7 @@
             --sidebar-width:           250px;
             --sidebar-collapsed-width: 64px;
         }
+
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
         body { background:var(--bg-body); color:var(--text-primary); display:flex; min-height:100vh; font-size:14px; line-height:1.5; }
 
@@ -93,9 +94,9 @@
 
         /* Stats */
         .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
-        .stat-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:12px; padding:22px; display:flex; flex-direction:column; position:relative; transition:transform .25s,box-shadow .25s; box-shadow:0 4px 16px rgba(0,0,0,.25); }
-        .stat-card::after { content:''; position:absolute; inset:0; border-radius:12px; background:linear-gradient(145deg,rgba(52,211,153,.04),transparent 60%); pointer-events:none; }
-        .stat-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(52,211,153,.12); }
+        .stat-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:12px; padding:22px; display:flex; flex-direction:column; position:relative; transition:transform .25s,box-shadow .25s; box-shadow:0 4px 16px rgba(0,0,0,.25); overflow:hidden; }
+        .stat-card::after { content:''; position:absolute; inset:0; border-radius:12px; background:linear-gradient(145deg,rgba(52,211,153,0.03),transparent 60%); pointer-events:none; }
+        .stat-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(52,211,153,0.12); }
         .stat-card-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:10px; }
         .stat-icon { width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; flex-shrink:0; }
         .icon-teal   { background:rgba(52,211,153,.12); color:var(--primary); }
@@ -110,8 +111,10 @@
 
         /* Content layout */
         .content-layout { display:grid; grid-template-columns:1.6fr 1fr; gap:20px; }
-        .card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:14px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,.2); }
-        .card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+        .card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:14px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,.2); position:relative; transition:transform .25s,box-shadow .25s; overflow:hidden; }
+        .card::after { content:''; position:absolute; inset:0; border-radius:14px; background:linear-gradient(145deg,rgba(52,211,153,0.03),transparent 60%); pointer-events:none; }
+        .card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(52,211,153,0.1); }
+        .card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; position:relative; z-index:1; }
         .card-title { font-size:1rem; font-weight:600; color:var(--text-primary); }
         .link-teal { color:var(--primary); text-decoration:none; font-size:.8125rem; font-weight:500; transition:color .2s; }
         .link-teal:hover { color:var(--primary-bright); }
@@ -195,11 +198,11 @@
             position:absolute;
             top:calc(100% + 12px);
             right:0;
-            width:220px;
+            width:240px;
             background:var(--bg-card);
             border:1px solid var(--border-color);
-            border-radius:14px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(52,211,153,0.05);
+            border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(52,211,153,0.08);
             display:none;
             flex-direction:column;
             z-index:1000;
@@ -208,54 +211,14 @@
             animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .user-dropdown.show { display:flex; }
-        .user-dropdown-header {
-            padding:16px;
-            border-bottom:1px solid var(--border-color);
-            background:rgba(52,211,153,0.02);
-            display: none; /* Mobile only usually, but good to have */
-        }
-        .user-dropdown-item {
-            padding:12px 16px;
-            display:flex;
-            align-items:center;
-            gap:12px;
-            color:var(--text-secondary);
-            text-decoration:none;
-            font-size:.8125rem;
-            font-weight:500;
-            transition:all .2s;
-            cursor:pointer;
-        }
-        .user-dropdown-item:hover {
-            background:var(--bg-card-hover);
-            color:var(--primary);
-            padding-left: 20px;
-        }
-        .user-dropdown-item i {
-            width:18px;
-            font-size:0.95rem;
-            text-align:center;
-            color: var(--text-muted);
-            transition: color .2s;
-        }
-        .user-dropdown-item:hover i {
-            color: var(--primary);
-        }
-        .user-dropdown-divider {
-            height:1px;
-            background:var(--border-color);
-            margin:4px 0;
-        }
-        .user-dropdown-item.logout {
-            color:#f87171;
-        }
-        .user-dropdown-item.logout i {
-            color:#f87171;
-        }
-        .user-dropdown-item.logout:hover {
-            background:rgba(248,113,113,0.08);
-            color:#f87171;
-        }
+        .user-dropdown-item { padding:14px 20px; display:flex; align-items:center; gap:16px; color:var(--text-secondary); text-decoration:none; font-size:.875rem; font-weight:500; transition:all .2s; cursor:pointer; }
+        .user-dropdown-item:hover { background:var(--bg-card-hover); color:var(--primary); padding-left:24px; }
+        .user-dropdown-item i { width:20px; font-size:1.1rem; text-align:center; color:var(--text-muted); transition:color .2s; }
+        .user-dropdown-item:hover i { color:var(--primary); }
+        .user-dropdown-divider { height:1px; background:var(--border-color); margin:8px 0; }
+        .user-dropdown-item.logout { color:#f87171; }
+        .user-dropdown-item.logout i { color:#f87171; }
+        .user-dropdown-item.logout:hover { background:rgba(248,113,113,0.08); color:#f87171; }
 
         /* Search Results Dropdown */
         .search-results {
@@ -330,6 +293,12 @@
                 <a href="/informasi" class="nav-link">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-link-text">Informasi Penulis</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/table-penulis" class="nav-link">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                    <span class="nav-link-text">Daftar Penulis</span>
                 </a>
             </li>
         </ul>
@@ -418,15 +387,15 @@
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="#" class="user-dropdown-item">
+                        <a href="/profile" class="user-dropdown-item">
                             <i class="fa-regular fa-user"></i>
                             <span>Profil Saya</span>
                         </a>
-                        <a href="#" class="user-dropdown-item">
+                        <a href="/akun" class="user-dropdown-item">
                             <i class="fa-regular fa-id-badge"></i>
                             <span>Informasi Akun</span>
                         </a>
-                        <a href="#" class="user-dropdown-item">
+                        <a href="/pengaturan" class="user-dropdown-item">
                             <i class="fa-solid fa-gear"></i>
                             <span>Pengaturan</span>
                         </a>

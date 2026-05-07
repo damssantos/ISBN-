@@ -27,6 +27,7 @@
             --sidebar-width:           250px;
             --sidebar-collapsed-width: 64px;
         }
+
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
         body { background:var(--bg-body); color:var(--text-primary); display:flex; min-height:100vh; font-size:14px; line-height:1.5; }
 
@@ -70,11 +71,37 @@
         .header-icon-btn:hover { background:var(--bg-elevated); border-color:var(--primary-dim); color:var(--primary); }
         .notif-dot { position:absolute; top:9px; right:10px; width:7px; height:7px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
         .header-divider { width:1px; height:28px; background:var(--border-color); margin:0 8px; }
+        .user-wrapper { position:relative; }
         .user-header { display:flex; align-items:center; gap:10px; padding:6px 10px 6px 6px; border-radius:10px; cursor:pointer; transition:background .2s; }
         .user-header:hover { background:var(--bg-card); }
         .user-avatar { width:36px; height:36px; background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.875rem; }
         .user-header-name { font-weight:600; font-size:.8125rem; color:var(--text-primary); line-height:1.3; }
         .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.3; }
+        .user-dropdown {
+            position:absolute;
+            top:calc(100% + 12px);
+            right:0;
+            width:240px;
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(52,211,153,0.08);
+            display:none;
+            flex-direction:column;
+            z-index:1000;
+            overflow:hidden;
+            transform-origin: top right;
+            animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .user-dropdown.show { display:flex; }
+        .user-dropdown-item { padding:14px 20px; display:flex; align-items:center; gap:16px; color:var(--text-secondary); text-decoration:none; font-size:.875rem; font-weight:500; transition:all .2s; cursor:pointer; }
+        .user-dropdown-item:hover { background:var(--bg-card-hover); color:var(--primary); padding-left:24px; }
+        .user-dropdown-item i { width:20px; font-size:1.1rem; text-align:center; color:var(--text-muted); transition:color .2s; }
+        .user-dropdown-item:hover i { color:var(--primary); }
+        .user-dropdown-divider { height:1px; background:var(--border-color); margin:8px 0; }
+        .user-dropdown-item.logout { color:#f87171; }
+        .user-dropdown-item.logout i { color:#f87171; }
+        .user-dropdown-item.logout:hover { background:rgba(248,113,113,0.08); color:#f87171; }
 
         /* Breadcrumb */
         .breadcrumb { display:flex; align-items:center; gap:8px; font-size:.8125rem; color:var(--text-muted); margin-bottom:16px; }
@@ -164,9 +191,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/informasi" class="nav-link">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-link-text">Informasi Penulis</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/table-penulis" class="nav-link">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                    <span class="nav-link-text">Daftar Penulis</span>
                 </a>
             </li>
         </ul>
@@ -191,13 +224,22 @@
                     <span class="notif-dot"></span>
                 </button>
                 <div class="header-divider"></div>
-                <div class="user-header">
-                    <div class="user-avatar">P</div>
-                    <div class="user-header-info">
-                        <div class="user-header-name">Pradama</div>
-                        <div class="user-header-role">Kontributor</div>
+                <div class="user-wrapper">
+                    <div class="user-header" id="userToggle">
+                        <div class="user-avatar">P</div>
+                        <div class="user-header-info">
+                            <div class="user-header-name">Pradama</div>
+                            <div class="user-header-role">Kontributor</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
-                    <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                        <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
+                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                    </div>
                 </div>
             </div>
         </header>
@@ -212,8 +254,8 @@
                 <p class="page-subtitle">Lengkapi informasi di bawah ini untuk mendaftarkan draf Anda ke dalam sistem.</p>
             </div>
             <div class="page-actions">
-                <button class="btn-outline-action">Simpan sebagai Draf</button>
-                <button class="btn-primary">Terbitkan</button>
+                <button class="btn-outline-action" id="btnDraft">Simpan sebagai Draf</button>
+                <button class="btn-primary" id="btnAjukan">Ajukan</button>
             </div>
         </div>
 
@@ -281,19 +323,22 @@
                     
                     <div class="form-group" style="position:relative; z-index:1; flex:1; display:flex; flex-direction:column;">
                         <label>Foto Cover</label>
-                        <div class="upload-area" style="min-height:240px; flex:1;">
-                            <div class="upload-icon"><i class="fa-regular fa-image"></i></div>
-                            <div class="upload-text" style="line-height: 1.6;">Seret & lepas foto sampul atau<br><span class="text-primary font-semibold">Cari File</span></div>
-                            <div class="upload-hint mt-2">Format JPEG, PNG (Maks 10MB)</div>
+                        <input type="file" id="inputCover" accept="image/jpeg,image/png" style="display:none;">
+                        <div class="upload-area" id="areaCover" style="min-height:240px; flex:1;">
+                            <div class="upload-icon" id="iconCover"><i class="fa-regular fa-image"></i></div>
+                            <div class="upload-text" id="textCover" style="line-height: 1.6;">Seret & lepas foto sampul atau<br><span class="text-primary font-semibold">Cari File</span></div>
+                            <div class="upload-hint mt-2" id="hintCover">Format JPEG, PNG (Maks 10MB)</div>
+                            <img id="previewCover" style="display:none; max-width:100%; max-height:200px; border-radius:8px; margin-top:8px;" alt="Preview">
                         </div>
                     </div>
 
                     <div class="form-group mt-4" style="margin-bottom:0; position:relative; z-index:1;">
                         <label>Unggah Naskah</label>
-                        <div class="upload-area upload-area-primary" style="border-style:dashed; padding:32px 20px;">
-                            <div class="upload-icon-circle"><i class="fa-solid fa-file-arrow-up"></i></div>
-                            <div class="upload-text text-primary font-semibold" style="font-size:1rem;">Unggah Naskah</div>
-                            <div class="upload-hint mt-2">Format PDF, DOCX, EPUB (Maks 50MB)</div>
+                        <input type="file" id="inputNaskah" accept=".pdf,.docx,.epub" style="display:none;">
+                        <div class="upload-area upload-area-primary" id="areaNaskah" style="border-style:dashed; padding:32px 20px;">
+                            <div class="upload-icon-circle" id="iconNaskah"><i class="fa-solid fa-file-arrow-up"></i></div>
+                            <div class="upload-text text-primary font-semibold" id="textNaskah" style="font-size:1rem;">Unggah Naskah</div>
+                            <div class="upload-hint mt-2" id="hintNaskah">Format PDF, DOCX, EPUB (Maks 50MB)</div>
                         </div>
                     </div>
                 </div>
@@ -309,6 +354,90 @@
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         });
+
+        // Upload Foto Cover
+        function setupImageUpload(areaId, inputId, iconId, textId, hintId, previewId, maxMB) {
+            const area = document.getElementById(areaId);
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            const text = document.getElementById(textId);
+            const hint = document.getElementById(hintId);
+            const preview = document.getElementById(previewId);
+
+            area.addEventListener('click', () => input.click());
+            area.addEventListener('dragover', (e) => { e.preventDefault(); area.style.borderColor='var(--primary)'; });
+            area.addEventListener('dragleave', () => { area.style.borderColor=''; });
+            area.addEventListener('drop', (e) => {
+                e.preventDefault(); area.style.borderColor='';
+                if(e.dataTransfer.files.length){ input.files=e.dataTransfer.files; showPreview(input.files[0]); }
+            });
+            input.addEventListener('change', () => { if(input.files.length) showPreview(input.files[0]); });
+
+            function showPreview(file) {
+                if(file.size > maxMB*1024*1024){ alert('Ukuran file maksimal '+maxMB+'MB'); return; }
+                icon.style.display='none'; hint.style.display='none';
+                if(file.type.startsWith('image/')){
+                    const reader = new FileReader();
+                    reader.onload = (e) => { preview.src=e.target.result; preview.style.display='block'; };
+                    reader.readAsDataURL(file);
+                    text.innerHTML='<span class="text-primary font-semibold">'+file.name+'</span>';
+                } else {
+                    preview.style.display='none';
+                    text.innerHTML='<i class="fa-solid fa-file-check" style="font-size:2rem;color:var(--primary);margin-bottom:8px;"></i><br><span class="text-primary font-semibold">'+file.name+'</span>';
+                }
+            }
+        }
+
+        // Upload Naskah
+        function setupFileUpload(areaId, inputId, iconId, textId, hintId, maxMB) {
+            const area = document.getElementById(areaId);
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            const text = document.getElementById(textId);
+            const hint = document.getElementById(hintId);
+
+            area.addEventListener('click', () => input.click());
+            area.addEventListener('dragover', (e) => { e.preventDefault(); area.style.borderColor='var(--primary)'; });
+            area.addEventListener('dragleave', () => { area.style.borderColor=''; });
+            area.addEventListener('drop', (e) => {
+                e.preventDefault(); area.style.borderColor='';
+                if(e.dataTransfer.files.length){ input.files=e.dataTransfer.files; showFile(input.files[0]); }
+            });
+            input.addEventListener('change', () => { if(input.files.length) showFile(input.files[0]); });
+
+            function showFile(file) {
+                if(file.size > maxMB*1024*1024){ alert('Ukuran file maksimal '+maxMB+'MB'); return; }
+                icon.innerHTML='<i class="fa-solid fa-file-circle-check" style="font-size:1.5rem;"></i>';
+                icon.style.background='var(--primary)'; icon.style.boxShadow='0 4px 16px rgba(52,211,153,.4)';
+                text.innerHTML=file.name;
+                hint.innerHTML='<i class="fa-solid fa-check" style="color:var(--primary);"></i> File berhasil diunggah';
+            }
+        }
+
+        setupImageUpload('areaCover','inputCover','iconCover','textCover','hintCover','previewCover',10);
+        setupFileUpload('areaNaskah','inputNaskah','iconNaskah','textNaskah','hintNaskah',50);
+
+        // Ajukan button -> redirect to detail
+        document.getElementById('btnAjukan').addEventListener('click', () => {
+            const btn = document.getElementById('btnAjukan');
+            btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Mengajukan...';
+            setTimeout(() => { window.location.href='/pengajuan/detail'; }, 1000);
+        });
+
+        // Draft button feedback
+        document.getElementById('btnDraft').addEventListener('click', () => {
+            const btn = document.getElementById('btnDraft');
+            const orig = btn.innerHTML;
+            btn.innerHTML='<i class="fa-solid fa-check"></i> Draf Tersimpan!';
+            btn.style.borderColor='var(--primary)'; btn.style.color='var(--primary)';
+            setTimeout(() => { btn.innerHTML=orig; btn.style.borderColor=''; btn.style.color=''; }, 2000);
+        });
+
+        // User Dropdown
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
+        document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
     </script>
 
 </body>
