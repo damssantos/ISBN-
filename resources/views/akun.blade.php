@@ -8,22 +8,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary:        #8B5CF6;
-            --primary-bright: #A78BFA;
-            --primary-dim:    #6D28D9;
-            --primary-glow:   rgba(139, 92, 246, 0.15);
-            --accent:         #8B5CF6;
-            --bg-body:        #15131E;
-            --bg-sidebar:     #1E1B2E;
-            --bg-card:        #231F36;
-            --bg-card-hover:  #2D2845;
-            --bg-input:       #1B1829;
-            --bg-elevated:    #2D2845;
-            --border-color:   #342E4A;
-            --border-light:   #231F36;
-            --text-primary:   #E2D8F0;
-            --text-secondary: #A59EBA;
-            --text-muted:     #6F6987;
+            --primary:        #3BC3BD;
+            --primary-bright: #5CD9D4;
+            --primary-dim:    #2E9B96;
+            --primary-glow:   rgba(59, 195, 189, 0.15);
+            --accent:         #3BC3BD;
+            --bg-body:        #0f1d26;
+            --bg-sidebar:     #0c1a22;
+            --bg-card:        #1B2B38;
+            --bg-card-hover:  #2e4255;
+            --bg-input:       #111f2a;
+            --bg-elevated:    #2B3D49;
+            --border-color:   #2e4459;
+            --border-light:   #1e3040;
+            --text-primary:   #F0F6FA;
+            --text-secondary: #B8CDD8;
+            --text-muted:     #7A9BAA;
             --sidebar-width:           250px;
             --sidebar-collapsed-width: 64px;
         }
@@ -48,7 +48,7 @@
         .nav-link i { width:20px; min-width:20px; text-align:center; font-size:1rem; flex-shrink:0; }
         .nav-link-text { transition:opacity .2s; }
         .sidebar.collapsed .nav-link-text { opacity:0; width:0; overflow:hidden; }
-        .nav-link.active { background:linear-gradient(90deg,rgba(139,92,246,.14),rgba(139,92,246,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
+        .nav-link.active { background:linear-gradient(90deg, rgba(59, 195, 189, 0.16), rgba(59, 195, 189, 0.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
         .nav-link:hover:not(.active) { background:var(--bg-card); color:var(--text-secondary); }
         .sidebar-footer { padding:14px 8px; border-top:1px solid var(--border-color); }
         .logout-btn { display:flex; align-items:center; gap:12px; padding:10px 12px; color:var(--text-muted); text-decoration:none; font-weight:500; font-size:.875rem; border-radius:10px; transition:all .2s; white-space:nowrap; }
@@ -63,7 +63,7 @@
         .header-actions { 
             display:flex; 
             align-items:center; 
-            background: rgba(30, 27, 46, 0.6);
+            background: rgba(15, 29, 38, 0.7);
             border: 1px solid var(--border-color);
             padding: 4px 12px 4px 4px;
             border-radius: 16px;
@@ -78,7 +78,7 @@
         .user-wrapper { position:relative; }
         .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
         .user-header:hover { background:rgba(255,255,255,0.05); }
-        .user-avatar-sm { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
+        .user-avatar-sm { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(59, 195, 189,0.3); }
         .user-header-info { display:flex; flex-direction:column; gap:0; }
         .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
         .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
@@ -90,7 +90,7 @@
             background:var(--bg-card);
             border:1px solid var(--border-color);
             border-radius:16px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.08);
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(59, 195, 189,0.08);
             display:none;
             flex-direction:column;
             z-index:1000;
@@ -112,8 +112,8 @@
         .page-grid { display:grid; grid-template-columns:300px 1fr; gap:24px; margin-top:10px; }
         
         .card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:20px; padding:28px; box-shadow:0 4px 20px rgba(0,0,0,0.2); position:relative; overflow:hidden; transition:transform .25s, box-shadow .25s; }
-        .card::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg,rgba(139,92,246,0.03),transparent 60%); pointer-events:none; }
-        .card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(139,92,246,0.1); }
+        .card::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg,rgba(59, 195, 189,0.03),transparent 60%); pointer-events:none; }
+        .card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(59, 195, 189,0.1); }
         .card-full { height: 100%; }
         
         .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
@@ -122,7 +122,7 @@
 
         /* Account Status Card */
         .status-card { text-align:center; }
-        .status-icon { width:80px; height:80px; border-radius:24px; background:var(--primary-glow); color:var(--primary); display:flex; align-items:center; justify-content:center; font-size:2.5rem; margin:0 auto 20px; border:1px solid rgba(139,92,246,0.2); }
+        .status-icon { width:80px; height:80px; border-radius:24px; background:var(--primary-glow); color:var(--primary); display:flex; align-items:center; justify-content:center; font-size:2.5rem; margin:0 auto 20px; border:1px solid rgba(59, 195, 189,0.2); }
         .status-label { display:inline-block; padding:4px 12px; border-radius:20px; background:#10b98120; color:#10b981; font-size:.75rem; font-weight:700; margin-bottom:12px; border:1px solid #10b98140; }
         .status-text { font-size:.875rem; color:var(--text-muted); margin-bottom:24px; }
         

@@ -8,28 +8,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary:        #8B5CF6;
-            --primary-bright: #A78BFA;
-            --primary-dim:    #6D28D9;
-            --primary-glow:   rgba(139, 92, 246, 0.15);
-            --accent:         #8B5CF6;
-            --bg-body:        #15131E;
-            --bg-sidebar:     #1E1B2E;
-            --bg-card:        #231F36;
-            --bg-card-hover:  #2D2845;
-            --bg-input:       #1B1829;
-            --bg-elevated:    #2D2845;
-            --border-color:   #342E4A;
-            --border-light:   #231F36;
-            --text-primary:   #E2D8F0;
-            --text-secondary: #A59EBA;
-            --text-muted:     #6F6987;
-            --status-review-bg:      rgba(139, 92, 246, 0.1);
-            --status-review-text:    #A78BFA;
-            --status-published-bg:   rgba(16, 185, 129, 0.12);
-            --status-published-text: #10B981;
-            --status-draft-bg:       rgba(107, 114, 128, 0.1);
-            --status-draft-text:     #9CA3AF;
+            --primary:        #3BC3BD;
+            --primary-bright: #5CD9D4;
+            --primary-dim:    #2E9B96;
+            --primary-glow:   rgba(59, 195, 189, 0.15);
+            --accent:         #3BC3BD;
+            --bg-body:        #0f1d26;
+            --bg-sidebar:     #0c1a22;
+            --bg-card:        #1B2B38;
+            --bg-card-hover:  #2e4255;
+            --bg-input:       #111f2a;
+            --bg-elevated:    #2B3D49;
+            --border-color:   #2e4459;
+            --border-light:   #1e3040;
+            --text-primary:   #F0F6FA;
+            --text-secondary: #B8CDD8;
+            --text-muted:     #7A9BAA;
+            --status-review-bg:      rgba(59, 130, 246, 0.12);
+            --status-review-text:    #60A5FA;
+            --status-published-bg:   rgba(59, 195, 189, 0.15);
+            --status-published-text: #3BC3BD;
+            --status-draft-bg:       rgba(122, 155, 170, 0.15);
+            --status-draft-text:     #7A9BAA;
             --sidebar-width:           250px;
             --sidebar-collapsed-width: 64px;
         }
@@ -53,7 +53,7 @@
         .nav-link i { width:20px; min-width:20px; text-align:center; font-size:1rem; flex-shrink:0; }
         .nav-link-text { transition:opacity .2s; }
         .sidebar.collapsed .nav-link-text { opacity:0; width:0; overflow:hidden; }
-        .nav-link.active { background:linear-gradient(90deg,rgba(139,92,246,.14),rgba(139,92,246,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
+        .nav-link.active { background:linear-gradient(90deg, rgba(59, 195, 189, 0.16), rgba(59, 195, 189, 0.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
         .nav-link:hover:not(.active) { background:var(--bg-card); color:var(--text-secondary); }
         .sidebar-footer { padding:14px 8px; border-top:1px solid var(--border-color); }
         .logout-btn { display:flex; align-items:center; gap:12px; padding:10px 12px; color:var(--text-muted); text-decoration:none; font-weight:500; font-size:.875rem; border-radius:10px; transition:all .2s; white-space:nowrap; }
@@ -75,7 +75,7 @@
         .header-actions { 
             display:flex; 
             align-items:center; 
-            background: rgba(30, 27, 46, 0.6);
+            background: rgba(15, 29, 38, 0.7);
             border: 1px solid var(--border-color);
             padding: 4px 12px 4px 4px;
             border-radius: 16px;
@@ -90,7 +90,7 @@
         .user-wrapper { position:relative; }
         .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
         .user-header:hover { background:rgba(255,255,255,0.05); }
-        .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
+        .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(59, 195, 189,0.3); }
         .user-header-info { display:flex; flex-direction:column; gap:0; }
         .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
         .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
@@ -103,7 +103,7 @@
             background:var(--bg-card);
             border:1px solid var(--border-color);
             border-radius:16px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.08);
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(59, 195, 189,0.08);
             display:none;
             flex-direction:column;
             z-index:1000;
@@ -128,8 +128,8 @@
         .page-subtitle { font-size:.875rem; color:var(--text-muted); margin-top:4px; }
 
         .card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:14px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,.2); position:relative; overflow:hidden; transition:transform .25s, box-shadow .25s; }
-        .card::after { content:''; position:absolute; inset:0; border-radius:14px; background:linear-gradient(145deg,rgba(139,92,246,0.03),transparent 60%); pointer-events:none; }
-        .card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(139,92,246,0.1); }
+        .card::after { content:''; position:absolute; inset:0; border-radius:14px; background:linear-gradient(145deg,rgba(59, 195, 189,0.03),transparent 60%); pointer-events:none; }
+        .card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(59, 195, 189,0.1); }
 
         /* Table */
         .table-container { width:100%; overflow-x:auto; }
@@ -150,11 +150,11 @@
         .status-draft::before { background:var(--status-draft-text); }
 
         .date-text { font-size:.875rem; color:var(--text-secondary); }
-        .action-btn { width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; background:rgba(139,92,246,.1); color:var(--primary); text-decoration:none; font-size:.875rem; transition:all .2s; }
-        .action-btn:hover { background:var(--primary); color:#15131E; transform: translateY(-2px); }
+        .action-btn { width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; background:rgba(59, 195, 189,.1); color:var(--primary); text-decoration:none; font-size:.875rem; transition:all .2s; }
+        .action-btn:hover { background:var(--primary); color:#0f1d26; transform: translateY(-2px); }
 
-        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; text-decoration:none; box-shadow:0 4px 12px rgba(139,92,246,.2); }
-        .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(139,92,246,.3); }
+        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; text-decoration:none; box-shadow:0 4px 12px rgba(59, 195, 189,.2); }
+        .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(59, 195, 189,.3); }
         
         .empty-state { padding:40px; text-align:center; color:var(--text-muted); display:none; }
     </style>
