@@ -8,24 +8,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary:        #34d399;
-            --primary-bright: #6ee7b7;
-            --primary-dim:    #059669;
-            --primary-glow:   rgba(52, 211, 153, 0.15);
-            --accent:         #a7f3d0;
-            --bg-body:        #0f1f1a;
-            --bg-sidebar:     #0a1814;
-            --bg-card:        #1a2e28;
-            --bg-card-hover:  #213830;
-            --bg-input:       #1a2e28;
-            --bg-elevated:    #243f37;
-            --border-color:   #2d4f45;
-            --border-light:   #243f37;
-            --text-primary:   #ecfdf5;
-            --text-secondary: #9ecfbf;
-            --text-muted:     #6ba898;
-            --status-review-bg:      rgba(251, 191, 36, 0.1);
-            --status-review-text:    #fcd34d;
+            --primary:        #8B5CF6;
+            --primary-bright: #A78BFA;
+            --primary-dim:    #6D28D9;
+            --primary-glow:   rgba(139, 92, 246, 0.15);
+            --accent:         #8B5CF6;
+            --bg-body:        #15131E;
+            --bg-sidebar:     #1E1B2E;
+            --bg-card:        #231F36;
+            --bg-card-hover:  #2D2845;
+            --bg-input:       #1B1829;
+            --bg-elevated:    #2D2845;
+            --border-color:   #342E4A;
+            --border-light:   #231F36;
+            --text-primary:   #E2D8F0;
+            --text-secondary: #A59EBA;
+            --text-muted:     #6F6987;
+            --status-review-bg:      rgba(139, 92, 246, 0.1);
+            --status-review-text:    #A78BFA;
             --sidebar-width:           250px;
             --sidebar-collapsed-width: 64px;
         }
@@ -44,15 +44,13 @@
         .sidebar-toggle { width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; color:var(--text-muted); border-radius:7px; cursor:pointer; flex-shrink:0; font-size:.95rem; transition:background .2s,color .2s; }
         .sidebar-toggle:hover { background:var(--bg-card); color:var(--primary); }
 
-
-
         .nav-menu { list-style:none; padding:12px 8px; flex:1; overflow-y:auto; overflow-x:hidden; }
         .nav-item { margin-bottom:2px; }
         .nav-link { display:flex; align-items:center; gap:12px; padding:10px 12px; text-decoration:none; color:var(--text-muted); border-radius:10px; font-size:.875rem; font-weight:500; transition:all .2s; white-space:nowrap; overflow:hidden; }
         .nav-link i { width:20px; min-width:20px; text-align:center; font-size:1rem; flex-shrink:0; }
         .nav-link-text { transition:opacity .2s; }
         .sidebar.collapsed .nav-link-text { opacity:0; width:0; overflow:hidden; }
-        .nav-link.active { background:linear-gradient(90deg,rgba(52,211,153,.14),rgba(52,211,153,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
+        .nav-link.active { background:linear-gradient(90deg,rgba(139,92,246,.14),rgba(139,92,246,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
         .nav-link:hover:not(.active) { background:var(--bg-card); color:var(--text-secondary); }
         .sidebar-footer { padding:14px 8px; border-top:1px solid var(--border-color); }
         .logout-btn { display:flex; align-items:center; gap:12px; padding:10px 12px; color:var(--text-muted); text-decoration:none; font-weight:500; font-size:.875rem; border-radius:10px; transition:all .2s; white-space:nowrap; }
@@ -61,22 +59,32 @@
         .sidebar.collapsed .logout-btn span { opacity:0; width:0; overflow:hidden; }
 
         /* Main */
-        .main-content { flex:1; margin-left:var(--sidebar-width); padding:0 36px 48px; transition:margin-left .3s cubic-bezier(.4,0,.2,1); }
-        .main-content.expanded { margin-left:var(--sidebar-collapsed-width); }
-
-        /* Header */
-        .top-header { display:flex; justify-content:flex-end; align-items:center; padding:20px 0; }
-        .header-actions { display:flex; align-items:center; gap:8px; }
-        .header-icon-btn { width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all .2s; position:relative; font-size:1rem; }
-        .header-icon-btn:hover { background:var(--bg-elevated); border-color:var(--primary-dim); color:var(--primary); }
-        .notif-dot { position:absolute; top:9px; right:10px; width:7px; height:7px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
-        .header-divider { width:1px; height:28px; background:var(--border-color); margin:0 8px; }
+        .main-content { flex:1; margin-left:var(--sidebar-width); padding:0 40px 48px; transition:margin-left 0.3s cubic-bezier(.4, 0, .2, 1); }
+        
+        .top-header { display:flex; justify-content:flex-end; align-items:center; padding:12px 0; }
+        .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; padding-top: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+        .header-actions { 
+            display:flex; 
+            align-items:center; 
+            background: rgba(30, 27, 46, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px 4px 4px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            gap: 0;
+        }
+        .header-icon-btn { width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:12px; border:none; background:transparent; color:var(--text-secondary); cursor:pointer; transition:all 0.2s; position:relative; font-size:1.1rem; }
+        .header-icon-btn:hover { background:rgba(255,255,255,0.05); color:var(--primary-bright); }
+        .header-divider { width:1px; height:24px; background:var(--border-color); margin:0 12px 0 8px; opacity: 0.6; }
+        .notif-dot { position:absolute; top:10px; right:10px; width:6px; height:6px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
+        
         .user-wrapper { position:relative; }
-        .user-header { display:flex; align-items:center; gap:10px; padding:6px 10px 6px 6px; border-radius:10px; cursor:pointer; transition:background .2s; }
-        .user-header:hover { background:var(--bg-card); }
-        .user-avatar { width:36px; height:36px; background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.875rem; }
-        .user-header-name { font-weight:600; font-size:.8125rem; color:var(--text-primary); line-height:1.3; }
-        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.3; }
+        .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
+        .user-header:hover { background:rgba(255,255,255,0.05); }
+        .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
+        .user-header-info { display:flex; flex-direction:column; gap:0; }
+        .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
+        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
         .user-dropdown {
             position:absolute;
             top:calc(100% + 12px);
@@ -85,7 +93,7 @@
             background:var(--bg-card);
             border:1px solid var(--border-color);
             border-radius:16px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(52,211,153,0.08);
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.08);
             display:none;
             flex-direction:column;
             z-index:1000;
@@ -111,8 +119,8 @@
 
         /* Detail Card */
         .detail-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:14px; padding:32px; box-shadow:0 4px 20px rgba(0,0,0,.2); position:relative; overflow:hidden; transition:transform .25s, box-shadow .25s; }
-        .detail-card::after { content:''; position:absolute; inset:0; border-radius:14px; background:linear-gradient(145deg,rgba(52,211,153,0.03),transparent 60%); pointer-events:none; }
-        .detail-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(52,211,153,0.1); }
+        .detail-card::after { content:''; position:absolute; inset:0; border-radius:14px; background:linear-gradient(145deg,rgba(139,92,246,0.03),transparent 60%); pointer-events:none; }
+        .detail-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(139,92,246,0.1); }
 
         /* Status Bar */
         .status-bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; position:relative; z-index:1; }
@@ -168,9 +176,21 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/pengajuan" class="nav-link active">
+                <a href="/pengajuan" class="nav-link">
                     <i class="fa-regular fa-file-lines"></i>
                     <span class="nav-link-text">Pengajuan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/daftar-pengajuan" class="nav-link">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span class="nav-link-text">Daftar Naskah</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/draf" class="nav-link">
+                    <i class="fa-solid fa-inbox"></i>
+                    <span class="nav-link-text">Draf Naskah</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -205,7 +225,7 @@
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
                         <div class="user-avatar">P</div>
-                        <div>
+                        <div class="user-header-info">
                             <div class="user-header-name">Pradama</div>
                             <div class="user-header-role">Kontributor</div>
                         </div>
@@ -223,9 +243,9 @@
         </header>
 
         <div class="page-header">
-            <h1 class="page-title">Pengajuan Naskah</h1>
-            <a href="/pengajuan" class="btn-back">
-                <i class="fa-solid fa-arrow-left"></i> Kembali
+            <h1 class="page-title">Detail Naskah</h1>
+            <a href="/daftar-pengajuan" class="btn-back" style="text-decoration: none; font-size: 13px; color: var(--text-muted); display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Naskah
             </a>
         </div>
 

@@ -8,22 +8,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary:        #34d399;
-            --primary-bright: #6ee7b7;
-            --primary-dim:    #059669;
-            --primary-glow:   rgba(52, 211, 153, 0.15);
-            --accent:         #a7f3d0;
-            --bg-body:        #0f1f1a;
-            --bg-sidebar:     #0a1814;
-            --bg-card:        #1a2e28;
-            --bg-card-hover:  #213830;
-            --bg-input:       #1a2e28;
-            --bg-elevated:    #243f37;
-            --border-color:   #2d4f45;
-            --border-light:   #243f37;
-            --text-primary:   #ecfdf5;
-            --text-secondary: #9ecfbf;
-            --text-muted:     #6ba898;
+            --primary:        #8B5CF6;
+            --primary-bright: #A78BFA;
+            --primary-dim:    #6D28D9;
+            --primary-glow:   rgba(139, 92, 246, 0.15);
+            --accent:         #8B5CF6;
+            --bg-body:        #15131E;
+            --bg-sidebar:     #1E1B2E;
+            --bg-card:        #231F36;
+            --bg-card-hover:  #2D2845;
+            --bg-input:       #1B1829;
+            --bg-elevated:    #2D2845;
+            --border-color:   #342E4A;
+            --border-light:   #231F36;
+            --text-primary:   #E2D8F0;
+            --text-secondary: #A59EBA;
+            --text-muted:     #6F6987;
             --sidebar-width:           250px;
             --sidebar-collapsed-width: 64px;
         }
@@ -48,7 +48,7 @@
         .nav-link i { width:20px; min-width:20px; text-align:center; font-size:1rem; flex-shrink:0; }
         .nav-link-text { transition:opacity .2s; }
         .sidebar.collapsed .nav-link-text { opacity:0; width:0; overflow:hidden; }
-        .nav-link.active { background:linear-gradient(90deg,rgba(52,211,153,.14),rgba(52,211,153,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
+        .nav-link.active { background:linear-gradient(90deg,rgba(139,92,246,.14),rgba(139,92,246,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
         .nav-link:hover:not(.active) { background:var(--bg-card); color:var(--text-secondary); }
         .sidebar-footer { padding:14px 8px; border-top:1px solid var(--border-color); }
         .logout-btn { display:flex; align-items:center; gap:12px; padding:10px 12px; color:var(--text-muted); text-decoration:none; font-weight:500; font-size:.875rem; border-radius:10px; transition:all .2s; white-space:nowrap; }
@@ -57,22 +57,31 @@
         .sidebar.collapsed .logout-btn span { opacity:0; width:0; overflow:hidden; }
 
         /* Main */
-        .main-content { flex:1; margin-left:var(--sidebar-width); padding:0 36px 48px; transition:margin-left .3s cubic-bezier(.4,0,.2,1); }
-        .main-content.expanded { margin-left:var(--sidebar-collapsed-width); }
+        .main-content { flex:1; margin-left:var(--sidebar-width); padding:0 40px 48px; transition:margin-left 0.3s cubic-bezier(.4, 0, .2, 1); }
 
         /* Header */
-        .top-header { display:flex; justify-content:flex-end; align-items:center; padding:20px 0; }
-        .header-actions { display:flex; align-items:center; gap:8px; }
-        .header-icon-btn { width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all .2s; position:relative; font-size:1rem; }
-        .header-icon-btn:hover { background:var(--bg-elevated); border-color:var(--primary-dim); color:var(--primary); }
-        .notif-dot { position:absolute; top:9px; right:10px; width:7px; height:7px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
-        .header-divider { width:1px; height:28px; background:var(--border-color); margin:0 8px; }
+        .header-actions { 
+            display:flex; 
+            align-items:center; 
+            background: rgba(30, 27, 46, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px 4px 4px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            gap: 0;
+        }
+        .header-icon-btn { width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:12px; border:none; background:transparent; color:var(--text-secondary); cursor:pointer; transition:all 0.2s; position:relative; font-size:1.1rem; }
+        .header-icon-btn:hover { background:rgba(255,255,255,0.05); color:var(--primary-bright); }
+        .header-divider { width:1px; height:24px; background:var(--border-color); margin:0 12px 0 8px; opacity: 0.6; }
+        .notif-dot { position:absolute; top:10px; right:10px; width:6px; height:6px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
+        
         .user-wrapper { position:relative; }
-        .user-header { display:flex; align-items:center; gap:10px; padding:6px 10px 6px 6px; border-radius:10px; cursor:pointer; transition:background .2s; }
-        .user-header:hover { background:var(--bg-card); }
-        .user-avatar-sm { width:36px; height:36px; background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.875rem; }
-        .user-header-name { font-weight:600; font-size:.8125rem; color:var(--text-primary); line-height:1.3; }
-        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.3; }
+        .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
+        .user-header:hover { background:rgba(255,255,255,0.05); }
+        .user-avatar-sm { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
+        .user-header-info { display:flex; flex-direction:column; gap:0; }
+        .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
+        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
         .user-dropdown {
             position:absolute;
             top:calc(100% + 12px);
@@ -81,7 +90,7 @@
             background:var(--bg-card);
             border:1px solid var(--border-color);
             border-radius:16px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(52,211,153,0.08);
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.08);
             display:none;
             flex-direction:column;
             z-index:1000;
@@ -105,13 +114,13 @@
         /* Left Column: Profile Overview */
         .profile-sidebar-col { height: 100%; }
         .profile-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:20px; padding:32px 24px; text-align:center; position:relative; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.3); height: 100%; display: flex; flex-direction: column; justify-content: center; transition: transform .25s, box-shadow .25s; }
-        .profile-card::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg,rgba(52,211,153,0.03),transparent 60%); pointer-events:none; }
-        .profile-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(52,211,153,0.1); }
+        .profile-card::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg,rgba(139,92,246,0.03),transparent 60%); pointer-events:none; }
+        .profile-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(139,92,246,0.1); }
         .profile-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:100px; background:linear-gradient(135deg,var(--primary-dim),var(--bg-card)); opacity:0.2; z-index:0; }
-        .profile-avatar-lg { width:120px; height:120px; border-radius:30px; background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:white; font-size:3rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; position:relative; z-index:1; border:4px solid var(--bg-card); box-shadow:0 8px 24px rgba(52,211,153,0.2); }
+        .profile-avatar-lg { width:120px; height:120px; border-radius:30px; background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:white; font-size:3rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; position:relative; z-index:1; border:4px solid var(--bg-card); box-shadow:0 8px 24px rgba(139,92,246,0.2); }
         .profile-name { font-size:1.5rem; font-weight:700; color:var(--text-primary); margin-bottom:4px; position:relative; z-index:1; }
         .profile-username { font-size:.875rem; color:var(--primary); font-weight:600; margin-bottom:16px; position:relative; z-index:1; }
-        .profile-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:var(--primary-glow); color:var(--primary-bright); border-radius:20px; font-size:.75rem; font-weight:700; margin-bottom:24px; position:relative; z-index:1; border:1px solid rgba(52,211,153,0.1); }
+        .profile-badge { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:6px 12px; background:var(--primary-glow); color:var(--primary-bright); border-radius:20px; font-size:.75rem; font-weight:700; margin:0 auto 24px; position:relative; z-index:1; border:1px solid rgba(139,92,246,0.1); align-self:center; }
         
         .profile-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; position:relative; z-index:1; }
         .stat-box { background:rgba(255,255,255,0.03); border-radius:14px; padding:14px; border:1px solid rgba(255,255,255,0.05); }
@@ -126,12 +135,14 @@
 
         /* Right Column: Settings */
         .settings-container { display:flex; flex-direction:column; gap:24px; height: 100%; }
-        .settings-section { background:var(--bg-card); border:1px solid var(--border-color); border-radius:20px; padding:28px; box-shadow:0 4px 20px rgba(0,0,0,0.2); height: 100%; }
-        .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+        .settings-section { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:20px; padding:28px; box-shadow:0 10px 30px rgba(0,0,0,0.3); height: 100%; position:relative; overflow:hidden; transition:transform .25s, box-shadow .25s; }
+        .settings-section::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg,rgba(139,92,246,0.03),transparent 60%); pointer-events:none; }
+        .settings-section:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(139,92,246,0.1); }
+        .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; position:relative; z-index:1; }
         .section-title { font-size:1.125rem; font-weight:700; color:var(--text-primary); display:flex; align-items:center; gap:12px; }
         .section-title i { color:var(--primary); }
         
-        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; position:relative; z-index:1; }
         .form-group { display:flex; flex-direction:column; gap:8px; }
         .form-group.full { grid-column: span 2; }
         label { font-size:.8125rem; font-weight:600; color:var(--text-muted); }
@@ -141,7 +152,7 @@
         .form-control:focus { outline:none; border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
         
         .btn-save { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#fff; border:none; padding:12px 24px; border-radius:10px; font-size:.875rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:10px; transition:all .2s; margin-top:10px; }
-        .btn-save:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(52,211,153,0.3); }
+        .btn-save:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(139,92,246,0.3); }
 
         /* Breadcrumb */
         .breadcrumb { display:flex; align-items:center; gap:8px; font-size:.8125rem; color:var(--text-muted); margin-bottom:16px; margin-top:10px; }
@@ -177,6 +188,18 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="/daftar-pengajuan" class="nav-link">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span class="nav-link-text">Daftar Naskah</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/draf" class="nav-link">
+                    <i class="fa-solid fa-inbox"></i>
+                    <span class="nav-link-text">Draf Naskah</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="/informasi" class="nav-link">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-link-text">Informasi Penulis</span>
@@ -198,7 +221,7 @@
     </aside>
 
     <main class="main-content" id="mainContent">
-        <header class="top-header">
+        <header class="top-header" style="display: flex; justify-content: flex-end; padding: 12px 0;">
             <div class="header-actions">
                 <button class="header-icon-btn" title="Notifikasi">
                     <i class="fa-regular fa-bell"></i>
@@ -208,7 +231,7 @@
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
                         <div class="user-avatar-sm">P</div>
-                        <div>
+                        <div class="user-header-info">
                             <div class="user-header-name">Pradama</div>
                             <div class="user-header-role">Kontributor</div>
                         </div>
@@ -225,15 +248,14 @@
             </div>
         </header>
 
-        <div class="breadcrumb">
-            <a href="#">Portal</a> <span>/</span> <span class="active">Profil Saya</span>
-        </div>
+
 
         <div class="profile-grid">
             <!-- Left Column -->
             <div class="profile-sidebar-col">
                 <div class="profile-card">
-                    <div class="profile-avatar-lg">P</div>
+                    <div class="profile-avatar-lg" id="avatarPreview">P</div>
+                    <input type="file" id="avatarInput" accept="image/*" style="display:none">
                     <h2 class="profile-name">Pradama Wijaya</h2>
                     <p class="profile-username">@pradama_wj</p>
                     <div class="profile-badge">
@@ -252,8 +274,8 @@
                     </div>
                     
                     <div class="profile-actions">
-                        <button class="btn-profile-action"><i class="fa-solid fa-camera"></i> Ubah Foto</button>
-                        <button class="btn-profile-action"><i class="fa-solid fa-key"></i> Ganti Password</button>
+                        <button class="btn-profile-action" id="changeAvatarBtn"><i class="fa-solid fa-camera"></i> Ubah Foto</button>
+                        <a href="/akun" class="btn-profile-action" style="text-decoration: none;"><i class="fa-solid fa-key"></i> Ganti Password</a>
                         <button class="btn-profile-action logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar</button>
                     </div>
                 </div>
@@ -339,6 +361,43 @@
         const userDropdown = document.getElementById('userDropdown');
         userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
         document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
+
+        // Profile Photo Change Logic
+        const changeAvatarBtn = document.getElementById('changeAvatarBtn');
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarPreview = document.getElementById('avatarPreview');
+
+        changeAvatarBtn.addEventListener('click', () => {
+            avatarInput.click();
+        });
+
+        avatarInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Update main profile avatar
+                    avatarPreview.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">`;
+                    
+                    // Update small header avatar if it exists
+                    const headerAvatar = document.querySelector('.user-avatar-sm');
+                    if (headerAvatar) {
+                        headerAvatar.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">`;
+                    }
+
+                    // Optional: Show success notification
+                    const btn = document.getElementById('btnSave');
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Foto Diperbarui!';
+                    btn.style.background = 'var(--primary-dim)';
+                    setTimeout(() => {
+                        btn.innerHTML = orig;
+                        btn.style.background = '';
+                    }, 2000);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
     </script>
 </body>
 </html>

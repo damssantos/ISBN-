@@ -33,3 +33,11 @@ Route::get('/table-penulis', function () {
 Route::get('/pengajuan/detail', function () {
     return view('table-pengajuan');
 });
+
+Route::get('/draf', function () {
+    return view('draf');
+});
+
+Route::get('/daftar-pengajuan', function () {
+    return view('daftar-pengajuan');
+});

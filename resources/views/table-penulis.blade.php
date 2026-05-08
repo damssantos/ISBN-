@@ -8,22 +8,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary:        #34d399;
-            --primary-bright: #6ee7b7;
-            --primary-dim:    #059669;
-            --primary-glow:   rgba(52, 211, 153, 0.15);
-            --accent:         #a7f3d0;
-            --bg-body:        #0f1f1a;
-            --bg-sidebar:     #0a1814;
-            --bg-card:        #1a2e28;
-            --bg-card-hover:  #213830;
-            --bg-input:       #1a2e28;
-            --bg-elevated:    #243f37;
-            --border-color:   #2d4f45;
-            --border-light:   #243f37;
-            --text-primary:   #ecfdf5;
-            --text-secondary: #9ecfbf;
-            --text-muted:     #6ba898;
+            --primary:        #8B5CF6;
+            --primary-bright: #A78BFA;
+            --primary-dim:    #6D28D9;
+            --primary-glow:   rgba(139, 92, 246, 0.15);
+            --accent:         #8B5CF6;
+            --bg-body:        #15131E;
+            --bg-sidebar:     #1E1B2E;
+            --bg-card:        #231F36;
+            --bg-card-hover:  #2D2845;
+            --bg-input:       #1B1829;
+            --bg-elevated:    #2D2845;
+            --border-color:   #342E4A;
+            --border-light:   #231F36;
+            --text-primary:   #E2D8F0;
+            --text-secondary: #A59EBA;
+            --text-muted:     #6F6987;
             --sidebar-width:           250px;
             --sidebar-collapsed-width: 64px;
         }
@@ -48,7 +48,7 @@
         .nav-link i { width:20px; min-width:20px; text-align:center; font-size:1rem; flex-shrink:0; }
         .nav-link-text { transition:opacity .2s; }
         .sidebar.collapsed .nav-link-text { opacity:0; width:0; overflow:hidden; }
-        .nav-link.active { background:linear-gradient(90deg,rgba(52,211,153,.14),rgba(52,211,153,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
+        .nav-link.active { background:linear-gradient(90deg,rgba(139,92,246,.14),rgba(139,92,246,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
         .nav-link:hover:not(.active) { background:var(--bg-card); color:var(--text-secondary); }
         .sidebar-footer { padding:14px 8px; border-top:1px solid var(--border-color); }
         .logout-btn { display:flex; align-items:center; gap:12px; padding:10px 12px; color:var(--text-muted); text-decoration:none; font-weight:500; font-size:.875rem; border-radius:10px; transition:all .2s; white-space:nowrap; }
@@ -67,24 +67,28 @@
         .search-input::placeholder { color:var(--text-muted); }
         .search-input:focus { border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
         
-        /* Search Results */
-        .search-results { position:absolute; top:calc(100% + 8px); left:0; width:100%; background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; box-shadow:0 15px 40px rgba(0,0,0,0.4); display:none; flex-direction:column; z-index:1000; overflow:hidden; }
-        .search-results.show { display:flex; }
-        .search-result-category { padding:12px 16px 6px; font-size:.65rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); letter-spacing:1px; }
-        .search-result-item { padding:10px 16px; display:flex; align-items:center; gap:12px; color:var(--text-secondary); text-decoration:none; transition:all .2s; font-size:.8125rem; }
-        .search-result-item:hover { background:var(--bg-card-hover); color:var(--primary); }
-        .search-result-item i { width:16px; text-align:center; color:var(--text-muted); }
-        .header-actions { display:flex; align-items:center; gap:8px; }
-        .header-icon-btn { width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all .2s; position:relative; }
-        .header-icon-btn:hover { background:var(--bg-elevated); border-color:var(--primary-dim); color:var(--primary); }
-        .notif-dot { position:absolute; top:9px; right:10px; width:7px; height:7px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
-        .header-divider { width:1px; height:28px; background:var(--border-color); margin:0 8px; }
+        .header-actions { 
+            display:flex; 
+            align-items:center; 
+            background: rgba(30, 27, 46, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px 4px 4px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            gap: 0;
+        }
+        .header-icon-btn { width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:12px; border:none; background:transparent; color:var(--text-secondary); cursor:pointer; transition:all 0.2s; position:relative; font-size:1.1rem; }
+        .header-icon-btn:hover { background:rgba(255,255,255,0.05); color:var(--primary-bright); }
+        .header-divider { width:1px; height:24px; background:var(--border-color); margin:0 12px 0 8px; opacity: 0.6; }
+        .notif-dot { position:absolute; top:10px; right:10px; width:6px; height:6px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
+        
         .user-wrapper { position:relative; }
-        .user-header { display:flex; align-items:center; gap:10px; padding:6px 10px 6px 6px; border-radius:10px; cursor:pointer; transition:background .2s; }
-        .user-header:hover { background:var(--bg-card); }
-        .user-avatar { width:36px; height:36px; background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.875rem; }
-        .user-header-name { font-weight:600; font-size:.8125rem; color:var(--text-primary); line-height:1.3; }
-        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.3; }
+        .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
+        .user-header:hover { background:rgba(255,255,255,0.05); }
+        .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
+        .user-header-info { display:flex; flex-direction:column; gap:0; }
+        .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
+        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
         .user-dropdown { 
             position:absolute; 
             top:calc(100% + 12px); 
@@ -93,7 +97,7 @@
             background:var(--bg-card); 
             border:1px solid var(--border-color); 
             border-radius:16px; 
-            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(52,211,153,0.08); 
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.08); 
             display:none; 
             flex-direction:column; 
             z-index:1000; 
@@ -115,13 +119,13 @@
         /* Content Header */
         .content-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; margin-top:10px; }
         .page-title { font-size:1.5rem; font-weight:700; color:var(--text-primary); }
-        .btn-add { background:var(--primary); color:#ffffff; padding:10px 20px; border-radius:10px; text-decoration:none; font-weight:700; font-size:.875rem; display:flex; align-items:center; gap:8px; transition:all .2s; border:none; cursor:pointer; box-shadow:0 4px 15px rgba(52,211,153,0.2); }
-        .btn-add:hover { background:var(--primary-bright); transform:translateY(-2px); box-shadow:0 6px 20px rgba(52,211,153,0.3); }
+        .btn-add { background:var(--primary); color:#ffffff; padding:10px 20px; border-radius:10px; text-decoration:none; font-weight:700; font-size:.875rem; display:flex; align-items:center; gap:8px; transition:all .2s; border:none; cursor:pointer; box-shadow:0 4px 15px rgba(139,92,246,0.2); }
+        .btn-add:hover { background:var(--primary-bright); transform:translateY(-2px); box-shadow:0 6px 20px rgba(139,92,246,0.3); }
 
         /* Table Card */
         .table-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.2); position:relative; transition:transform .25s,box-shadow .25s; }
-        .table-card::after { content:''; position:absolute; inset:0; border-radius:16px; background:linear-gradient(145deg,rgba(52,211,153,0.03),transparent 60%); pointer-events:none; }
-        .table-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(52,211,153,0.1); }
+        .table-card::after { content:''; position:absolute; inset:0; border-radius:16px; background:linear-gradient(145deg,rgba(139,92,246,0.03),transparent 60%); pointer-events:none; }
+        .table-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(139,92,246,0.1); }
         .table-responsive { width:100%; overflow-x:auto; }
         table { width:100%; border-collapse:collapse; text-align:left; }
         th { background:rgba(255,255,255,0.02); padding:16px 20px; font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); border-bottom:1px solid var(--border-color); }
@@ -135,7 +139,7 @@
         .author-meta { font-size:.75rem; color:var(--text-muted); }
 
         .badge { padding:4px 10px; border-radius:6px; font-size:.7rem; font-weight:700; text-transform:uppercase; }
-        .badge-active { background:rgba(52,211,153,0.1); color:var(--primary); }
+        .badge-active { background:rgba(139,92,246,0.1); color:var(--primary); }
         
         .action-btns { display:flex; gap:8px; }
         .action-btn { width:32px; height:32px; border-radius:8px; border:1px solid var(--border-color); background:transparent; color:var(--text-muted); cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center; }
@@ -160,6 +164,8 @@
         .close-modal { cursor:pointer; font-size:1.25rem; color:var(--text-muted); transition:color .2s; }
         .close-modal:hover { color:#f87171; }
         .btn-modal { padding:10px 20px; border-radius:10px; font-weight:600; cursor:pointer; border:1px solid var(--border-color); background:var(--bg-elevated); color:var(--text-primary); }
+        
+        .empty-state { padding:40px; text-align:center; color:var(--text-muted); display:none; }
     </style>
 </head>
 <body>
@@ -230,6 +236,18 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="/daftar-pengajuan" class="nav-link">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span class="nav-link-text">Daftar Naskah</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/draf" class="nav-link">
+                    <i class="fa-solid fa-inbox"></i>
+                    <span class="nav-link-text">Draf Naskah</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="/informasi" class="nav-link">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-link-text">Informasi Penulis</span>
@@ -254,21 +272,13 @@
         <header class="top-header">
             <div class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="search-input" id="searchInput" placeholder="Cari penulis atau data lainnya...">
-                <div class="search-results" id="searchResults">
-                    <div class="search-result-category">Hasil Terkait</div>
-                    <a href="#" class="search-result-item">
-                        <i class="fa-regular fa-user"></i>
-                        <span>Dr. Pradama Wijaya, M.Kom</span>
-                    </a>
-                    <a href="#" class="search-result-item">
-                        <i class="fa-regular fa-user"></i>
-                        <span>Siti Sarah, M.Pd</span>
-                    </a>
-                </div>
+                <input type="text" class="search-input" id="searchInput" placeholder="Cari nama penulis, email, atau ID...">
             </div>
             <div class="header-actions">
-                <button class="header-icon-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></button>
+                <button class="header-icon-btn" title="Notifikasi">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notif-dot"></span>
+                </button>
                 <div class="header-divider"></div>
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
@@ -302,7 +312,7 @@
 
         <div class="table-card">
             <div class="table-responsive">
-                <table>
+                <table id="authorTable">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -326,8 +336,8 @@
                                 </div>
                             </td>
                             <td>
-                                <div style="font-size:.8125rem;">
-                                    <i class="fa-regular fa-envelope" style="width:16px;"></i> pradama.w@univ.ac.id<br>
+                                <div class="contact-text" style="font-size:.8125rem;">
+                                    <i class="fa-regular fa-envelope" style="width:16px;"></i> <span class="author-email">pradama.w@univ.ac.id</span><br>
                                     <i class="fa-solid fa-phone" style="width:16px; margin-top:4px;"></i> 08123456789
                                 </div>
                             </td>
@@ -350,7 +360,7 @@
                             <td>2</td>
                             <td>
                                 <div class="author-info">
-                                    <div class="author-avatar" style="background:rgba(52,211,153,0.05);">SS</div>
+                                    <div class="author-avatar" style="background:rgba(139,92,246,0.05);">SS</div>
                                     <div>
                                         <div class="author-name">Siti Sarah, M.Pd</div>
                                         <div class="author-meta">ID: AUTH-002</div>
@@ -358,8 +368,8 @@
                                 </div>
                             </td>
                             <td>
-                                <div style="font-size:.8125rem;">
-                                    <i class="fa-regular fa-envelope" style="width:16px;"></i> siti.sarah@gmail.com<br>
+                                <div class="contact-text" style="font-size:.8125rem;">
+                                    <i class="fa-regular fa-envelope" style="width:16px;"></i> <span class="author-email">siti.sarah@gmail.com</span><br>
                                     <i class="fa-solid fa-phone" style="width:16px; margin-top:4px;"></i> 08987654321
                                 </div>
                             </td>
@@ -380,6 +390,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div id="emptyState" class="empty-state">
+                    <i class="fa-solid fa-magnifying-glass" style="font-size: 2rem; margin-bottom: 12px; display: block;"></i>
+                    Penulis tidak ditemukan.
+                </div>
             </div>
         </div>
     </main>
@@ -396,19 +410,32 @@
         userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
         document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
 
-        // Search Interactivity
+        // Search Filtering Logic
         const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
-        if (searchInput && searchResults) {
-            searchInput.addEventListener('focus', () => { if(searchInput.value.length > 0) searchResults.classList.add('show'); });
-            searchInput.addEventListener('input', () => {
-                if(searchInput.value.length > 0) searchResults.classList.add('show');
-                else searchResults.classList.remove('show');
-            });
-            document.addEventListener('click', (e) => {
-                if(!searchInput.contains(e.target) && !searchResults.contains(e.target)) searchResults.classList.remove('show');
-            });
-        }
+        const table = document.getElementById('authorTable');
+        const emptyState = document.getElementById('emptyState');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.toLowerCase();
+            let hasResults = false;
+
+            for (let i = 0; i < rows.length; i++) {
+                const name = rows[i].querySelector('.author-name').textContent.toLowerCase();
+                const id = rows[i].querySelector('.author-meta').textContent.toLowerCase();
+                const email = rows[i].querySelector('.author-email').textContent.toLowerCase();
+                
+                if (name.includes(query) || id.includes(query) || email.includes(query)) {
+                    rows[i].style.display = '';
+                    hasResults = true;
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+
+            table.style.display = hasResults ? '' : 'none';
+            emptyState.style.display = hasResults ? 'none' : 'block';
+        });
 
         // Action Functions
         function viewDetail(nama, email, afiliasi, telp) {

@@ -8,22 +8,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary:        #34d399;
-            --primary-bright: #6ee7b7;
-            --primary-dim:    #059669;
-            --primary-glow:   rgba(52, 211, 153, 0.15);
-            --accent:         #a7f3d0;
-            --bg-body:        #0f1f1a;
-            --bg-sidebar:     #0a1814;
-            --bg-card:        #1a2e28;
-            --bg-card-hover:  #213830;
-            --bg-input:       #1a2e28;
-            --bg-elevated:    #243f37;
-            --border-color:   #2d4f45;
-            --border-light:   #243f37;
-            --text-primary:   #ecfdf5;
-            --text-secondary: #9ecfbf;
-            --text-muted:     #6ba898;
+            --primary:        #8B5CF6;
+            --primary-bright: #A78BFA;
+            --primary-dim:    #6D28D9;
+            --primary-glow:   rgba(139, 92, 246, 0.15);
+            --accent:         #8B5CF6;
+            --bg-body:        #15131E;
+            --bg-sidebar:     #1E1B2E;
+            --bg-card:        #231F36;
+            --bg-card-hover:  #2D2845;
+            --bg-input:       #1B1829;
+            --bg-elevated:    #2D2845;
+            --border-color:   #342E4A;
+            --border-light:   #231F36;
+            --text-primary:   #E2D8F0;
+            --text-secondary: #A59EBA;
+            --text-muted:     #6F6987;
             --sidebar-width:           250px;
             --sidebar-collapsed-width: 64px;
         }
@@ -47,7 +47,7 @@
         .nav-link i { width:20px; min-width:20px; text-align:center; font-size:1rem; flex-shrink:0; }
         .nav-link-text { transition:opacity .2s; }
         .sidebar.collapsed .nav-link-text { opacity:0; width:0; overflow:hidden; }
-        .nav-link.active { background:linear-gradient(90deg,rgba(52,211,153,.14),rgba(52,211,153,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
+        .nav-link.active { background:linear-gradient(90deg,rgba(139,92,246,.14),rgba(139,92,246,.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
         .nav-link:hover:not(.active) { background:var(--bg-card); color:var(--text-secondary); }
         .sidebar-footer { padding:14px 8px; border-top:1px solid var(--border-color); }
         .logout-btn { display:flex; align-items:center; gap:12px; padding:10px 12px; color:var(--text-muted); text-decoration:none; font-weight:500; font-size:.875rem; border-radius:10px; transition:all .2s; white-space:nowrap; }
@@ -56,7 +56,7 @@
         .sidebar.collapsed .logout-btn span { opacity:0; width:0; overflow:hidden; }
 
         /* Main */
-        .main-content { flex:1; margin-left:var(--sidebar-width); padding:0 36px 48px; transition:margin-left .3s cubic-bezier(.4,0,.2,1); }
+        .main-content { flex:1; margin-left:var(--sidebar-width); padding:0 40px 48px; transition:margin-left 0.3s cubic-bezier(.4, 0, .2, 1); }
         .main-content.expanded { margin-left:var(--sidebar-collapsed-width); }
 
         /* Header */
@@ -66,17 +66,28 @@
         .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:var(--bg-card); border-radius:10px; font-size:.875rem; font-family:'Inter',sans-serif; outline:none; color:var(--text-primary); transition:border-color .2s,box-shadow .2s; }
         .search-input::placeholder { color:var(--text-muted); }
         .search-input:focus { border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
-        .header-actions { display:flex; align-items:center; gap:8px; }
-        .header-icon-btn { width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all .2s; position:relative; font-size:1rem; }
-        .header-icon-btn:hover { background:var(--bg-elevated); border-color:var(--primary-dim); color:var(--primary); }
-        .notif-dot { position:absolute; top:9px; right:10px; width:7px; height:7px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
-        .header-divider { width:1px; height:28px; background:var(--border-color); margin:0 8px; }
+        .top-header { display:flex; justify-content:flex-end; align-items:center; padding:16px 0 8px; }
+        .header-actions { 
+            display:flex; 
+            align-items:center; 
+            background: rgba(30, 27, 46, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px 4px 4px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            gap: 0;
+        }
+        .header-icon-btn { width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:12px; border:none; background:transparent; color:var(--text-secondary); cursor:pointer; transition:all 0.2s; position:relative; font-size:1.1rem; }
+        .header-icon-btn:hover { background:rgba(255,255,255,0.05); color:var(--primary-bright); }
+        .header-divider { width:1px; height:24px; background:var(--border-color); margin:0 12px 0 8px; opacity: 0.6; }
+        .notif-dot { position:absolute; top:10px; right:10px; width:6px; height:6px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
         .user-wrapper { position:relative; }
-        .user-header { display:flex; align-items:center; gap:10px; padding:6px 10px 6px 6px; border-radius:10px; cursor:pointer; transition:background .2s; }
-        .user-header:hover { background:var(--bg-card); }
-        .user-avatar { width:36px; height:36px; background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.875rem; }
-        .user-header-name { font-weight:600; font-size:.8125rem; color:var(--text-primary); line-height:1.3; }
-        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.3; }
+        .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
+        .user-header:hover { background:rgba(255,255,255,0.05); }
+        .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
+        .user-header-info { display:flex; flex-direction:column; gap:0; }
+        .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
+        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
         .user-dropdown {
             position:absolute;
             top:calc(100% + 12px);
@@ -85,7 +96,7 @@
             background:var(--bg-card);
             border:1px solid var(--border-color);
             border-radius:16px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(52,211,153,0.08);
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.08);
             display:none;
             flex-direction:column;
             z-index:1000;
@@ -104,33 +115,29 @@
         .user-dropdown-item.logout:hover { background:rgba(248,113,113,0.08); color:#f87171; }
 
         /* Breadcrumb */
-        .breadcrumb { display:flex; align-items:center; gap:8px; font-size:.8125rem; color:var(--text-muted); margin-bottom:16px; }
+        .breadcrumb { display:flex; align-items:center; gap:8px; font-size:.8125rem; color:var(--text-muted); margin-bottom:12px; }
         .breadcrumb a { color:var(--text-muted); text-decoration:none; transition:color .2s; }
         .breadcrumb a:hover { color:var(--primary); }
         .breadcrumb .active { color:var(--primary); font-weight:500; }
 
         /* Page Header */
-        .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; }
+        .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-top: 4px; }
         .page-title-section { display:flex; flex-direction:column; gap:6px; margin:0; }
         .page-title-section h1 { font-size:2rem; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px; line-height:1; margin:0; }
         .page-subtitle { font-size:.875rem; color:var(--text-muted); margin:0; max-width:none; line-height:1.4; }
         .page-actions { display:flex; gap:12px; align-items:center; }
         
         /* Buttons */
-        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; box-shadow:0 4px 12px rgba(52,211,153,.2); }
-        .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(52,211,153,.3); }
+        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; box-shadow:0 4px 12px rgba(139,92,246,.2); }
+        .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(139,92,246,.3); }
         .btn-outline-action { background:transparent; color:var(--text-secondary); border:1px solid var(--border-color); padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:500; font-family:'Inter',sans-serif; cursor:pointer; transition:all .2s; }
         .btn-outline-action:hover { border-color:var(--primary-dim); color:var(--primary); background:var(--bg-elevated); }
 
         /* Form Layout */
         .form-layout { display:grid; grid-template-columns:1fr 340px; gap:24px; align-items:stretch; }
-        .form-main { display:flex; flex-direction:column; gap:24px; height:100%; }
-        .form-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:12px; padding:28px; position:relative; transition:transform .25s,box-shadow .25s; box-shadow:0 4px 16px rgba(0,0,0,.15); overflow:hidden; }
-        .form-card::after { content:''; position:absolute; inset:0; border-radius:12px; background:linear-gradient(145deg,rgba(52,211,153,.03),transparent 60%); pointer-events:none; }
-        .form-card:hover { transform:translateY(-2px); border-top-color:var(--primary); box-shadow:0 8px 24px rgba(0,0,0,.25),0 0 0 1px rgba(52,211,153,.08); }
-        
-        .form-sidebar { display:flex; flex-direction:column; height:100%; }
-        .form-sidebar .form-card { flex:1; display:flex; flex-direction:column; }
+        .form-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:12px; padding:28px; position:relative; transition:transform .25s,box-shadow .25s; box-shadow:0 4px 16px rgba(0,0,0,.15); overflow:hidden; display: flex; flex-direction: column; }
+        .form-card::after { content:''; position:absolute; inset:0; border-radius:12px; background:linear-gradient(145deg,rgba(139,92,246,.03),transparent 60%); pointer-events:none; }
+        .form-card:hover { transform:translateY(-2px); border-top-color:var(--primary); box-shadow:0 8px 24px rgba(0,0,0,.25),0 0 0 1px rgba(139,92,246,.08); }
         
         .section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; position:relative; z-index:1; }
         .section-title { font-size:1.125rem; font-weight:600; color:var(--text-primary); display:flex; align-items:center; gap:10px; margin-bottom:24px; position:relative; z-index:1; }
@@ -151,18 +158,51 @@
         select.form-control { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236ba898'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; background-size:14px; padding-right:36px; }
 
         /* Upload Areas */
-        .upload-area { border:1px dashed var(--border-color); border-radius:10px; padding:40px 20px; text-align:center; background:rgba(26,46,40,0.4); cursor:pointer; transition:all .2s; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-        .upload-area:hover { border-color:var(--primary-dim); background:rgba(52,211,153,0.03); }
+        .upload-area { border:1px dashed var(--border-color); border-radius:10px; padding:40px 20px; text-align:center; background:rgba(255,255,255,0.02); cursor:pointer; transition:all .2s; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+        .upload-area:hover { border-color:var(--primary); background:rgba(139,92,246,0.03); transform: translateY(-2px); }
         .upload-icon { font-size:2rem; color:var(--text-muted); margin-bottom:12px; }
         .upload-text { font-size:.875rem; color:var(--text-secondary); margin-bottom:4px; }
         .text-primary { color:var(--primary); }
         .font-semibold { font-weight:600; }
         .upload-hint { font-size:.75rem; color:var(--text-muted); }
         
-        .upload-area-primary { border-color:rgba(52,211,153,0.3); background:rgba(52,211,153,0.02); }
-        .upload-area-primary:hover { border-color:var(--primary); background:rgba(52,211,153,0.05); }
-        .upload-icon-circle { width:48px; height:48px; background:var(--primary-dim); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.25rem; margin:0 auto 12px; box-shadow:0 4px 12px rgba(5,150,105,.3); }
+        .upload-area-primary { 
+            border: 1px dashed rgba(139, 92, 246, 0.4); 
+            background: rgba(139, 92, 246, 0.02); 
+            border-radius: 16px;
+            padding: 40px 20px;
+        }
+        .upload-area-primary:hover { 
+            border-color: var(--primary); 
+            background: rgba(139, 92, 246, 0.05); 
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+        }
+        .upload-icon-circle { 
+            width: 64px; 
+            height: 64px; 
+            background: var(--primary); 
+            color: white; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.5rem; 
+            margin: 0 auto 16px; 
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4); 
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .upload-area-primary:hover .upload-icon-circle {
+            transform: scale(1.1);
+        }
+        .upload-text-vibrant {
+            color: var(--primary-bright);
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-bottom: 8px;
+        }
         .mt-4 { margin-top:24px; }
+        .btn-remove-author { background:rgba(248,113,113,0.05); border:1px solid rgba(248,113,113,0.2); color:#f87171; padding:8px 16px; border-radius:8px; font-size:0.75rem; font-weight:600; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:8px; }
+        .btn-remove-author:hover { background:rgba(248,113,113,0.1); border-color:#f87171; transform:translateY(-1px); }
     </style>
 </head>
 <body>
@@ -191,6 +231,18 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="/daftar-pengajuan" class="nav-link">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span class="nav-link-text">Daftar Naskah</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/draf" class="nav-link">
+                    <i class="fa-solid fa-inbox"></i>
+                    <span class="nav-link-text">Draf Naskah</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="/informasi" class="nav-link">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-link-text">Informasi Penulis</span>
@@ -214,10 +266,6 @@
     <main class="main-content" id="mainContent">
 
         <header class="top-header">
-            <div class="search-container">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="search-input" placeholder="Cari naskah, penulis, atau ISBN...">
-            </div>
             <div class="header-actions">
                 <button class="header-icon-btn" title="Notifikasi">
                     <i class="fa-regular fa-bell"></i>
@@ -244,102 +292,108 @@
             </div>
         </header>
 
-        <div class="breadcrumb">
-            <a href="#">Portal</a> <span>/</span> <span class="active">Pengajuan</span>
+        <div class="breadcrumb" style="margin-top: 4px; margin-bottom: 4px;">
+            <a href="/">Portal</a> <span style="opacity: 0.5; margin: 0 4px;">/</span> <span class="active">Pengajuan</span>
         </div>
 
         <div class="page-header">
             <div class="page-title-section">
                 <h1>Detail Naskah</h1>
-                <p class="page-subtitle">Lengkapi informasi di bawah ini untuk mendaftarkan draf Anda ke dalam sistem.</p>
+                <p class="page-subtitle">Lengkapi informasi di bawah ini untuk mendaftarkan naskah Anda ke sistem.</p>
             </div>
-            <div class="page-actions">
-                <button class="btn-outline-action" id="btnDraft">Simpan sebagai Draf</button>
-                <button class="btn-primary" id="btnAjukan">Ajukan</button>
+            <div class="page-actions" style="display: flex; gap: 12px;">
+                <a href="/draf" class="btn-outline-action" id="btnDraft" style="text-decoration: none;">Simpan sebagai Draf</a>
+                <a href="/daftar-pengajuan" class="btn-primary" id="btnAjukan" style="text-decoration: none;">Ajukan</a>
             </div>
         </div>
 
         <div class="form-layout">
-            <div class="form-main">
-                <!-- Informasi Naskah -->
-                <div class="form-card">
-                    <h2 class="section-title"><span class="title-bar"></span>Informasi Naskah</h2>
-                    
-                    <div class="form-group">
-                        <label>Judul Naskah</label>
-                        <input type="text" class="form-control" placeholder="Masukkan judul naskah...">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Sub Judul Naskah</label>
-                        <input type="text" class="form-control" placeholder="Masukkan sub judul naskah...">
-                    </div>
-
-                    <div class="form-group" style="margin-bottom:0; position:relative; z-index:1;">
-                        <label>Sinopsis</label>
-                        <textarea class="form-control" rows="8" placeholder="Tuliskan sinopsis singkat mengenai naskah Anda..."></textarea>
-                    </div>
+            <!-- Row 1 Left: Informasi Naskah -->
+            <div class="form-card">
+                <h2 class="section-title"><span class="title-bar"></span>Informasi Naskah</h2>
+                
+                <div class="form-group">
+                    <label>Judul Naskah</label>
+                    <input type="text" class="form-control" placeholder="Masukkan judul naskah...">
                 </div>
 
-                <!-- Informasi Penulis -->
-                <div class="form-card">
-                    <div class="section-header">
-                        <h2 class="section-title"><span class="title-bar"></span>Informasi Penulis</h2>
-                        <a href="#" class="link-teal"><i class="fa-solid fa-plus-circle"></i> Tambahkan Penulis Lainnya</a>
-                    </div>
-                    
-                    <div class="form-row" style="position:relative; z-index:1;">
-                        <div class="form-group">
-                            <label>Nama Lengkap</label>
-                            <input type="text" class="form-control" placeholder="Masukkan nama lengkap penulis...">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" placeholder="Masukkan alamat email aktif...">
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label>Sub Judul Naskah</label>
+                    <input type="text" class="form-control" placeholder="Masukkan sub judul naskah...">
+                </div>
 
-                    <div class="form-row" style="margin-bottom:0; position:relative; z-index:1;">
-                        <div class="form-group" style="flex: 0 0 160px;">
-                            <label>Urutan Penulis</label>
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
+                <div class="form-group" style="margin-bottom:0; position:relative; z-index:1;">
+                    <label>Sinopsis</label>
+                    <textarea class="form-control" rows="8" placeholder="Tuliskan sinopsis singkat mengenai naskah Anda..."></textarea>
+                </div>
+            </div>
+
+            <!-- Row 1 Right: Unggah Foto Sampul -->
+            <div class="form-card">
+                <h2 class="section-title"><span class="title-bar"></span>Unggah Foto Sampul</h2>
+                
+                <div class="form-group" style="position:relative; z-index:1; flex:1; display:flex; flex-direction:column; margin-bottom:0;">
+                    <input type="file" id="inputCover" accept="image/jpeg,image/png" style="display:none;">
+                    <div class="upload-area upload-area-primary" id="areaCover" style="flex:1;">
+                        <div class="upload-icon-circle" id="iconCover"><i class="fa-regular fa-image"></i></div>
+                        <div class="upload-text-vibrant" id="textCover">Unggah Foto Sampul</div>
+                        <div class="upload-hint" id="hintCover">Format JPEG, PNG (Maks 10MB)</div>
+                        <img id="previewCover" style="display:none; max-width:100%; max-height:240px; border-radius:12px; margin-top:12px; border: 1px solid var(--border-color);" alt="Preview">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2 Left: Informasi Penulis -->
+            <div class="form-card" id="authorCard">
+                <div class="section-header">
+                    <h2 class="section-title"><span class="title-bar"></span>Informasi Penulis</h2>
+                    <a href="javascript:void(0)" class="link-teal" id="addAuthorBtn"><i class="fa-solid fa-plus-circle"></i> Tambahkan Penulis Lainnya</a>
+                </div>
+                
+                <div id="authorsContainer">
+                    <!-- Author Item 1 -->
+                    <div class="author-item" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border-light);">
+                        <div class="form-row" style="position:relative; z-index:1;">
+                            <div class="form-group">
+                                <label>Nama Lengkap</label>
+                                <input type="text" class="form-control" placeholder="Masukkan nama lengkap penulis...">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" placeholder="Masukkan alamat email aktif...">
+                            </div>
                         </div>
-                        <div class="form-group" style="flex: 1;">
-                            <label>Biodata Narasi</label>
-                            <textarea class="form-control" rows="4" placeholder="Tuliskan biodata narasi singkat..."></textarea>
+
+                        <div class="form-row" style="margin-bottom:0; position:relative; z-index:1;">
+                            <div class="form-group" style="flex: 0 0 160px;">
+                                <label>Urutan Penulis</label>
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
+                                <label>Biodata Narasi</label>
+                                <textarea class="form-control" style="min-height: 80px;" placeholder="Tuliskan biodata narasi singkat..."></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="form-sidebar">
-                <!-- Lampiran -->
-                <div class="form-card" style="padding:28px 24px;">
-                    <h2 class="section-title"><span class="title-bar"></span>Lampiran</h2>
-                    
-                    <div class="form-group" style="position:relative; z-index:1; flex:1; display:flex; flex-direction:column;">
-                        <label>Foto Cover</label>
-                        <input type="file" id="inputCover" accept="image/jpeg,image/png" style="display:none;">
-                        <div class="upload-area" id="areaCover" style="min-height:240px; flex:1;">
-                            <div class="upload-icon" id="iconCover"><i class="fa-regular fa-image"></i></div>
-                            <div class="upload-text" id="textCover" style="line-height: 1.6;">Seret & lepas foto sampul atau<br><span class="text-primary font-semibold">Cari File</span></div>
-                            <div class="upload-hint mt-2" id="hintCover">Format JPEG, PNG (Maks 10MB)</div>
-                            <img id="previewCover" style="display:none; max-width:100%; max-height:200px; border-radius:8px; margin-top:8px;" alt="Preview">
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-4" style="margin-bottom:0; position:relative; z-index:1;">
-                        <label>Unggah Naskah</label>
-                        <input type="file" id="inputNaskah" accept=".pdf,.docx,.epub" style="display:none;">
-                        <div class="upload-area upload-area-primary" id="areaNaskah" style="border-style:dashed; padding:32px 20px;">
-                            <div class="upload-icon-circle" id="iconNaskah"><i class="fa-solid fa-file-arrow-up"></i></div>
-                            <div class="upload-text text-primary font-semibold" id="textNaskah" style="font-size:1rem;">Unggah Naskah</div>
-                            <div class="upload-hint mt-2" id="hintNaskah">Format PDF, DOCX, EPUB (Maks 50MB)</div>
-                        </div>
+            <!-- Row 2 Right: Unggah Naskah -->
+            <div class="form-card">
+                <h2 class="section-title"><span class="title-bar"></span>Unggah Naskah</h2>
+                
+                <div class="form-group" style="position:relative; z-index:1; flex: 1; display: flex; flex-direction: column; margin-bottom:0;">
+                    <input type="file" id="inputNaskah" accept=".pdf,.docx,.epub" style="display:none;">
+                    <div class="upload-area upload-area-primary" id="areaNaskah" style="flex: 1;">
+                        <div class="upload-icon-circle" id="iconNaskah"><i class="fa-solid fa-file-arrow-up"></i></div>
+                        <div class="upload-text-vibrant" id="textNaskah">Unggah Naskah</div>
+                        <div class="upload-hint" id="hintNaskah">Format PDF, DOCX, EPUB (Maks 50MB)</div>
                     </div>
                 </div>
             </div>
@@ -408,7 +462,7 @@
             function showFile(file) {
                 if(file.size > maxMB*1024*1024){ alert('Ukuran file maksimal '+maxMB+'MB'); return; }
                 icon.innerHTML='<i class="fa-solid fa-file-circle-check" style="font-size:1.5rem;"></i>';
-                icon.style.background='var(--primary)'; icon.style.boxShadow='0 4px 16px rgba(52,211,153,.4)';
+                icon.style.background='var(--primary)'; icon.style.boxShadow='0 4px 16px rgba(139,92,246,.4)';
                 text.innerHTML=file.name;
                 hint.innerHTML='<i class="fa-solid fa-check" style="color:var(--primary);"></i> File berhasil diunggah';
             }
@@ -438,6 +492,64 @@
         const userDropdown = document.getElementById('userDropdown');
         userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
         document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
+
+        // Dynamic Author Addition
+        const authorsContainer = document.getElementById('authorsContainer');
+        const addAuthorBtn = document.getElementById('addAuthorBtn');
+        let authorCount = 1;
+
+        addAuthorBtn.addEventListener('click', () => {
+            authorCount++;
+            const authorHtml = `
+                <div class="author-item" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border-light); animation: fadeIn 0.3s ease-out;">
+                    <div class="section-header" style="margin-bottom: 16px;">
+                        <h3 style="font-size: 0.875rem; color: var(--primary); font-weight: 600;">Penulis #${authorCount}</h3>
+                    </div>
+                    <div class="form-row" style="position:relative; z-index:1;">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" class="form-control" placeholder="Masukkan nama lengkap penulis...">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" placeholder="Masukkan alamat email aktif...">
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-bottom:0; position:relative; z-index:1;">
+                        <div class="form-group" style="flex: 0 0 160px;">
+                            <label>Urutan Penulis</label>
+                            <select class="form-control">
+                                <option ${authorCount===1?'selected':''}>1</option>
+                                <option ${authorCount===2?'selected':''}>2</option>
+                                <option ${authorCount===3?'selected':''}>3</option>
+                                <option ${authorCount===4?'selected':''}>4</option>
+                                <option ${authorCount===5?'selected':''}>5</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
+                            <label>Biodata Narasi</label>
+                            <textarea class="form-control" style="min-height: 80px;" placeholder="Tuliskan biodata narasi singkat..."></textarea>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                        <button class="btn-remove-author" onclick="this.closest('.author-item').remove()">
+                            <i class="fa-solid fa-trash-can"></i> Hapus Penulis
+                        </button>
+                    </div>
+                </div>
+            `;
+            authorsContainer.insertAdjacentHTML('beforeend', authorHtml);
+        });
+
+        // Add fadeIn animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 
 </body>
