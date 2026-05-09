@@ -11,5 +11,8 @@ Route::get('/pengajuan', function () {
 });
 
 Route::get('/informasi', function () {
-    return view('informasi');
+    return view('informasi'); 
 });
+use App\Http\Controllers\NaskahController;
+
+Route::post('/pengajuan-naskah', [NaskahController::class, 'store'])->name('naskah.store');

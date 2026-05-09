@@ -179,7 +179,8 @@
     </aside>
 
     <main class="main-content" id="mainContent">
-
+   <form action="{{ route('naskah.store') }}" method="POST" id="formNaskah" style="display: contents;">
+          @csrf
         <header class="top-header">
             <div class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -213,29 +214,38 @@
             </div>
             <div class="page-actions">
                 <button class="btn-outline-action">Simpan sebagai Draf</button>
-                <button class="btn-primary">Terbitkan</button>
+               <button type="submit" form="formNaskah" class="btn-primary">Terbitkan</button>
             </div>
         </div>
+        @if (session('status'))
+    <div style="background: rgba(5, 150, 105, 0.2); color: #6ee7b7; padding: 16px; border: 1px solid #059669; border-radius: 10px; margin-bottom: 24px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-circle-check"></i>
+        {{ session('status') }}
+    </div>
+@endif
 
         <div class="form-layout">
             <div class="form-main">
+                <div class="form-layout">
+
+        <div class="form-main">
                 <!-- Informasi Naskah -->
                 <div class="form-card">
                     <h2 class="section-title"><span class="title-bar"></span>Informasi Naskah</h2>
                     
                     <div class="form-group">
                         <label>Judul Naskah</label>
-                        <input type="text" class="form-control" placeholder="Masukkan judul naskah...">
+                        <input type="text" name="judul" class="form-control" placeholder="Masukkan judul naskah...">
                     </div>
 
                     <div class="form-group">
                         <label>Sub Judul Naskah</label>
-                        <input type="text" class="form-control" placeholder="Masukkan sub judul naskah...">
+                        <input type="text" name="sub_judul" class="form-control" placeholder="Masukkan sub judul naskah...">
                     </div>
 
                     <div class="form-group" style="margin-bottom:0; position:relative; z-index:1;">
                         <label>Sinopsis</label>
-                        <textarea class="form-control" rows="8" placeholder="Tuliskan sinopsis singkat mengenai naskah Anda..."></textarea>
+                        <textarea name="sinopsis" class="form-control" rows="8" placeholder="Tuliskan sinopsis..."></textarea>
                     </div>
                 </div>
 
