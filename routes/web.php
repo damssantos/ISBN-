@@ -16,3 +16,31 @@ Route::get('/informasi', function () {
 use App\Http\Controllers\NaskahController;
 
 Route::post('/pengajuan-naskah', [NaskahController::class, 'store'])->name('naskah.store');
+
+Route::get('/profile', function () {
+    return view('profile');
+});
+
+Route::get('/akun', function () {
+    return view('akun');
+});
+
+Route::get('/pengaturan', function () {
+    return view('pengaturan');
+});
+
+Route::get('/table-penulis', function () {
+    return view('table-penulis');
+});
+
+Route::get('/pengajuan/detail', function () {
+    return view('table-pengajuan');
+});
+
+Route::get('/draf', function () {
+    return view('draf');
+});
+
+Route::get('/daftar-pengajuan', function () {
+    return view('daftar-pengajuan');
+});
