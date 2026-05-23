@@ -62,11 +62,6 @@
 
         /* Header */
         .top-header { display:flex; justify-content:flex-end; align-items:center; padding:12px 0; }
-        .search-container { position:relative; width:340px; }
-        .search-container i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:.875rem; }
-        .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:var(--bg-card); border-radius:10px; font-size:.875rem; font-family:'Inter',sans-serif; outline:none; color:var(--text-primary); transition:border-color .2s,box-shadow .2s; }
-        .search-input::placeholder { color:var(--text-muted); }
-        .search-input:focus { border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
         .header-actions { 
             display:flex; 
             align-items:center; 
@@ -155,8 +150,6 @@
         .upload-file-input { display:none; }
         .upload-filename { font-size:.75rem; color:var(--primary); margin-top:6px; text-align:center; word-break:break-all; }
         input[type="date"]::-webkit-calendar-picker-indicator { filter:invert(0.7) sepia(1) saturate(3) hue-rotate(100deg); cursor:pointer; }
-        
-
     </style>
 </head>
 <body>
@@ -173,278 +166,252 @@
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="/" class="nav-link">
-                    <i class="fa-solid fa-border-all"></i>
-                    <span class="nav-link-text">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/pengajuan" class="nav-link">
-                    <i class="fa-regular fa-file-lines"></i>
-                    <span class="nav-link-text">Pengajuan</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/daftar-pengajuan" class="nav-link">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span class="nav-link-text">Daftar Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/draf" class="nav-link">
-                    <i class="fa-solid fa-inbox"></i>
-                    <span class="nav-link-text">Draf Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/informasi" class="nav-link active">
-                    <i class="fa-regular fa-user"></i>
-                    <span class="nav-link-text">Informasi Penulis</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/table-penulis" class="nav-link">
-                    <i class="fa-solid fa-users-viewfinder"></i>
-                    <span class="nav-link-text">Daftar Penulis</span>
-                </a>
-            </li>
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="/pengajuan" class="nav-link"><i class="fa-regular fa-file-lines"></i><span class="nav-link-text">Pengajuan</span></a></li>
+            <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link"><i class="fa-solid fa-list-check"></i><span class="nav-link-text">Daftar Naskah</span></a></li>
+            <li class="nav-item"><a href="/draf" class="nav-link"><i class="fa-solid fa-inbox"></i><span class="nav-link-text">Draf Naskah</span></a></li>
+            <li class="nav-item"><a href="/informasi-penulis" class="nav-link active"><i class="fa-regular fa-user"></i><span class="nav-link-text">Informasi Penulis</span></a></li>
+            <li class="nav-item"><a href="/table-penulis" class="nav-link"><i class="fa-solid fa-users-viewfinder"></i><span class="nav-link-text">Daftar Penulis</span></a></li>
         </ul>
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                <span>Keluar</span>
-            </a>
+            <a href="#" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
         </div>
     </aside>
 
     <main class="main-content" id="mainContent">
-        <header class="top-header">
-            <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </button>
-                <div class="header-divider"></div>
-                <div class="user-wrapper">
-                    <div class="user-header" id="userToggle">
-                        <div class="user-avatar">P</div>
-                        <div class="user-header-info">
-                            <div class="user-header-name">Pradama</div>
-                            <div class="user-header-role">Kontributor</div>
+        
+        <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <header class="top-header">
+                <div class="header-actions">
+                    <button type="button" class="header-icon-btn" title="Notifikasi">
+                        <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
+                    </button>
+                    <div class="header-divider"></div>
+                    <div class="user-wrapper">
+                        <div class="user-header" id="userToggle">
+                            <div class="user-avatar">{{ substr($user->name ?? 'P', 0, 1) }}</div>
+                            <div class="user-header-info">
+                                <div class="user-header-name">{{ $user->name ?? 'User' }}</div>
+                                <div class="user-header-role">Kontributor</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                         </div>
-                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                        <div class="user-dropdown" id="userDropdown">
+                            <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                            <a href="/id-akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
+                            <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+                            <div class="user-dropdown-divider"></div>
+                            <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                        </div>
                     </div>
-                    <div class="user-dropdown" id="userDropdown">
-                        <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
-                        <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
-                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
-                        <div class="user-dropdown-divider"></div>
-                        <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                </div>
+            </header>
+
+            <div class="profile-header">
+                <div class="profile-header-left">
+                    <div class="profile-avatar">{{ substr($user->name ?? 'P', 0, 1) }}</div>
+                    <div>
+                        <div class="profile-name">{{ $user->name ?? 'Informasi Penulis' }}</div>
+                        <div class="profile-role">Kelola detail informasi profil Anda secara realtime</div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-save" id="btnSave" style="padding: 10px 24px; border-radius: 8px; font-weight: 600; border:none; cursor:pointer;">
+                    <i class="fa-solid fa-pen-to-square"></i> Perbarui Data
+                </button>
+            </div>
+
+            @if(session('status'))
+                <div style="background: rgba(59, 195, 189, 0.15); border: 1px solid var(--primary); color: var(--primary-bright); padding: 14px; border-radius: 10px; margin-bottom: 24px; font-weight: 600; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-circle-check"></i> {{ session('status') }}
+                </div>
+            @endif
+
+            <div class="profile-section">
+                <h2 class="section-title"><i class="fa-solid fa-user-circle"></i> Informasi Pribadi</h2>
+                <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="form-label">Gelar Depan</label>
+                        <input type="text" name="gelar_depan" class="form-control" value="{{ $user->gelar_depan ?? '' }}" placeholder="Contoh: Dr. / Prof.">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nama Penulis</label>
+                        <input type="text" name="name" class="form-control" value="{{ $user->name ?? '' }}" required placeholder="Masukkan nama penulis...">
+                    </div>
+                </div>
+                <div class="form-grid form-grid-3" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="form-label">Gelar Belakang</label>
+                        <input type="text" name="gelar_belakang" class="form-control" value="{{ $user->gelar_belakang ?? '' }}" placeholder="Contoh: M.Kom / Ph.D">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Jenis Kelamin</label>
+                        <select name="jenis_kelamin" class="form-control">
+                            <option value="">-- Pilih Jenis Kelamin --</option>
+                            <option value="Laki-laki" {{ ($user->jenis_kelamin ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="Perempuan" {{ ($user->jenis_kelamin ?? '') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Agama</label>
+                        <select name="agama" class="form-control">
+                            <option value="">-- Pilih Agama --</option>
+                            <option value="Islam" {{ ($user->agama ?? '') == 'Islam' ? 'selected' : '' }}>Islam</option>
+                            <option value="Kristen Protestan" {{ ($user->agama ?? '') == 'Kristen Protestan' ? 'selected' : '' }}>Kristen Protestan</option>
+                            <option value="Katolik" {{ ($user->agama ?? '') == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+                            <option value="Hindu" {{ ($user->agama ?? '') == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                            <option value="Buddha" {{ ($user->agama ?? '') == 'Buddha' ? 'selected' : '' }}>Buddha</option>
+                            <option value="Konghucu" {{ ($user->agama ?? '') == 'Konghucu' ? 'selected' : '' }}>Konghucu</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Tempat Lahir</label>
+                        <input type="text" name="tempat_lahir" class="form-control" value="{{ $user->tempat_lahir ?? '' }}" placeholder="Masukkan kota lahir...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tanggal Lahir</label>
+                        <input type="date" name="tanggal_lahir" class="form-control" value="{{ $user->tanggal_lahir ?? '' }}">
                     </div>
                 </div>
             </div>
-        </header>
 
-        <div class="profile-header">
-            <div class="profile-header-left">
-                <div class="profile-avatar">P</div>
-                <div>
-                    <div class="profile-name">Informasi Penulis</div>
-                    <div class="profile-role">Kelola detail informasi profil Anda</div>
-                </div>
-            </div>
-            <button class="btn-save" id="btnSave" style="padding: 10px 24px; border-radius: 8px; font-weight: 600;">
-                <i class="fa-solid fa-pen-to-square"></i> Perbarui Data
-            </button>
-        </div>
-
-        <!-- Informasi Pribadi -->
-        <div class="profile-section">
-            <h2 class="section-title"><i class="fa-solid fa-user-circle"></i> Informasi Pribadi</h2>
-            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <label class="form-label">Gelar Depan</label>
-                    <input type="text" class="form-control" value="Dr.">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Nama Penulis</label>
-                    <input type="text" class="form-control" value="Pradama Wijaya">
-                </div>
-            </div>
-            <div class="form-grid form-grid-3" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <label class="form-label">Gelar Belakang</label>
-                    <input type="text" class="form-control" value="M.Kom">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Jenis Kelamin</label>
-                    <select class="form-control">
-                        <option selected>Laki-laki</option>
-                        <option>Perempuan</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Agama</label>
-                    <select class="form-control">
-                        <option selected>Islam</option>
-                        <option>Kristen Protestan</option>
-                        <option>Katolik</option>
-                        <option>Hindu</option>
-                        <option>Buddha</option>
-                        <option>Konghucu</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-grid form-grid-2">
-                <div class="form-group">
-                    <label class="form-label">Tempat Lahir</label>
-                    <input type="text" class="form-control" value="Jakarta">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Tanggal Lahir</label>
-                    <input type="date" class="form-control" value="1990-05-15">
-                </div>
-            </div>
-        </div>
-
-        <!-- Identitas & Kontak -->
-        <div class="profile-section">
-            <h2 class="section-title"><i class="fa-solid fa-id-card"></i> Identitas & Kontak</h2>
-            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <label class="form-label">NIK</label>
-                    <input type="text" class="form-control" value="3171020304900001">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Nama Sesuai KTP</label>
-                    <input type="text" class="form-control" value="Pradama Wijaya">
-                </div>
-            </div>
-            <div class="form-grid form-grid-1" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <label class="form-label">Alamat Sesuai KTP</label>
-                    <input type="text" class="form-control" value="Jl. Kebon Jeruk No. 45, Jakarta Barat, DKI Jakarta 11530">
-                </div>
-            </div>
-            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" value="pradama.wijaya@gmail.com">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Nomor HP</label>
-                    <input type="text" class="form-control" value="081234567890">
-                </div>
-            </div>
-            <div class="form-grid form-grid-2">
-                <div class="form-group">
-                    <label class="form-label">Nomor Telepon</label>
-                    <input type="text" class="form-control" value="0215550123">
-                </div>
-                <div class="form-group"></div>
-            </div>
-        </div>
-
-        <!-- Informasi Institusi & Pajak -->
-        <div class="profile-section">
-            <h2 class="section-title"><i class="fa-solid fa-building"></i> Informasi Institusi & Pajak</h2>
-            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <label class="form-label">Nama Kantor</label>
-                    <input type="text" class="form-control" value="Universitas Indonesia">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Tempat Mengajar</label>
-                    <input type="text" class="form-control" value="Depok, Jawa Barat">
-                </div>
-            </div>
-            <div class="form-grid form-grid-1" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <label class="form-label">Alamat Surat Menyurat</label>
-                    <input type="text" class="form-control" value="Gedung Dekanat Lt. 2, Kampus UI Depok">
-                </div>
-            </div>
-            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <label class="form-label">NPWP</label>
-                    <input type="text" class="form-control" value="01.234.567.8-901.000">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Nama NPWP</label>
-                    <input type="text" class="form-control" value="Pradama Wijaya">
-                </div>
-            </div>
-            <div class="form-grid form-grid-1">
-                <div class="form-group">
-                    <label class="form-label">Alamat NPWP</label>
-                    <input type="text" class="form-control" value="Jl. Kebon Jeruk No. 45, Jakarta Barat">
-                </div>
-            </div>
-        </div>
-
-        <!-- Informasi Rekening -->
-        <div class="profile-section">
-            <h2 class="section-title"><i class="fa-solid fa-credit-card"></i> Informasi Rekening</h2>
-            <div class="form-grid form-grid-2" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <label class="form-label">Nomor Rekening</label>
-                    <input type="text" class="form-control" value="1234567890">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Nama Rekening</label>
-                    <input type="text" class="form-control" value="Pradama Wijaya">
-                </div>
-            </div>
-            <div class="form-grid form-grid-3">
-                <div class="form-group">
-                    <label class="form-label">Nama Bank</label>
-                    <input type="text" class="form-control" value="Bank Mandiri">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Cabang Bank</label>
-                    <input type="text" class="form-control" value="Jakarta Thamrin">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Kota Bank</label>
-                    <input type="text" class="form-control" value="Jakarta Pusat">
-                </div>
-            </div>
-        </div>
-
-        <!-- Dokumen & Lampiran -->
-        <div class="profile-section">
-            <h2 class="section-title"><i class="fa-solid fa-file-arrow-up"></i> Dokumen & Lampiran</h2>
-            <div class="form-grid form-grid-2">
-                <div class="upload-group">
-                    <label class="form-label">Upload KTP</label>
-                    <input type="file" class="upload-file-input" id="uploadKtp" accept="image/jpeg,image/png">
-                    <div class="upload-area" id="uploadKtpArea">
-                        <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.25rem;color:var(--primary);margin-bottom:6px;"></i>
-                        <div><span class="upload-link">Pilih berkas atau tarik ke sini</span></div>
-                        <div class="upload-hint">Format JPG, PNG (Maks 5MB)</div>
+            <div class="profile-section">
+                <h2 class="section-title"><i class="fa-solid fa-id-card"></i> Identitas & Kontak</h2>
+                <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="form-label">NIK</label>
+                        <input type="text" name="nik" class="form-control" value="{{ $user->nik ?? '' }}" placeholder="Masukkan 16 digit NIK...">
                     </div>
-                    <div class="upload-preview" id="previewKtp">
-                        <i class="fa-solid fa-id-card"></i>
+                    <div class="form-group">
+                        <label class="form-label">Nama Sesuai KTP</label>
+                        <input type="text" class="form-control" value="{{ $user->name ?? '' }}" placeholder="Nama sesuai KTP..." disabled style="opacity:0.6;">
                     </div>
-                    <div class="upload-filename" id="filenameKtp"></div>
                 </div>
-                <div class="upload-group">
-                    <label class="form-label">Upload Foto Penulis</label>
-                    <input type="file" class="upload-file-input" id="uploadFoto" accept="image/jpeg,image/png">
-                    <div class="upload-area" id="uploadFotoArea">
-                        <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.25rem;color:var(--primary);margin-bottom:6px;"></i>
-                        <div><span class="upload-link">Pilih berkas atau tarik ke sini</span></div>
-                        <div class="upload-hint">Format JPG, PNG (Maks 5MB)</div>
+                <div class="form-grid form-grid-1" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="form-label">Alamat Sesuai KTP</label>
+                        <input type="text" name="alamat_ktp" class="form-control" value="{{ $user->alamat_ktp ?? '' }}" placeholder="Masukkan alamat lengkap sesuai KTP...">
                     </div>
-                    <div class="upload-preview" id="previewFoto">
-                        <i class="fa-solid fa-camera"></i>
+                </div>
+                <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="{{ $user->email ?? 'email@gmail.com' }}" disabled style="opacity: 0.6;">
                     </div>
-                    <div class="upload-filename" id="filenameFoto"></div>
+                    <div class="form-group">
+                        <label class="form-label">Nomor HP</label>
+                        <input type="text" class="form-control" value="081234567890" disabled style="opacity: 0.5;">
+                    </div>
+                </div>
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Nomor Telepon</label>
+                        <input type="text" class="form-control" value="0215550123" disabled style="opacity: 0.5;">
+                    </div>
+                    <div class="form-group"></div>
                 </div>
             </div>
-        </div>
 
+            <div class="profile-section">
+                <h2 class="section-title"><i class="fa-solid fa-building"></i> Informasi Institusi & Pajak</h2>
+                <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="form-label">Nama Kantor</label>
+                        <input type="text" class="form-control" value="Universitas Indonesia" disabled style="opacity: 0.5;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tempat Mengajar</label>
+                        <input type="text" class="form-control" value="Depok, Jawa Barat" disabled style="opacity: 0.5;">
+                    </div>
+                </div>
+                <div class="form-grid form-grid-1" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="form-label">Alamat Surat Menyurat</label>
+                        <input type="text" class="form-control" value="Gedung Dekanat Lt. 2, Kampus UI Depok" disabled style="opacity: 0.5;">
+                    </div>
+                </div>
+                <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="form-label">NPWP</label>
+                        <input type="text" class="form-control" value="01.234.567.8-901.000" disabled style="opacity: 0.5;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nama NPWP</label>
+                        <input type="text" class="form-control" value="{{ $user->name ?? 'Pradama Wijaya' }}" disabled style="opacity: 0.5;">
+                    </div>
+                </div>
+                <div class="form-grid form-grid-1">
+                    <div class="form-group">
+                        <label class="form-label">Alamat NPWP</label>
+                        <input type="text" class="form-control" value="Jl. Kebon Jeruk No. 45, Jakarta Barat" disabled style="opacity: 0.5;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h2 class="section-title"><i class="fa-solid fa-credit-card"></i> Informasi Rekening</h2>
+                <div class="form-grid form-grid-2" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="form-label">Nomor Rekening</label>
+                        <input type="text" class="form-control" value="1234567890" disabled style="opacity: 0.5;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nama Rekening</label>
+                        <input type="text" class="form-control" value="{{ $user->name ?? 'Pradama Wijaya' }}" disabled style="opacity: 0.5;">
+                    </div>
+                </div>
+                <div class="form-grid form-grid-3">
+                    <div class="form-group">
+                        <label class="form-label">Nama Bank</label>
+                        <input type="text" class="form-control" value="Bank Mandiri" disabled style="opacity: 0.5;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Cabang Bank</label>
+                        <input type="text" class="form-control" value="Jakarta Thamrin" disabled style="opacity: 0.5;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Kota Bank</label>
+                        <input type="text" class="form-control" value="Jakarta Pusat" disabled style="opacity: 0.5;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h2 class="section-title"><i class="fa-solid fa-file-arrow-up"></i> Dokumen & Lampiran</h2>
+                <div class="form-grid form-grid-2">
+                    <div class="upload-group">
+                        <label class="form-label">Upload KTP</label>
+                        <input type="file" class="upload-file-input" id="uploadKtp" accept="image/jpeg,image/png">
+                        <div class="upload-area" id="uploadKtpArea">
+                            <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.25rem;color:var(--primary);margin-bottom:6px;"></i>
+                            <div><span class="upload-link">Pilih berkas atau tarik ke sini</span></div>
+                            <div class="upload-hint">Format JPG, PNG (Maks 5MB)</div>
+                        </div>
+                        <div class="upload-preview" id="previewKtp">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+                        <div class="upload-filename" id="filenameKtp"></div>
+                    </div>
+                    <div class="upload-group">
+                        <label class="form-label">Upload Foto Penulis</label>
+                        <input type="file" class="upload-file-input" id="uploadFoto" accept="image/jpeg,image/png">
+                        <div class="upload-area" id="uploadFotoArea">
+                            <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.25rem;color:var(--primary);margin-bottom:6px;"></i>
+                            <div><span class="upload-link">Pilih berkas atau tarik ke sini</span></div>
+                            <div class="upload-hint">Format JPG, PNG (Maks 5MB)</div>
+                        </div>
+                        <div class="upload-preview" id="previewFoto">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <div class="upload-filename" id="filenameFoto"></div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
     </main>
 
     <script>
@@ -455,9 +422,7 @@
             mainContent.classList.toggle('expanded');
         });
 
-
-
-        // Upload KTP
+        // Upload KTP & Foto preview handlers
         function setupUpload(areaId, inputId, previewId, filenameId) {
             const area = document.getElementById(areaId);
             const input = document.getElementById(inputId);
@@ -496,16 +461,7 @@
         setupUpload('uploadKtpArea', 'uploadKtp', 'previewKtp', 'filenameKtp');
         setupUpload('uploadFotoArea', 'uploadFoto', 'previewFoto', 'filenameFoto');
 
-        // Save and Redirect
-        document.getElementById('btnSave').addEventListener('click', () => {
-            const btn = document.getElementById('btnSave');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Menyimpan...';
-            setTimeout(() => {
-                window.location.href = '/table-penulis';
-            }, 800);
-        });
-
-        // User Dropdown
+        // User Dropdown logic
         const userToggle = document.getElementById('userToggle');
         const userDropdown = document.getElementById('userDropdown');
         userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });

@@ -172,48 +172,15 @@
             </button>
         </div>
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="/" class="nav-link">
-                    <i class="fa-solid fa-border-all"></i>
-                    <span class="nav-link-text">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/pengajuan" class="nav-link">
-                    <i class="fa-regular fa-file-lines"></i>
-                    <span class="nav-link-text">Pengajuan</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/daftar-pengajuan" class="nav-link active">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span class="nav-link-text">Daftar Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/draf" class="nav-link">
-                    <i class="fa-solid fa-inbox"></i>
-                    <span class="nav-link-text">Draf Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/informasi" class="nav-link">
-                    <i class="fa-regular fa-user"></i>
-                    <span class="nav-link-text">Informasi Penulis</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/table-penulis" class="nav-link">
-                    <i class="fa-solid fa-users-viewfinder"></i>
-                    <span class="nav-link-text">Daftar Penulis</span>
-                </a>
-            </li>
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="/pengajuan" class="nav-link"><i class="fa-regular fa-file-lines"></i><span class="nav-link-text">Pengajuan</span></a></li>
+            <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link active"><i class="fa-solid fa-list-check"></i><span class="nav-link-text">Daftar Naskah</span></a></li>
+            <li class="nav-item"><a href="/draf" class="nav-link"><i class="fa-solid fa-inbox"></i><span class="nav-link-text">Draf Naskah</span></a></li>
+            <li class="nav-item"><a href="/informasi" class="nav-link"><i class="fa-regular fa-user"></i><span class="nav-link-text">Informasi Penulis</span></a></li>
+            <li class="nav-item"><a href="/table-penulis" class="nav-link"><i class="fa-solid fa-users-viewfinder"></i><span class="nav-link-text">Daftar Penulis</span></a></li>
         </ul>
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                <span>Keluar</span>
-            </a>
+            <a href="#" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
         </div>
     </aside>
 
@@ -225,8 +192,7 @@
             </div>
             <div class="header-actions">
                 <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
+                    <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
                 </button>
                 <div class="header-divider"></div>
                 <div class="user-wrapper">
@@ -271,50 +237,38 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="ms-title">Analisis Perubahan Iklim 2024</div>
-                                <div class="ms-id">ID: MS-8829</div>
-                            </td>
-                            <td><span class="status-badge status-review">Dalam Peninjauan</span></td>
-                            <td><div class="date-text">12 Okt 2023</div></td>
-                            <td style="text-align:center">
-                                <a href="/pengajuan/detail" class="action-btn" title="Lihat Detail"><i class="fa-regular fa-eye"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="ms-title">Metodologi Medan Kuantum</div>
-                                <div class="ms-id">ID: MS-7741</div>
-                            </td>
-                            <td><span class="status-badge status-published">Diterbitkan</span></td>
-                            <td><div class="date-text">28 Sep 2023</div></td>
-                            <td style="text-align:center">
-                                <a href="/pengajuan/detail" class="action-btn" title="Lihat Detail"><i class="fa-regular fa-eye"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="ms-title">Dinamika Perencanaan Kota</div>
-                                <div class="ms-id">ID: MS-4122</div>
-                            </td>
-                            <td><span class="status-badge status-draft">Draf</span></td>
-                            <td><div class="date-text">15 Sep 2023</div></td>
-                            <td style="text-align:center">
-                                <a href="/pengajuan/detail" class="action-btn" title="Lihat Detail"><i class="fa-regular fa-eye"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="ms-title">Kecerdasan Buatan dalam Pendidikan</div>
-                                <div class="ms-id">ID: MS-3321</div>
-                            </td>
-                            <td><span class="status-badge status-review">Dalam Peninjauan</span></td>
-                            <td><div class="date-text">05 Nov 2023</div></td>
-                            <td style="text-align:center">
-                                <a href="/pengajuan/detail" class="action-btn" title="Lihat Detail"><i class="fa-regular fa-eye"></i></a>
-                            </td>
-                        </tr>
+                        @forelse($naskahs as $naskah)
+                            <tr>
+                                <td>
+                                    <div class="ms-title">{{ $naskah->judul }}</div>
+                                    <div class="ms-id">ID: MS-{{ str_pad($naskah->id, 4, '0', STR_PAD_LEFT) }}</div>
+                                </td>
+                                <td>
+                                    @if($naskah->status == 'Diterbitkan')
+                                        <span class="status-badge status-published">Diterbitkan</span>
+                                    @elif($naskah->status == 'Draf')
+                                        <span class="status-badge status-draft">Draf</span>
+                                    @else
+                                        <span class="status-badge status-review">Dalam Peninjauan</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="date-text">{{ $naskah->updated_at->format('d M Y') }}</div>
+                                </td>
+                                <td style="text-align:center">
+                                    <a href="/pengajuan/{{ $naskah->id }}" class="action-btn" title="Lihat Detail">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                    <i class="fa-solid fa-inbox" style="font-size: 2rem; margin-bottom: 12px; display: block;"></i>
+                                    Belum ada naskah yang diajukan.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 <div id="emptyState" class="empty-state">
@@ -337,7 +291,7 @@
         userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
         document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
 
-        // Search Filtering Logic
+        // Search Filtering Logic Tetap Jalan Sempurna Aman Terkendali
         const searchInput = document.getElementById('searchInput');
         const table = document.getElementById('submissionTable');
         const emptyState = document.getElementById('emptyState');
@@ -346,21 +300,37 @@
         searchInput.addEventListener('input', function() {
             const query = searchInput.value.toLowerCase();
             let hasResults = false;
+            let totalVisibleRows = 0;
 
             for (let i = 0; i < rows.length; i++) {
-                const title = rows[i].querySelector('.ms-title').textContent.toLowerCase();
-                const id = rows[i].querySelector('.ms-id').textContent.toLowerCase();
+                // Skip jika baris adalah pesan empty state dari forelse
+                if (rows[i].cells.length === 1) continue; 
+
+                const titleEl = rows[i].querySelector('.ms-title');
+                const idEl = rows[i].querySelector('.ms-id');
                 
-                if (title.includes(query) || id.includes(query)) {
-                    rows[i].style.display = '';
-                    hasResults = true;
-                } else {
-                    rows[i].style.display = 'none';
+                if (titleEl && idEl) {
+                    const title = titleEl.textContent.toLowerCase();
+                    const id = idEl.textContent.toLowerCase();
+                    
+                    if (title.includes(query) || id.includes(query)) {
+                        rows[i].style.display = '';
+                        hasResults = true;
+                        totalVisibleRows++;
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
                 }
             }
 
-            table.style.display = hasResults ? '' : 'none';
-            emptyState.style.display = hasResults ? 'none' : 'block';
+            // Jika ada text pencarian tapi baris data sembunyi semua
+            if (query.length > 0 && totalVisibleRows === 0) {
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+            } else {
+                table.style.display = '';
+                emptyState.style.display = 'none';
+            }
         });
     </script>
 </body>
