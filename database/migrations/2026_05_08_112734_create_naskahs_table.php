@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('naskahs', function (Blueprint $table) {
             $table->id();
+            $table->string('judul');
+            $table->string('sub_judul')->nullable();
+            $table->text('sinopsis');
             $table->timestamps();
         });
     }
