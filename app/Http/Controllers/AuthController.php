@@ -3,76 +3,67 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // 1. Tampilkan Halaman Login yang aseli
+    // 1. TAMPILKAN FORM LOGIN
     public function showLogin()
     {
-        return view('auth.login'); // diarahkan ke folder auth/login.blade.php
+        return view('auth.login');
     }
 
-    // 2. Tampilkan Halaman Register yang aseli
-    // 2. Tampilkan Halaman Register yang asli
-    public function showRegister()
-    {
-        return view('auth.register'); // Pastikan tulisannya begini ya!
-    }
-
-    // 3. Proses Registrasi Akun Baru
-    public function register(Request $request)
-    {
-        // Validasi inputan dari form register
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        // Simpan ke database tabel users
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password), // Password wajib di-hash/enkripsi!
-        ]);
-
-        // Lempar ke halaman login dengan pesan sukses
-        return redirect('/auth-login')->with('success', 'Akun berhasil dibuat! Silakan login.');
-    }
-
-    // 4. Proses Verifikasi Login
+    // 2. PROSES MASUK VALIDASI AKUN
     public function login(Request $request)
     {
-        // Validasi inputan login
-        $credentials = $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // Cek apakah email dan password cocok dengan di databaseS
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+        $user = DB::table('akun_pengguna')->where('email', $request->email)->first();
 
-            // Kalau sukses, lempar ke halaman Dashboard utama
-            return redirect()->intended('/');
+        if ($user && Hash::check($request->password, $user->password)) {
+            session(['user_id' => $user->id, 'user_name' => $user->name]);
+            return redirect()->route('dashboard')->with('status', 'Selamat Datang Kembali, Penulis Hebat!');
         }
 
-        // Kalau gagal, balikin ke login dengan error
-        return redirect()->back()->withErrors([
-            'email' => 'Email atau password salah!',
-        ])->withInput();
+        return redirect()->back()->withErrors(['error' => 'Aduh, Email atau Password kamu salah nih!']);
     }
 
-    // 5. Proses Logout
-    public function logout(Request $request)
+    // 3. TAMPILKAN FORM DAFTAR
+    public function showRegister()
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        return view('auth.register');
+    }
 
+    // 4. PROSES SAVE DATA REGISTRASI BARU KE DATABASE REAL TIME
+    public function register(Request $request)
+    {
+        // Validasi inputan form - DISESUAIKAN KE TABEL AKUN_PENGGUNA
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:akun_pengguna,email',
+            'password' => 'required|min:6',
+        ]);
+
+        // Eksekusi simpan permanen ke tabel akun_pengguna database asli!
+        DB::table('akun_pengguna')->insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), // Enkripsi password aman
+        ]);
+
+        // KUNCI SAKTI: Mengarah ke 'login' kustom dan membawa pesan sukses untuk Maria!
+        return redirect()->route('login')->with('status', 'MANTAP MARIA! Akun kamu berhasil terdaftar di DB, silakan masuk!');
+    }
+
+    // 5. PROSES KELUAR SISTEM
+    public function logout()
+    {
+        session()->forget(['user_id', 'user_name']);
         return redirect()->route('login');
     }
 }

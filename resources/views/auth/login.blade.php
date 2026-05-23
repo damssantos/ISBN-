@@ -25,7 +25,7 @@
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
         .input-wrapper { position: relative; }
-        .input-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .input-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size:.875rem; }
         .form-control { width: 100%; padding: 12px 14px 12px 40px; background: #111f2a; border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); outline: none; transition: all 0.2s; }
         .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 195, 189, 0.15); }
         .btn-submit { width: 100%; background: linear-gradient(135deg, var(--primary), var(--primary-dim)); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 10px; }
@@ -33,6 +33,7 @@
         .auth-footer { text-align: center; margin-top: 24px; font-size: 0.875rem; color: var(--text-muted); }
         .auth-footer a { color: var(--primary); text-decoration: none; font-weight: 500; }
         .alert-error { background: rgba(248, 113, 113, 0.15); border: 1px solid #f87171; color: #f87171; padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 0.875rem; font-weight: 500; }
+        .alert-success { background: rgba(59, 195, 189, 0.15); border: 1px solid var(--primary); color: var(--primary-bright); padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 0.875rem; font-weight: 500; text-align: center; }
     </style>
 </head>
 <body>
@@ -42,9 +43,15 @@
             <h1>ISBN TIRTA JAYA</h1>
         </div>
 
+        @if (session('status'))
+            <div class="alert-success">
+                <i class="fa-solid fa-circle-check"></i> {{ session('status') }}
+            </div>
+        @endif
+
         @if ($errors->any())
             <div class="alert-error">
-                {{ $errors->first() }}
+                <i class="fa-solid fa-triangle-exclamation"></i> {{ $errors->first() }}
             </div>
         @endif
 

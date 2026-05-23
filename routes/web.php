@@ -2,89 +2,66 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NaskahController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\AuthController; 
 
 // ==========================================
-// RUTE UTAMA & HALAMAN PORTAL STATIC (FE BUNDLE)
+// 1. GERBANG UTAMA & RE-DIRECTION PORTAL
 // ==========================================
+// Buka web pertama kali (/) langsung dipaksa oper ke halaman login kustom kita
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
-Route::get('/profile', function () {
-    return view('profile');
-});
-
-Route::get('/akun', function () {
-    return view('akun');
-});
-
-Route::get('/pengaturan', function () {
-    return view('pengaturan');
-});
-
-Route::get('/table-penulis', function () {
-    return view('table-penulis');
-});
-
-Route::get('/pengajuan/detail', function () {
-    return view('table-pengajuan');
-});
+// Halaman Dashboard Utama (Sudah dikunci namanya biar tidak memicu error Route Not Found)
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
 // ==========================================
-// MODUL MANAGEMENT NASKAH & DRAF (BACKEND OPERATIONAL)
+// 2. SISTEM AUTENTIKASI KUSTOM (TABEL: akun_pengguna)
 // ==========================================
-
-// Form Pengajuan Baru
-Route::get('/pengajuan', function () {
-    return view('pengajuan');
-})->name('naskah.create');
-
-// Simpan Data Pengajuan Baru (POST)
-Route::post('/pengajuan', [NaskahController::class, 'store'])->name('naskah.store');
-
-// Daftar Naskah Utama
-Route::get('/daftar-pengajuan', [NaskahController::class, 'index'])->name('naskah.index');
-
-// Detail Naskah Satuan Berdasarkan ID
-Route::get('/pengajuan/{id}', [NaskahController::class, 'show'])->name('naskah.show');
-
-// Menampilkan Halaman Draf dari DB
-Route::get('/draf', [NaskahController::class, 'draf'])->name('naskah.draf');
-
-// Aksi Edit & Update Draf
-Route::get('/pengajuan/{id}/edit', [NaskahController::class, 'edit'])->name('naskah.edit');
-
-// Aksi Delete Draf Permanen (DELETE)
-Route::delete('/pengajuan/{id}', [NaskahController::class, 'destroy'])->name('naskah.destroy');
-
-// Rute Utama Informasi Penulis (Database Real)
-Route::get('/informasi-penulis', [ProfilController::class, 'index'])->name('profil.informasi');
-Route::post('/informasi-penulis/update', [ProfilController::class, 'update'])->name('profil.update');
-
-// JURUS ANTI NYASAR: Kalau ada yang nekat nembak /informasi, otomatis dioper ke /informasi-penulis!
-Route::redirect('/informasi', '/informasi-penulis');
-
-// ==========================================
-// SISTEM AUTHENTICATION (LOGIN & REGISTER)
-// ==========================================
-
-// Register Route
-Route::get('/auth-register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/auth-register', [AuthController::class, 'register'])->name('register.store');
-
-// Login Route
+// Form Login (Sign In) - Menembak URL kustom /auth-login bawaan desain FE kamu
 Route::get('/auth-login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/auth-login', [AuthController::class, 'login'])->name('login.store');
 
-// Logout Route
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// Form Register (Sign Up) - Menembak URL kustom /auth-register bawaan desain FE kamu
+Route::get('/auth-register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/auth-register', [AuthController::class, 'register'])->name('register.store');
+
+// Jalur Keluar Sistem (Logout)
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// JURUS SAKTI ANTI-404: Kalau ada yang nyasar ngetik /login atau /register, otomatis dioper ke rute asli FE!
+Route::redirect('/login', '/auth-login');
+Route::redirect('/register', '/auth-register');
 
 
 // ==========================================
-// MONITORING DASHBOARD
+// 3. MODUL MANAGEMENT NASKAH & DRAF
 // ==========================================
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/pengajuan', function () { return view('pengajuan'); })->name('naskah.create');
+Route::post('/pengajuan', [NaskahController::class, 'store'])->name('naskah.store');
+Route::get('/daftar-pengajuan', [NaskahController::class, 'index'])->name('naskah.index');
+Route::get('/pengajuan/{id}', [NaskahController::class, 'show'])->name('naskah.show');
+Route::get('/draf', [NaskahController::class, 'draf'])->name('naskah.draf');
+Route::get('/pengajuan/{id}/edit', [NaskahController::class, 'edit'])->name('naskah.edit');
+Route::delete('/pengajuan/{id}', [NaskahController::class, 'destroy'])->name('naskah.destroy');
+
+
+// ==========================================
+// 4. MODUL INFORMASI PENULIS (TABEL: profil_penulis)
+// ==========================================
+Route::get('/informasi-penulis', [ProfilController::class, 'index'])->name('profil.informasi');
+Route::post('/informasi-penulis/update', [ProfilController::class, 'update'])->name('profil.update');
+Route::redirect('/informasi', '/informasi-penulis');
+
+
+// ==========================================
+// 5. COMPONENT PORTAL STATIS SUB-MENU FE
+// ==========================================
+Route::get('/profile', function () { return view('profile'); });
+Route::get('/akun', function () { return view('akun'); });
+Route::get('/pengaturan', function () { return view('pengaturan'); });
+Route::get('/table-penulis', function () { return view('table-penulis'); });
+Route::get('/pengajuan/detail', function () { return view('table-pengajuan'); });
