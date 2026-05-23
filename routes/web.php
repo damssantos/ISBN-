@@ -62,3 +62,20 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 use App\Http\Controllers\DashboardController;
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->name('admin.dashboard');
+
+Route::get('/admin/review-naskah', function () {
+    return view('admin.review-naskah');
+})->name('admin.review-naskah');
+
+Route::get('/admin/detail-review-naskah', function () {
+    return view('admin.detail-review-naskah');
+});
+
+// Admin Buku Terbit page
+Route::get('/admin/buku-terbit', function () {
+    return view('admin.buku-terbit');
+})->name('admin.buku-terbit');
