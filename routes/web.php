@@ -79,3 +79,18 @@ Route::get('/admin/detail-review-naskah', function () {
 Route::get('/admin/buku-terbit', function () {
     return view('admin.buku-terbit');
 })->name('admin.buku-terbit');
+
+// Admin Pengguna page
+Route::get('/admin/pengguna', function () {
+    return view('admin.pengguna');
+})->name('admin.pengguna');
+
+// Superadmin Dashboard
+Route::get('/superadmin/dashboard', function () {
+    return view('superadmin.dashboard-superadmin');
+})->name('superadmin.dashboard');
+
+// Superadmin Cek Pembayaran
+Route::get('/superadmin/cek-pembayaran', function () {
+    return view('superadmin.cek-pembayaran');
+})->name('superadmin.cek-pembayaran');

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISBN YPIK PAM JAYA - Buku Terbit</title>
+    <title>ISBN YPIK PAM JAYA - Daftar Pengguna</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -99,11 +99,11 @@
         }
         .user-avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Custom Styles for Buku Terbit page */
+        /* Custom Styles for Pengguna page */
         .page-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
             margin-top: 24px;
             margin-bottom: 28px;
         }
@@ -119,106 +119,63 @@
             max-width: 600px;
             line-height: 1.5;
         }
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-        .btn-filter {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            border: 1px solid var(--border-color);
-            background: rgba(27, 43, 56, 0.5);
-            color: var(--text-secondary);
-            border-radius: 10px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-filter:hover {
+
+        .stats-card-main {
             background: var(--bg-card);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-        .btn-export {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            border: none;
-            background: var(--primary);
-            color: #0f1d26;
-            border-radius: 10px;
-            font-size: 0.875rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-export:hover {
-            background: var(--primary-bright);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--primary-glow);
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            background-color: var(--bg-elevated);
-            min-width: 200px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            z-index: 10;
-            border-radius: 10px;
             border: 1px solid var(--border-color);
-            overflow: hidden;
-            margin-top: 8px;
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            min-width: 240px;
         }
-        .dropdown-content a {
-            color: var(--text-secondary);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.875rem;
-            transition: background 0.2s, color 0.2s;
-        }
-        .dropdown-content a:hover {
-            background-color: var(--bg-card-hover);
+        .stats-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
             color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
         }
-        .dropdown-content.show { 
-            display: block; 
-            animation: fadeIn 0.2s ease;
+        .stats-val-wrapper {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .stats-value {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--text-primary);
         }
-        .card { 
+        .stats-subtext {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .table-card { 
             background: var(--bg-card); 
             border: 1px solid var(--border-color); 
             border-top: 2px solid var(--primary-dim); 
-            border-radius: 14px; 
+            border-radius: 16px; 
             padding: 24px; 
             box-shadow: 0 4px 20px rgba(0,0,0,.2); 
             position: relative; 
             overflow: hidden; 
             transition: transform .25s, box-shadow .25s; 
         }
-        .card::after { 
+        .table-card::after { 
             content: ''; 
             position: absolute; 
             inset: 0; 
-            border-radius: 14px; 
+            border-radius: 16px; 
             background: linear-gradient(145deg, rgba(59, 195, 189, 0.03), transparent 60%); 
             pointer-events: none; 
         }
-        .card:hover { 
+        .table-card:hover { 
             transform: translateY(-4px); 
             border-top-color: var(--primary); 
             box-shadow: 0 12px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(59, 195, 189, 0.1); 
@@ -226,58 +183,32 @@
 
         /* Table */
         .table-container { width: 100%; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
         th { 
-            text-align: left; 
-            padding: 0 0 14px; 
+            padding: 16px 24px; 
             font-size: .75rem; 
             color: var(--text-muted); 
-            font-weight: 600; 
+            font-weight: 700; 
             text-transform: uppercase; 
-            letter-spacing: .4px; 
+            letter-spacing: 1px; 
             border-bottom: 1px solid var(--border-color); 
         }
         td { 
-            padding: 16px 0; 
+            padding: 18px 24px; 
             border-bottom: 1px solid var(--border-light); 
             vertical-align: middle; 
             font-size: .875rem; 
         }
         tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(255,255,255,0.01); }
 
-        .judul-naskah-terbit {
-            font-weight: 600;
-            font-size: .875rem;
+        .user-name {
+            font-weight: 700;
             color: var(--text-primary);
         }
-        .penulis-naskah-terbit, .waktu-naskah-terbit {
-            font-size: .875rem;
+        .user-email, .user-phone {
             color: var(--text-secondary);
             font-weight: 500;
-        }
-        .isbn-naskah-terbit {
-            font-weight: 600;
-            font-size: .875rem;
-            color: var(--text-primary);
-        }
-
-        .action-btn { 
-            width: 36px; 
-            height: 36px; 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            border-radius: 10px; 
-            background: rgba(59, 195, 189, .1); 
-            color: var(--primary); 
-            text-decoration: none; 
-            font-size: .875rem; 
-            transition: all .2s; 
-        }
-        .action-btn:hover { 
-            background: var(--primary); 
-            color: #0f1d26; 
-            transform: translateY(-2px); 
         }
 
         .table-footer {
@@ -296,37 +227,34 @@
         .pagination-container {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 16px;
         }
-        .page-btn {
-            width: 32px;
-            height: 32px;
+        .page-arrow {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
         }
-        .page-btn:hover:not(.disabled):not(.active) {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--primary-glow);
+        .page-arrow:hover:not(.disabled) {
+            color: var(--primary-bright);
+            transform: scale(1.2);
         }
-        .page-btn.active {
-            background: var(--primary);
-            color: var(--bg-body);
-            border-color: var(--primary);
-            font-weight: 700;
-        }
-        .page-btn.disabled {
+        .page-arrow.disabled {
+            color: var(--text-muted);
             opacity: 0.3;
             cursor: not-allowed;
+        }
+
+        .empty-state {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            display: none;
         }
     </style>
 </head>
@@ -360,13 +288,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/admin/buku-terbit" class="nav-link active">
+                <a href="/admin/buku-terbit" class="nav-link">
                     <i class="fa-solid fa-book"></i>
                     <span class="nav-link-text">Buku Terbit</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/admin/pengguna" class="nav-link">
+                <a href="/admin/pengguna" class="nav-link active">
                     <i class="fa-solid fa-users"></i>
                     <span class="nav-link-text">Pengguna</span>
                 </a>
@@ -405,126 +333,104 @@
         <!-- Header Section -->
         <div class="page-header">
             <div>
-                <h1>Buku Terbit</h1>
-                <p>Daftar naskah yang telah disetujui dan mendapatkan ISBN secara resmi melalui sistem registrasi.</p>
+                <h1>Daftar Pengguna</h1>
+                <p>Manajemen akses dan identitas pengguna sistem.</p>
             </div>
-            <div class="action-buttons">
-                <div class="dropdown">
-                    <button class="btn-filter" id="filterBtn">
-                        <i class="fa-solid fa-filter"></i> Filter <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; margin-left: 4px;"></i>
-                    </button>
-                    <div id="filterDropdown" class="dropdown-content">
-                        <a href="#">Urutkan dari terbaru</a>
-                        <a href="#">Urutkan dari terlama</a>
-                    </div>
+            <div class="stats-card-main">
+                <span class="stats-label">Statistik Utama</span>
+                <div class="stats-val-wrapper">
+                    <span class="stats-value">1,284</span>
+                    <span class="stats-subtext">Total Pengguna</span>
                 </div>
-                <button class="btn-export">
-                    <i class="fa-solid fa-download"></i> Ekspor Data
-                </button>
             </div>
         </div>
 
         <!-- Table Card -->
-        <div class="card">
+        <div class="table-card">
             <div class="table-container">
-                <table>
+                <table id="userTable">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Judul Naskah</th>
-                            <th style="width: 25%;">Nama Penulis</th>
-                            <th style="width: 20%;">Waktu Terbit</th>
-                            <th style="width: 20%;">Kode ISBN</th>
+                            <th style="width: 35%;">Nama Pengguna</th>
+                            <th style="width: 35%;">Email</th>
+                            <th style="width: 30%;">Nomor. HP</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Arsitektur Digital Masa Depan</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Dr. Ahmad Subarjo</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">12 Okt 2023, 14:20</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-602-433-123-4</div>
-                            </td>
-
+                            <td><div class="user-name">Ahmad Hidayat</div></td>
+                            <td><div class="user-email">ahmad.h@example.com</div></td>
+                            <td><div class="user-phone">0812–3456–7890</div></td>
                         </tr>
                         <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Logika Pemrograman Lanjut</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Siti Aminah, M.Kom</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">10 Okt 2023, 09:15</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-623-111-567-8</div>
-                            </td>
-
+                            <td><div class="user-name">Budi Santoso</div></td>
+                            <td><div class="user-email">budi.s@example.com</div></td>
+                            <td><div class="user-phone">0812–4567–8901</div></td>
                         </tr>
                         <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Seni Menulis Kreatif</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Budi Darmawan</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">08 Okt 2023, 16:45</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-602-000-888-0</div>
-                            </td>
-
+                            <td><div class="user-name">Citra Lestari</div></td>
+                            <td><div class="user-email">citra.l@example.com</div></td>
+                            <td><div class="user-phone">0813–5678–9012</div></td>
                         </tr>
                         <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Data Science Untuk Bisnis</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Prof. Dr. Hendra Wijaya</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">05 Okt 2023, 11:30</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-623-456-789-0</div>
-                            </td>
-
+                            <td><div class="user-name">Dian Pratama</div></td>
+                            <td><div class="user-email">dian.p@example.com</div></td>
+                            <td><div class="user-phone">0815–6789–0123</div></td>
                         </tr>
                         <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Inovasi Bioteknologi Terapan</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Dr. Lisa Permata</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">01 Okt 2023, 15:10</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-602-888-222-1</div>
-                            </td>
-
+                            <td><div class="user-name">Eko Wahyudi</div></td>
+                            <td><div class="user-email">eko.w@example.com</div></td>
+                            <td><div class="user-phone">0856–7890–1234</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="user-name">Fanny Kurniawan</div></td>
+                            <td><div class="user-email">fanny.k@example.com</div></td>
+                            <td><div class="user-phone">0817–8901–2345</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="user-name">Gita Permata</div></td>
+                            <td><div class="user-email">gita.p@example.com</div></td>
+                            <td><div class="user-phone">0819–9012–3456</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="user-name">Hendra Wijaya</div></td>
+                            <td><div class="user-email">hendra.w@example.com</div></td>
+                            <td><div class="user-phone">0812–0123–4567</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="user-name">Indra Kusuma</div></td>
+                            <td><div class="user-email">indra.k@example.com</div></td>
+                            <td><div class="user-phone">0813–1234–5678</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="user-name">Joko Susilo</div></td>
+                            <td><div class="user-email">joko.s@example.com</div></td>
+                            <td><div class="user-phone">0815–2345–6789</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="user-name">Kartika Sari</div></td>
+                            <td><div class="user-email">kartika.s@example.com</div></td>
+                            <td><div class="user-phone">0856–3456–7890</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="user-name">Luluk Amelia</div></td>
+                            <td><div class="user-email">luluk.a@example.com</div></td>
+                            <td><div class="user-phone">0817–4567–8901</div></td>
                         </tr>
                     </tbody>
                 </table>
+                <div id="emptyState" class="empty-state">
+                    <i class="fa-solid fa-magnifying-glass" style="font-size: 2rem; margin-bottom: 12px; display: block;"></i>
+                    Pengguna tidak ditemukan.
+                </div>
             </div>
 
             <!-- Table Footer / Pagination -->
             <div class="table-footer">
-                <span class="footer-text">Menampilkan 5 dari 128 naskah</span>
+                <span class="footer-text">Menampilkan 1–12 dari 1,284</span>
                 <div class="pagination-container">
-                    <button class="page-btn disabled" title="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn" title="Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="page-arrow disabled" title="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="page-arrow" title="Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
         </div>
@@ -538,22 +444,31 @@
             mainContent.classList.toggle('expanded');
         });
 
-        // Dropdown toggle
-        const filterBtn = document.getElementById('filterBtn');
-        const filterDropdown = document.getElementById('filterDropdown');
-        
-        filterBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            filterDropdown.classList.toggle('show');
-        });
+        // Search Filter
+        const searchInput = document.getElementById('searchInput');
+        const userTable = document.getElementById('userTable');
+        const emptyState = document.getElementById('emptyState');
+        const rows = userTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
-        // Close dropdown when clicking outside
-        window.addEventListener('click', (e) => {
-            if (!e.target.closest('.dropdown')) {
-                if (filterDropdown.classList.contains('show')) {
-                    filterDropdown.classList.remove('show');
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            let hasResults = false;
+
+            for (let i = 0; i < rows.length; i++) {
+                const name = rows[i].querySelector('.user-name').textContent.toLowerCase();
+                const email = rows[i].querySelector('.user-email').textContent.toLowerCase();
+                const phone = rows[i].querySelector('.user-phone').textContent.toLowerCase();
+
+                if (name.includes(query) || email.includes(query) || phone.includes(query)) {
+                    rows[i].style.display = '';
+                    hasResults = true;
+                } else {
+                    rows[i].style.display = 'none';
                 }
             }
+
+            userTable.style.display = hasResults ? '' : 'none';
+            emptyState.style.display = hasResults ? 'none' : 'block';
         });
     </script>
 </body>

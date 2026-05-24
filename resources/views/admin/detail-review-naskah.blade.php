@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISBN Registry - Detail Review Naskah</title>
+    <title>ISBN YPIK PAM JAYA - Detail Review Naskah</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -24,7 +24,7 @@
             --text-primary:   #F0F6FA;
             --text-secondary: #B8CDD8;
             --text-muted:     #7A9BAA;
-            --sidebar-width:           250px;
+            --sidebar-width: 280px;
             --sidebar-collapsed-width: 64px;
         }
 
@@ -446,7 +446,7 @@
             <div class="brand-content">
                 <i class="fa-solid fa-book-bookmark brand-icon" style="font-size: 1.25rem; color: var(--primary);"></i>
                 <div style="display: flex; flex-direction: column; overflow: hidden;">
-                    <span class="brand-text">ISBN Registry</span>
+                    <span class="brand-text">ISBN YPIK PAM JAYA</span>
                     <span class="brand-subtitle" style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-top: -2px;">Admin Portal</span>
                 </div>
             </div>
@@ -469,13 +469,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/buku-terbit" class="nav-link">
                     <i class="fa-solid fa-book"></i>
                     <span class="nav-link-text">Buku Terbit</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/pengguna" class="nav-link">
                     <i class="fa-solid fa-users"></i>
                     <span class="nav-link-text">Pengguna</span>
                 </a>
@@ -629,7 +629,7 @@
                     <!-- Page 1 -->
                     <div class="doc-page" id="docPage1" style="margin-bottom: 24px;">
                         <div class="doc-page-header">
-                            <span>ISBN Registry Manuscript</span>
+                            <span>ISBN YPIK PAM JAYA Manuscript</span>
                             <span>Halaman 1</span>
                         </div>
                         <div class="doc-page-content">
@@ -655,7 +655,7 @@
                     <!-- Page 2 -->
                     <div class="doc-page" id="docPage2" style="margin-bottom: 24px;">
                         <div class="doc-page-header">
-                            <span>ISBN Registry Manuscript</span>
+                            <span>ISBN YPIK PAM JAYA Manuscript</span>
                             <span>Halaman 2</span>
                         </div>
                         <div class="doc-page-content">
@@ -684,7 +684,7 @@
                     <!-- Page 3 -->
                     <div class="doc-page" id="docPage3">
                         <div class="doc-page-header">
-                            <span>ISBN Registry Manuscript</span>
+                            <span>ISBN YPIK PAM JAYA Manuscript</span>
                             <span>Halaman 3</span>
                         </div>
                         <div class="doc-page-content">

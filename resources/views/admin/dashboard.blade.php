@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISBN Tirta Jaya - Admin Dashboard</title>
+    <title>ISBN YPIK PAM JAYA - Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -24,7 +24,7 @@
             --text-primary:   #F0F6FA;
             --text-secondary: #B8CDD8;
             --text-muted:     #7A9BAA;
-            --sidebar-width:           250px;
+            --sidebar-width: 280px;
             --sidebar-collapsed-width: 64px;
         }
 
@@ -273,7 +273,7 @@
             <div class="brand-content">
                 <i class="fa-solid fa-book-bookmark brand-icon" style="font-size: 1.25rem; color: var(--primary);"></i>
                 <div style="display: flex; flex-direction: column; overflow: hidden;">
-                    <span class="brand-text">ISBN Registry</span>
+                    <span class="brand-text">ISBN YPIK PAM JAYA</span>
                     <span class="brand-subtitle" style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-top: -2px;">Admin Portal</span>
                 </div>
             </div>
@@ -302,7 +302,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/pengguna" class="nav-link">
                     <i class="fa-solid fa-users"></i>
                     <span class="nav-link-text">Pengguna</span>
                 </a>
@@ -392,7 +392,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">Review Naskah</h2>
-                    <a href="#" class="link-teal">Lihat Semua</a>
+                    <a href="/admin/review-naskah" class="link-teal">Lihat Semua</a>
                 </div>
                 <div class="table-container">
                     <table>
@@ -522,7 +522,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn-outline-users">Lihat Semua Pengguna</button>
+                <button class="btn-outline-users" onclick="window.location.href='/admin/pengguna'">Lihat Semua Pengguna</button>
             </div>
         </section>
     </main>
