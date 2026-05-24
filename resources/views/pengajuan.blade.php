@@ -808,45 +808,65 @@
 
     <header class="top-header">
         <div class="header-actions">
-            <button class="header-icon-btn" id="notifToggle">
-                <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
-        </button>
-        <div class="header-divider"></div>
-        <div class="user-wrapper">
-            <div class="user-header" id="userToggle">
-                <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'P'), 0, 1)) }}</div>
-                <div class="user-header-info">
-                    <div class="user-header-name">{{ explode(' ', trim(session('user_name', 'User')))[0] }}</div>
-                    <div class="user-header-role">Kontributor</div>
+            <div class="notif-wrapper" style="position: relative; display: inline-block;">
+                <button type="button" class="header-icon-btn" id="notifToggle" title="Notifikasi">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notif-dot"></span>
+                </button>
+
+                <div class="notif-dropdown" id="notifDropdown" style="position: absolute; top: calc(100% + 12px); right: 0; width: 320px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; display: none; flex-direction: column; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;">
+                    <div style="font-weight: 700; font-size: 0.875rem; padding: 14px 18px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); display: flex; justify-content: space-between; align-items: center;">
+                        <span>Notifikasi</span>
+                        <span style="font-size: 0.75rem; color: var(--primary); font-weight: 500; cursor: pointer;">Tandai dibaca</span>
+                    </div>
+                    
+                    <div style="max-height: 280px; overflow-y: auto;">
+                        <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                            <div style="display: flex; gap: 10px;">
+                                <i class="fa-solid fa-circle-info" style="color: var(--primary); margin-top: 3px;"></i>
+                                <div>
+                                    <p style="margin: 0; line-height: 1.4;">Naskah <strong>"ya udah"</strong> Anda statusnya berubah menjadi <span style="color: var(--primary);">Dalam Peninjauan</span>.</p>
+                                    <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Hari ini, 13:37</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                            <div style="display: flex; gap: 10px;">
+                                <i class="fa-solid fa-circle-check" style="color: #4ade80; margin-top: 3px;"></i>
+                                <div>
+                                    <p style="margin: 0; line-height: 1.4;">Selamat! Akun Kontributor Anda berhasil diverifikasi oleh sistem.</p>
+                                    <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Kemarin, 10:15</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
             </div>
-            <div class="user-dropdown" id="userDropdown">
-                <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
-                <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
-                <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
-                <div class="user-dropdown-divider"></div>
-                <a href="/auth-login" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+
+            <div class="header-divider"></div>
+            
+            <div class="user-wrapper">
+                <div class="user-header" id="userToggle">
+                    <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'U'), 0, 1)) }}</div>
+                    <div class="user-header-info">
+                        <div class="user-header-name">{{ explode(' ', trim(session('user_name', 'User')))[0] }}</div>
+                        <div class="user-header-role">Kontributor</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                </div>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                    <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
+                    <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+                    <div class="user-dropdown-divider"></div>
+                    <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                </div>
             </div>
         </div>
-    </div>
     </header>
-                        <div class="user-dropdown" id="userDropdown">
-                            <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil
-                                    Saya</span></a>
-                            <a href="/akun" class="user-dropdown-item"><i
-                                    class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
-                            <a href="/pengaturan" class="user-dropdown-item"><i
-                                    class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
-                            <div class="user-dropdown-divider"></div>
-                            <a href="/auth-login" class="user-dropdown-item logout"><i
-                                    class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
-                        </div>
-
-                        <div class="breadcrumb">
-                            <a href="/">Portal</a> <span style="opacity: 0.5; margin: 0 4px;">/</span> <span
-                                class="active">Pengajuan</span>
-                        </div>
+    <div class="breadcrumb">
+        <a href="/">Portal</a> <span style="opacity: 0.5; margin: 0 4px;">/</span> <span class="active">Pengajuan</span>
+    </div>
 
                         <div class="page-header">
                             <div class="page-title-section">
@@ -991,181 +1011,119 @@
     </main>
 
     <script>
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('mainContent');
-    document.getElementById('sidebarToggle').addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        mainContent.classList.toggle('expanded');
-    });
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
 
-    // Upload Foto Cover
-    function setupImageUpload(areaId, inputId, iconId, textId, hintId, previewId, maxMB) {
-        const area = document.getElementById(areaId);
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        const text = document.getElementById(textId);
-        const hint = document.getElementById(hintId);
-        const preview = document.getElementById(previewId);
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        });
 
-        area.addEventListener('click', () => input.click());
-        area.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            area.style.borderColor = 'var(--primary)';
-        });
-        area.addEventListener('dragleave', () => {
-            area.style.borderColor = '';
-        });
-        area.addEventListener('drop', (e) => {
-            e.preventDefault();
-            area.style.borderColor = '';
-            if (e.dataTransfer.files.length) {
-                input.files = e.dataTransfer.files;
-                showPreview(input.files[0]);
+        // Toggle User Dropdown
+        if (userToggle && userDropdown) {
+            userToggle.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                userDropdown.classList.toggle('show'); 
+            });
+        }
+
+        // Dropdown Notifikasi
+        const notifToggle = document.getElementById('notifToggle');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        if (notifToggle && notifDropdown) {
+            notifToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = notifDropdown.style.display === 'none' || notifDropdown.style.display === '';
+                notifDropdown.style.display = isHidden ? 'flex' : 'none';
+                if (userDropdown) userDropdown.classList.remove('show');
+            });
+        }
+
+        // Global Click Event
+        document.addEventListener('click', (e) => { 
+            if (userDropdown && userToggle && !userDropdown.contains(e.target) && !userToggle.contains(e.target)) {
+                userDropdown.classList.remove('show'); 
+            }
+            if (notifDropdown && notifToggle && !notifDropdown.contains(e.target) && !notifToggle.contains(e.target)) {
+                notifDropdown.style.display = 'none';
             }
         });
-        input.addEventListener('change', () => {
-            if (input.files.length) showPreview(input.files[0]);
-        });
 
-        function showPreview(file) {
-            if (file.size > maxMB * 1024 * 1024) {
-                alert('Ukuran file maksimal ' + maxMB + 'MB');
-                return;
-            }
-            icon.style.display = 'none';
-            hint.style.display = 'none';
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-                text.innerHTML = '<span class="text-primary font-semibold">' + file.name + '</span>';
-            } else {
-                preview.style.display = 'none';
-                text.innerHTML =
-                    '<i class="fa-solid fa-file-check" style="font-size:2rem;color:var(--primary);margin-bottom:8px;"></i><br><span class="text-primary font-semibold">' +
-                    file.name + '</span>';
+        // Upload KTP & Foto preview handlers
+        function setupUpload(areaId, inputId, previewId, filenameId) {
+            const area = document.getElementById(areaId);
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const filename = document.getElementById(filenameId);
+
+            if (area && input) {
+                area.addEventListener('click', () => input.click());
+                area.addEventListener('dragover', (e) => { e.preventDefault(); area.style.borderColor = 'var(--primary)'; });
+                area.addEventListener('dragleave', () => { area.style.borderColor = ''; });
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.style.borderColor = '';
+                    if (e.dataTransfer.files.length) {
+                        input.files = e.dataTransfer.files;
+                        handleFile(input.files[0], preview, filename);
+                    }
+                });
+                input.addEventListener('change', () => {
+                    if (input.files.length) handleFile(input.files[0], preview, filename);
+                });
             }
         }
-    }
 
-    // Upload Berkas Naskah
-    function setupFileUpload(areaId, inputId, iconId, textId, hintId, maxMB) {
-        const area = document.getElementById(areaId);
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        const text = document.getElementById(textId);
-        const hint = document.getElementById(hintId);
-
-        area.addEventListener('click', () => input.click());
-        area.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            area.style.borderColor = 'var(--primary)';
-        });
-        area.addEventListener('dragleave', () => {
-            area.style.borderColor = '';
-        });
-        area.addEventListener('drop', (e) => {
-            e.preventDefault();
-            area.style.borderColor = '';
-            if (e.dataTransfer.files.length) {
-                input.files = e.dataTransfer.files;
-                showFile(input.files[0]);
-            }
-        });
-        input.addEventListener('change', () => {
-            if (input.files.length) showFile(input.files[0]);
-        });
-
-        function showFile(file) {
-            if (file.size > maxMB * 1024 * 1024) {
-                alert('Ukuran file maksimal ' + maxMB + 'MB');
-                return;
-            }
-            icon.innerHTML = '<i class="fa-solid fa-file-circle-check" style="font-size:1.5rem;"></i>';
-            icon.style.background = 'var(--primary)';
-            icon.style.boxShadow = '0 4px 16px rgba(59, 195, 189,.4)';
-            text.innerHTML = file.name;
-            hint.innerHTML = '<i class="fa-solid fa-check" style="color:var(--primary);"></i> File berhasil diunggah';
+        function handleFile(file, preview, filenameEl) {
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) { alert('Ukuran file maksimal 5MB'); return; }
+            if (!['image/jpeg','image/png'].includes(file.type)) { alert('Format harus JPG atau PNG'); return; }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.classList.add('has-image');
+                preview.innerHTML = '<img src="' + e.target.result + '" alt="Preview">';
+                filenameEl.textContent = file.name;
+            };
+            reader.readAsDataURL(file);
         }
-    }
 
-    setupImageUpload('areaCover', 'inputCover', 'iconCover', 'textCover', 'hintCover', 'previewCover', 10);
-    setupFileUpload('areaNaskah', 'inputNaskah', 'iconNaskah', 'textNaskah', 'hintNaskah', 50);
+        setupUpload('uploadKtpArea', 'uploadKtp', 'previewKtp', 'filenameKtp');
+        setupUpload('uploadFotoArea', 'uploadFoto', 'previewFoto', 'filenameFoto');
 
-    // User Dropdown Menu Toggle
-    const userToggle = document.getElementById('userToggle');
-    const userDropdown = document.getElementById('userDropdown');
-    userToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userDropdown.classList.toggle('show');
-    });
-    document.addEventListener('click', (e) => {
-        if (!userDropdown.contains(e.target) && !userToggle.contains(e.target)) userDropdown.classList.remove(
-            'show');
-    });
+        // ==========================================
+        // ⚡ agar email bisa langsung dari db
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const authorName = document.getElementById('authorName');
+            const authorEmail = document.getElementById('authorEmail');
 
-    // Dynamic Multiple Authors Array
-    const authorsContainer = document.getElementById('authorsContainer');
-    const addAuthorBtn = document.getElementById('addAuthorBtn');
-    let authorCount = 1;
+            // Ambil data session asli dari Laravel
+            const sessionName = "{{ session('user_name', '') }}";
+            const sessionEmail = "{{ session('user_email', '') }}";
 
-    addAuthorBtn.addEventListener('click', () => {
-        authorCount++;
-        const index = authorCount - 1;
-        const authorHtml = `
-                <div class="author-item" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border-light); animation: fadeIn 0.3s ease-out;">
-                    <div class="section-header" style="margin-bottom: 16px;">
-                        <h3 style="font-size: 0.875rem; color: var(--primary); font-weight: 600;">Penulis #${authorCount}</h3>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Nama Lengkap</label>
-                            <input type="text" name="penulis[${index}][nama]" class="form-control" placeholder="Masukkan nama lengkap penulis..." required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" name="penulis[${index}][email]" class="form-control" placeholder="Masukkan alamat email aktif..." required>
-                        </div>
-                    </div>
-                    <div class="form-row" style="margin-bottom:0;">
-                        <div class="form-group" style="flex: 0 0 160px;">
-                            <label>Urutan Penulis</label>
-                            <select name="penulis[${index}][urutan]" class="form-control">
-                                <option value="1" ${authorCount===1?'selected':''}>1</option>
-                                <option value="2" ${authorCount===2?'selected':''}>2</option>
-                                <option value="3" ${authorCount===3?'selected':''}>3</option>
-                                <option value="4" ${authorCount===4?'selected':''}>4</option>
-                                <option value="5" ${authorCount===5?'selected':''}>5</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
-                            <label>Biodata Narasi</label>
-                            <textarea name="penulis[${index}][biodata]" class="form-control" style="min-height: 80px;" placeholder="Tuliskan biodata narasi singkat..."></textarea>
-                        </div>
-                    </div>
-                    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                        <button type="button" class="btn-remove-author" onclick="this.closest('.author-item').remove()">
-                            <i class="fa-solid fa-trash-can"></i> Hapus Penulis
-                        </button>
-                    </div>
-                </div>
-            `;
-        authorsContainer.insertAdjacentHTML('beforeend', authorHtml);
-    });
-
-    // Inject CSS Animation Keyframe
-    const style = document.createElement('style');
-    style.innerHTML = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
+            if (authorName && sessionName) {
+                authorName.value = sessionName;
             }
-        `;
-    document.head.appendChild(style);
+
+            if (authorEmail) {
+                // 1. Cek dulu apakah session_email rill ada isinya dari AuthController
+                if (sessionEmail && sessionEmail !== 'user@gmail.com') {
+                    authorEmail.value = sessionEmail;
+                } 
+                // 2. Kalau kosong, paksa generate dari nama session + @gmail.com
+                else if (sessionName && sessionName.toLowerCase() !== 'user') {
+                    let cleanName = sessionName.toLowerCase().replace(/\s+/g, '');
+                    authorEmail.value = cleanName + '@gmail.com';
+                } 
+                // 3. Pilihan terakhir kalau semuanya zonk baru pake pengaman
+                else {
+                    authorEmail.value = 'kontributor_tirta@gmail.com';
+                }
+            }
+        });
     </script>
-</body>
-
+    </body>
 </html>

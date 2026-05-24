@@ -60,8 +60,27 @@ Route::redirect('/informasi', '/informasi-penulis');
 // ==========================================
 // 5. COMPONENT PORTAL STATIS SUB-MENU FE
 // ==========================================
-Route::get('/profile', function () { return view('profile'); });
-Route::get('/akun', function () { return view('akun'); });
-Route::get('/pengaturan', function () { return view('pengaturan'); });
-Route::get('/table-penulis', function () { return view('table-penulis'); });
-Route::get('/pengajuan/detail', function () { return view('table-pengajuan'); });
+Route::get('/profile', function () { 
+    if (!session()->has('user_id')) { return redirect()->route('login'); }
+    return view('profile'); 
+});
+
+Route::get('/akun', function () { 
+    if (!session()->has('user_id')) { return redirect()->route('login'); }
+    return view('akun'); 
+});
+
+Route::get('/pengaturan', function () { 
+    if (!session()->has('user_id')) { return redirect()->route('login'); }
+    return view('pengaturan'); 
+});
+
+Route::get('/table-penulis', function () { 
+    if (!session()->has('user_id')) { return redirect()->route('login'); }
+    return view('table-penulis'); 
+});
+
+Route::get('/pengajuan/detail', function () { 
+    if (!session()->has('user_id')) { return redirect()->route('login'); }
+    return view('table-pengajuan'); 
+});

@@ -26,7 +26,12 @@ class AuthController extends Controller
         $user = DB::table('akun_pengguna')->where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
-            session(['user_id' => $user->id, 'user_name' => $user->name]);
+            session([
+                'user_id'    => $user->id, 
+                'user_name'  => $user->name, 
+                'user_email' => $user->email
+            ]);
+            \Auth::loginUsingId($user->id); 
             return redirect()->route('dashboard')->with('status', 'Selamat Datang Kembali, Penulis Hebat!');
         }
 
@@ -64,6 +69,7 @@ class AuthController extends Controller
     public function logout()
     {
         session()->forget(['user_id', 'user_name']);
+        \Auth::logout();      
         return redirect()->route('login');
     }
 }

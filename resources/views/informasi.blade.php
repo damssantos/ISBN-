@@ -185,28 +185,57 @@
 
             <header class="top-header">
                 <div class="header-actions">
-                    <button type="button" class="header-icon-btn" title="Notifikasi">
-                        <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
-                    </button>
-                    
+                    <div class="notif-wrapper" style="position: relative; display: inline-block;">
+                        <button type="button" class="header-icon-btn" id="notifToggle" title="Notifikasi">
+                            <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
+                        </button>
+
+                        <div class="notif-dropdown" id="notifDropdown" style="position: absolute; top: calc(100% + 12px); right: 0; width: 320px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; display: none; flex-direction: column; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;">
+                            <div style="font-weight: 700; font-size: 0.875rem; padding: 14px 18px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); display: flex; justify-content: space-between; align-items: center;">
+                                <span>Notifikasi</span>
+                                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 500; cursor: pointer;">Tandai dibaca</span>
+                            </div>
+                            
+                            <div style="max-height: 280px; overflow-y: auto;">
+                                <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                    <div style="display: flex; gap: 10px;">
+                                        <i class="fa-solid fa-circle-info" style="color: var(--primary); margin-top: 3px;"></i>
+                                        <div>
+                                            <p style="margin: 0; line-height: 1.4;">Naskah <strong>"ya udah"</strong> Anda statusnya berubah menjadi <span style="color: var(--primary);">Dalam Peninjauan</span>.</p>
+                                            <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Hari ini, 13:37</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                    <div style="display: flex; gap: 10px;">
+                                        <i class="fa-solid fa-circle-check" style="color: #4ade80; margin-top: 3px;"></i>
+                                        <div>
+                                            <p style="margin: 0; line-height: 1.4;">Selamat! Akun Kontributor Anda berhasil diverifikasi oleh sistem.</p>
+                                            <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Kemarin, 10:15</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="header-divider"></div>
                     
                     <div class="user-wrapper">
                         <div class="user-header" id="userToggle">
-                            <div class="user-avatar">A</div>
+                            <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'U'), 0, 1)) }}</div>
                             <div class="user-header-info">
-                                <div class="user-header-name">Amelia</div>
+                                <div class="user-header-name">{{ explode(' ', trim(session('user_name', 'User')))[0] }}</div>
                                 <div class="user-header-role">Kontributor</div>
                             </div>
                             <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                         </div>
-                        
                         <div class="user-dropdown" id="userDropdown">
                             <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
-                            <a href="/id-akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
+                            <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
                             <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
                             <div class="user-dropdown-divider"></div>
-                            <a href="/auth-login" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                            <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                         </div>
                     </div>
                 </div>
@@ -214,9 +243,9 @@
 
             <div class="profile-header">
                 <div class="profile-header-left">
-                    <div class="profile-avatar">A</div>
+                    <div class="profile-avatar">{{ strtoupper(substr(session('user_name', 'U'), 0, 1)) }}</div>
                     <div>
-                        <div class="profile-name">Amelia Fransisca</div>
+                        <div class="profile-name">{{ session('user_name', 'Nama Pengguna') }}</div>
                         <div class="profile-role">Kelola detail informasi profil Anda secara realtime</div>
                     </div>
                 </div>
@@ -233,14 +262,21 @@
 
             <div class="profile-section">
                 <h2 class="section-title"><i class="fa-solid fa-user-circle"></i> Informasi Pribadi</h2>
+                
                 <div class="form-grid form-grid-2" style="margin-bottom:20px;">
                     <div class="form-group">
-                        <label class="form-label">Gelar Depan</label>
-                        <input type="text" name="gelar_depan" class="form-control" placeholder="Contoh: Dr. / Prof." autocomplete="off">
-                    </div>
-                    <div class="form-group">
                         <label class="form-label">Nama Penulis</label>
-                        <input type="text" name="name" class="form-control" value="Amelia Fransisca" required placeholder="Masukkan nama penulis" autocomplete="off">
+                        <input type="text" id="authorName" name="name" class="form-control" value="{{ session('user_name', 'Nama Penulis') }}" readonly style="opacity: 0.8;" autocomplete="off">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="authorEmail" name="email" class="form-control" placeholder="Masukkan alamat email Anda" autocomplete="off">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nomor HP</label>
+                        <input type="text" class="form-control" placeholder="Masukkan nomor HP..." disabled style="opacity: 0.5;">
                     </div>
                 </div>
                 <div class="form-grid form-grid-3" style="margin-bottom:20px;">
@@ -286,11 +322,11 @@
                 <div class="form-grid form-grid-2" style="margin-bottom:20px;">
                     <div class="form-group">
                         <label class="form-label">NIK</label>
-                        <input type="text" name="nik" class="form-control" placeholder="Masukkan 16 digit NIK..." autocomplete="off">
+                        <input type="text" name="nik" class="form-control" value="{{ $akun_pengguna->nik ?? '' }}" placeholder="Masukkan 16 digit NIK..." autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Sesuai KTP</label>
-                        <input type="text" class="form-control" value="Amelia Fransisca" placeholder="Nama sesuai KTP..." disabled style="opacity:0.6;">
+                        <input type="text" class="form-control" value="{{ session('user_name') }}" disabled style="opacity: 0.6;">
                     </div>
                 </div>
                 <div class="form-grid form-grid-1" style="margin-bottom:20px;">
@@ -302,8 +338,7 @@
                 <div class="form-grid form-grid-2" style="margin-bottom:20px;">
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="Masukkan alamat email..." disabled style="opacity: 0.6;">
-                    </div>
+                        <input type="email" class="form-control" value="{{ session('user_email', 'user@gmail.com') }}" placeholder="Masukkan alamat email">
                     <div class="form-group">
                         <label class="form-label">Nomor HP</label>
                         <input type="text" class="form-control" placeholder="Masukkan nomor HP..." disabled style="opacity: 0.5;">
@@ -343,7 +378,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama NPWP</label>
-                        <input type="text" class="form-control" value="Amelia Fransisca" placeholder="Nama sesuai NPWP..." disabled style="opacity: 0.5;">
+                        <input type="text" class="form-control" value="{{ $akun_pengguna->name ?? '' }}" placeholder="Nama sesuai NPWP..." disabled style="opacity: 0.5;">
                     </div>
                 </div>
                 <div class="form-grid form-grid-1">
@@ -363,7 +398,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Rekening</label>
-                        <input type="text" class="form-control" value="Amelia Fransisca" placeholder="Nama pemilik rekening..." disabled style="opacity: 0.5;">
+                        <input type="text" class="form-control" value="{{ $akun_pengguna->name ?? '' }}" placeholder="Nama pemilik rekening..." disabled style="opacity: 0.5;">
                     </div>
                 </div>
                 <div class="form-grid form-grid-3">
@@ -420,9 +455,46 @@
     <script>
         const sidebar = document.getElementById('sidebar');
         const mainContent = document.getElementById('mainContent');
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+
         document.getElementById('sidebarToggle').addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
+        });
+
+        // Toggle User Dropdown
+        if (userToggle && userDropdown) {
+            userToggle.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                userDropdown.classList.toggle('show'); 
+            });
+        }
+
+        // ==========================================
+        // LOGIC JAVASCRIPT DROPDOWN NOTIFIKASI
+        // ==========================================
+        const notifToggle = document.getElementById('notifToggle');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        if (notifToggle && notifDropdown) {
+            notifToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = notifDropdown.style.display === 'none' || notifDropdown.style.display === '';
+                notifDropdown.style.display = isHidden ? 'flex' : 'none';
+                
+                if (userDropdown) userDropdown.classList.remove('show');
+            });
+        }
+
+        // Global Click Event (Tutup semua dropdown kalau klik di luar area)
+        document.addEventListener('click', (e) => { 
+            if (userDropdown && userToggle && !userDropdown.contains(e.target) && !userToggle.contains(e.target)) {
+                userDropdown.classList.remove('show'); 
+            }
+            if (notifDropdown && notifToggle && !notifDropdown.contains(e.target) && !notifToggle.contains(e.target)) {
+                notifDropdown.style.display = 'none';
+            }
         });
 
         // Upload KTP & Foto preview handlers
@@ -432,20 +504,22 @@
             const preview = document.getElementById(previewId);
             const filename = document.getElementById(filenameId);
 
-            area.addEventListener('click', () => input.click());
-            area.addEventListener('dragover', (e) => { e.preventDefault(); area.style.borderColor = 'var(--primary)'; });
-            area.addEventListener('dragleave', () => { area.style.borderColor = ''; });
-            area.addEventListener('drop', (e) => {
-                e.preventDefault();
-                area.style.borderColor = '';
-                if (e.dataTransfer.files.length) {
-                    input.files = e.dataTransfer.files;
-                    handleFile(input.files[0], preview, filename);
-                }
-            });
-            input.addEventListener('change', () => {
-                if (input.files.length) handleFile(input.files[0], preview, filename);
-            });
+            if (area && input) {
+                area.addEventListener('click', () => input.click());
+                area.addEventListener('dragover', (e) => { e.preventDefault(); area.style.borderColor = 'var(--primary)'; });
+                area.addEventListener('dragleave', () => { area.style.borderColor = ''; });
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.style.borderColor = '';
+                    if (e.dataTransfer.files.length) {
+                        input.files = e.dataTransfer.files;
+                        handleFile(input.files[0], preview, filename);
+                    }
+                });
+                input.addEventListener('change', () => {
+                    if (input.files.length) handleFile(input.files[0], preview, filename);
+                });
+            }
         }
 
         function handleFile(file, preview, filenameEl) {
@@ -464,11 +538,23 @@
         setupUpload('uploadKtpArea', 'uploadKtp', 'previewKtp', 'filenameKtp');
         setupUpload('uploadFotoArea', 'uploadFoto', 'previewFoto', 'filenameFoto');
 
-        // User Dropdown logic
-        const userToggle = document.getElementById('userToggle');
-        const userDropdown = document.getElementById('userDropdown');
-        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
-        document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
+        // ==========================================
+        //  GENERATE EMAIL DARI NAMA SESSION
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const authorName = document.getElementById('authorName');
+            const authorEmail = document.getElementById('authorEmail');
+            const sessionName = "{{ session('user_name', '') }}";
+
+            if (authorName && sessionName) {
+                authorName.value = sessionName; 
+            }
+
+            if (authorEmail && sessionName) {
+                let cleanName = sessionName.toLowerCase().replace(/\s+/g, '');
+                authorEmail.value = cleanName + '@gmail.com';
+            }
+        });
     </script>
 </body>
 </html>

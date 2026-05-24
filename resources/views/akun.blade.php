@@ -56,25 +56,19 @@
         .logout-btn:hover { color:#f87171; background:rgba(248,113,113,.08); }
         .sidebar.collapsed .logout-btn span { opacity:0; width:0; overflow:hidden; }
 
-        /* Main */
+        /* Main Content */
         .main-content { flex:1; margin-left:var(--sidebar-width); padding:0 40px 48px; transition:margin-left 0.3s cubic-bezier(.4, 0, .2, 1); }
+        .main-content.expanded { margin-left:var(--sidebar-collapsed-width); }
         
-        .top-header { display:flex; justify-content:flex-end; align-items:center; padding:12px 0; }
-        .header-actions { 
-            display:flex; 
-            align-items:center; 
-            background: rgba(15, 29, 38, 0.7);
-            border: 1px solid var(--border-color);
-            padding: 4px 12px 4px 4px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            gap: 0;
-        }
+        /* Top Header Component */
+        .top-header { display:flex; justify-content:flex-end; align-items:center; padding:20px 0; }
+        .header-actions { display:flex; align-items:center; background: rgba(15, 29, 38, 0.7); border: 1px solid var(--border-color); padding: 4px 12px 4px 4px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); gap: 0; }
         .header-icon-btn { width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:12px; border:none; background:transparent; color:var(--text-secondary); cursor:pointer; transition:all 0.2s; position:relative; font-size:1.1rem; }
         .header-icon-btn:hover { background:rgba(255,255,255,0.05); color:var(--primary-bright); }
         .header-divider { width:1px; height:24px; background:var(--border-color); margin:0 12px 0 8px; opacity: 0.6; }
         .notif-dot { position:absolute; top:10px; right:10px; width:6px; height:6px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
         
+        /* Dropdown Components */
         .user-wrapper { position:relative; }
         .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
         .user-header:hover { background:rgba(255,255,255,0.05); }
@@ -82,22 +76,8 @@
         .user-header-info { display:flex; flex-direction:column; gap:0; }
         .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
         .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
-        .user-dropdown {
-            position:absolute;
-            top:calc(100% + 12px);
-            right:0;
-            width:240px;
-            background:var(--bg-card);
-            border:1px solid var(--border-color);
-            border-radius:16px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(59, 195, 189,0.08);
-            display:none;
-            flex-direction:column;
-            z-index:1000;
-            overflow:hidden;
-            transform-origin: top right;
-            animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        
+        .user-dropdown { position:absolute; top:calc(100% + 12px); right:0; width:240px; background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(59, 195, 189,0.08); display:none; flex-direction:column; z-index:1000; overflow:hidden; transform-origin: top right; animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         .user-dropdown.show { display:flex; }
         .user-dropdown-item { padding:14px 20px; display:flex; align-items:center; gap:16px; color:var(--text-secondary); text-decoration:none; font-size:.875rem; font-weight:500; transition:all .2s; cursor:pointer; }
         .user-dropdown-item:hover { background:var(--bg-card-hover); color:var(--primary); padding-left:24px; }
@@ -108,8 +88,15 @@
         .user-dropdown-item.logout i { color:#f87171; }
         .user-dropdown-item.logout:hover { background:rgba(248,113,113,0.08); color:#f87171; }
 
-        /* Page Layout */
+        /* Notif Dropdown Component Fix (Ditambah lebar aman agar tidak tertekang kolom grid) */
+        .notif-wrapper { position: relative; display: inline-block; }
+        .notif-dropdown { position: absolute; top: calc(100% + 12px); right: 0; width: 320px; min-width: 320px; max-width: 360px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; display: none; flex-direction: column; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden; transform-origin: top right; animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes dropdownFadeIn { from{opacity:0;transform:scale(.95) translateY(-10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
+        /* Page Layout Structural Grid */
         .page-grid { display:grid; grid-template-columns:300px 1fr; gap:24px; margin-top:10px; }
+        .left-col { height: 100%; }
+        .right-col { height: 100%; }
         
         .card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:20px; padding:28px; box-shadow:0 4px 20px rgba(0,0,0,0.2); position:relative; overflow:hidden; transition:transform .25s, box-shadow .25s; }
         .card::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg,rgba(59, 195, 189,0.03),transparent 60%); pointer-events:none; }
@@ -130,13 +117,7 @@
         .info-list { display:flex; flex-direction:column; gap:20px; }
         .info-item { display:flex; justify-content:space-between; align-items:center; padding-bottom:15px; border-bottom:1px solid var(--border-light); }
         .info-label { color:var(--text-muted); font-size:.8125rem; }
-        .info-value { color:var(--text-primary); font-weight:600; font-size:.875rem; }
-        
-        /* Security Badges */
-        .badge-list { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
-        .badge { padding:6px 12px; border-radius:8px; background:rgba(255,255,255,0.03); border:1px solid var(--border-color); font-size:.75rem; color:var(--text-secondary); display:flex; align-items:center; gap:8px; }
-        .badge i { color:var(--primary); }
-        .badge.warning i { color:#fbbf24; }
+        .info-value { color:var(--text-primary); font-weight:600; font-size:.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 210px; text-align: right; }
         
         /* Session List */
         .session-item { display:flex; align-items:center; gap:16px; padding:14px; border-radius:12px; background:rgba(255,255,255,0.02); border:1px solid var(--border-light); margin-bottom:12px; }
@@ -164,64 +145,62 @@
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="/" class="nav-link">
-                    <i class="fa-solid fa-border-all"></i>
-                    <span class="nav-link-text">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/pengajuan" class="nav-link">
-                    <i class="fa-regular fa-file-lines"></i>
-                    <span class="nav-link-text">Pengajuan</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/daftar-pengajuan" class="nav-link">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span class="nav-link-text">Daftar Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/draf" class="nav-link">
-                    <i class="fa-solid fa-inbox"></i>
-                    <span class="nav-link-text">Draf Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/informasi" class="nav-link">
-                    <i class="fa-regular fa-user"></i>
-                    <span class="nav-link-text">Informasi Penulis</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/table-penulis" class="nav-link">
-                    <i class="fa-solid fa-users-viewfinder"></i>
-                    <span class="nav-link-text">Daftar Penulis</span>
-                </a>
-            </li>
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="/pengajuan" class="nav-link"><i class="fa-regular fa-file-lines"></i><span class="nav-link-text">Pengajuan</span></a></li>
+            <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link"><i class="fa-solid fa-list-check"></i><span class="nav-link-text">Daftar Naskah</span></a></li>
+            <li class="nav-item"><a href="/draf" class="nav-link"><i class="fa-solid fa-inbox"></i><span class="nav-link-text">Draf Naskah</span></a></li>
+            <li class="nav-item"><a href="/informasi" class="nav-link"><i class="fa-regular fa-user"></i><span class="nav-link-text">Informasi Penulis</span></a></li>
+            <li class="nav-item"><a href="/table-penulis" class="nav-link"><i class="fa-solid fa-users-viewfinder"></i><span class="nav-link-text">Daftar Penulis</span></a></li>
         </ul>
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                <span>Keluar</span>
-            </a>
+            <a href="#" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
         </div>
     </aside>
 
     <main class="main-content" id="mainContent">
-        <header class="top-header">
+        <header class="top-header" style="display: flex; justify-content: flex-end; padding: 12px 0;">
             <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </button>
+                <div class="notif-wrapper">
+                    <button type="button" class="header-icon-btn" id="notifToggle" title="Notifikasi">
+                        <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
+                    </button>
+
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div style="font-weight: 700; font-size: 0.875rem; padding: 14px 18px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); display: flex; justify-content: space-between; align-items: center;">
+                            <span>Notifikasi</span>
+                            <span style="font-size: 0.75rem; color: var(--primary); font-weight: 500; cursor: pointer;">Tandai dibaca</span>
+                        </div>
+                        
+                        <div style="max-height: 280px; overflow-y: auto;">
+                            <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; gap: 10px;">
+                                    <i class="fa-solid fa-circle-info" style="color: var(--primary); margin-top: 3px;"></i>
+                                    <div>
+                                        <p style="margin: 0; line-height: 1.4;">Naskah <strong>"ya udah"</strong> Anda statusnya berubah menjadi <span style="color: var(--primary);">Dalam Peninjauan</span>.</p>
+                                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Hari ini, 13:37</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; gap: 10px;">
+                                    <i class="fa-solid fa-circle-check" style="color: #4ade80; margin-top: 3px;"></i>
+                                    <div>
+                                        <p style="margin: 0; line-height: 1.4;">Selamat! Akun Kontributor Anda berhasil diverifikasi oleh sistem.</p>
+                                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Kemarin, 10:15</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="header-divider"></div>
+                
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
-                        <div class="user-avatar-sm">{{ substr(trim(Auth::user()->name), 0, 1) }}</div>
+                        <div class="user-avatar-sm">{{ strtoupper(substr(session('user_name', 'U'), 0, 1)) }}</div>
                         <div class="user-header-info">
-                            <div class="user-header-name">{{ explode(' ', trim(Auth::user()->name))[0] }}</div>
+                            <div class="user-header-name" style="padding-right: 10px;">{{ explode(' ', trim(session('user_name', 'User')))[0] }}</div>
                             <div class="user-header-role">Kontributor</div>
                         </div>
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
@@ -231,7 +210,7 @@
                         <a href="/akun" class="user-dropdown-item active"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
                         <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
                         <div class="user-dropdown-divider"></div>
-                        <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                        <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
                 </div>
             </div>
@@ -244,7 +223,7 @@
                         <i class="fa-solid fa-user-shield"></i>
                     </div>
                     <div class="status-label">AKUN TERVERIFIKASI</div>
-                    <h2 style="font-size:1.25rem; margin-bottom:8px;">Akun Pradama</h2>
+                    <h2 style="font-size:1.25rem; margin-bottom:8px;">Akun {{ explode(' ', trim(session('user_name', 'User')))[0] }}</h2>
                     <p class="status-text">Terdaftar sejak 12 Januari 2024. Status akun Anda dalam keadaan baik dan aman.</p>
                     
                     <div class="info-list" style="text-align:left;">
@@ -256,7 +235,7 @@
                             <span class="info-label">Tipe Akun</span>
                             <span class="info-value">Kontributor</span>
                         </div>
-                        <div class="info-item">
+                        <div class="info-item" style="border-bottom:none; padding-bottom:0;">
                             <span class="info-label">Batas Naskah</span>
                             <span class="info-value">Tanpa Batas</span>
                         </div>
@@ -274,7 +253,7 @@
                         <div class="info-list" id="accountInfoList">
                             <div class="info-item">
                                 <span class="info-label">Email</span>
-                                <span class="info-value" id="emailValue">pradama.wijaya@gmail.com</span>
+                                <span class="info-value" id="emailValue">{{ session('user_email', 'user@gmail.com') }}</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Password</span>
@@ -320,43 +299,71 @@
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         });
+
+        // Dropdowns Logic Control 
         const userToggle = document.getElementById('userToggle');
         const userDropdown = document.getElementById('userDropdown');
-        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
-        document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
+        const notifToggle = document.getElementById('notifToggle');
+        const notifDropdown = document.getElementById('notifDropdown');
 
-        // Edit Account Info Logic
+        // Toggle Profil Dropdown
+        if (userToggle && userDropdown) {
+            userToggle.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                userDropdown.classList.toggle('show'); 
+                if (notifDropdown) notifDropdown.style.display = 'none';
+            });
+        }
+
+        // Toggle Lonceng Notifikasi Dropdown
+        if (notifToggle && notifDropdown) {
+            notifToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = notifDropdown.style.display === 'none' || notifDropdown.style.display === '';
+                notifDropdown.style.display = isHidden ? 'flex' : 'none';
+                if (userDropdown) userDropdown.classList.remove('show');
+            });
+        }
+
+        // Global Auto-Close Event Click
+        document.addEventListener('click', (e) => { 
+            if (userDropdown && userToggle && !userDropdown.contains(e.target) && !userToggle.contains(e.target)) {
+                userDropdown.classList.remove('show'); 
+            }
+            if (notifDropdown && notifToggle && !notifDropdown.contains(e.target) && !notifToggle.contains(e.target)) {
+                notifDropdown.style.display = 'none';
+            }
+        });
+
+        // Edit Mode Form Action Logic
         const editBtn = document.getElementById('editBtn');
         const emailValue = document.getElementById('emailValue');
         const passwordValue = document.getElementById('passwordValue');
         let isEditing = false;
 
-        editBtn.addEventListener('click', () => {
-            if (!isEditing) {
-                // Switch to Edit Mode
-                const currentEmail = emailValue.innerText;
-                emailValue.innerHTML = `<input type="email" id="emailInput" class="form-control" value="${currentEmail}" style="padding: 4px 8px; font-size: 0.875rem; background: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; width: 200px;">`;
-                passwordValue.innerHTML = `<input type="password" id="passwordInput" class="form-control" value="password" style="padding: 4px 8px; font-size: 0.875rem; background: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; width: 200px;">`;
-                editBtn.innerText = 'Simpan';
-                isEditing = true;
-            } else {
-                // Switch to View Mode (Save)
-                const newEmail = document.getElementById('emailInput').value;
-                emailValue.innerText = newEmail;
-                passwordValue.innerText = '••••••••••••';
-                
-                // Show feedback
-                const origText = editBtn.innerText;
-                editBtn.innerText = 'Berhasil!';
-                editBtn.style.color = 'var(--primary)';
-                setTimeout(() => {
-                    editBtn.innerText = 'Ubah';
-                    editBtn.style.color = '';
-                }, 2000);
-                
-                isEditing = false;
-            }
-        });
+        if (editBtn && emailValue && passwordValue) {
+            editBtn.addEventListener('click', () => {
+                if (!isEditing) {
+                    const currentEmail = emailValue.innerText;
+                    emailValue.innerHTML = `<input type="email" id="emailInput" class="form-control" value="${currentEmail}" style="padding: 4px 8px; font-size: 0.875rem; background: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; width: 200px; outline: none;">`;
+                    passwordValue.innerHTML = `<input type="password" id="passwordInput" class="form-control" value="********" style="padding: 4px 8px; font-size: 0.875rem; background: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; width: 200px; outline: none;">`;
+                    editBtn.innerText = 'Simpan';
+                    isEditing = true;
+                } else {
+                    const newEmail = document.getElementById('emailInput').value;
+                    emailValue.innerText = newEmail;
+                    passwordValue.innerText = '••••••••••••';
+                    
+                    editBtn.innerText = 'Berhasil!';
+                    editBtn.style.color = 'var(--primary)';
+                    setTimeout(() => {
+                        editBtn.innerText = 'Ubah';
+                        editBtn.style.color = '';
+                    }, 2000);
+                    isEditing = false;
+                }
+            });
+        }
     </script>
 </body>
 </html>

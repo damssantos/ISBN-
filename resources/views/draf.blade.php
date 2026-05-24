@@ -59,7 +59,12 @@
         .search-container i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-muted); }
         .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:var(--bg-card); border-radius:10px; color:var(--text-primary); outline:none; }
         
-        .header-actions { display:flex; align-items:center; background: rgba(15, 29, 38, 0.7); border: 1px solid var(--border-color); padding: 4px 12px 4px 4px; border-radius: 16px; }
+        .header-actions { display:flex; align-items:center; background: rgba(15, 29, 38, 0.7); border: 1px solid var(--border-color); padding: 4px 12px 4px 4px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); gap: 0; }
+        .header-icon-btn { width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:12px; border:none; background:transparent; color:var(--text-secondary); cursor:pointer; transition:all 0.2s; position:relative; font-size:1.1rem; }
+        .header-icon-btn:hover { background:rgba(255,255,255,0.05); color:var(--primary-bright); }
+        .header-divider { width:1px; height:24px; background:var(--border-color); margin:0 12px 0 8px; opacity: 0.6; }
+        .notif-dot { position:absolute; top:10px; right:10px; width:6px; height:6px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
+        
         .user-header { display:flex; align-items:center; gap:12px; cursor:pointer; }
         .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; }
 
@@ -88,6 +93,57 @@
 
         .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
         .empty-state { padding:40px; text-align:center; color:var(--text-muted); }
+
+        .user-wrapper { position:relative;
+        }
+        .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s;
+        }
+        .user-header:hover { background:rgba(255,255,255,0.05);
+        }
+        .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center;
+        font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(59, 195, 189,0.3); }
+        .user-header-info { display:flex;
+        flex-direction:column; gap:0; }
+        .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2;
+        }
+        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500;
+        }
+
+        .user-dropdown {
+            position:absolute;
+            top:calc(100% + 12px);
+            right:0;
+            width:240px;
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(59, 195, 189,0.08);
+            display:none;
+            flex-direction:column;
+            z-index:1000;
+            overflow:hidden;
+            transform-origin: top right;
+            animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes dropdownFadeIn { from{opacity:0;transform:scale(.95) translateY(-10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+        .user-dropdown.show { display:flex;
+        }
+        .user-dropdown-item { padding:14px 20px; display:flex; align-items:center; gap:16px; color:var(--text-secondary); text-decoration:none; font-size:.875rem; font-weight:500;
+        transition:all .2s; cursor:pointer; }
+        .user-dropdown-item:hover { background:var(--bg-card-hover); color:var(--primary); padding-left:24px;
+        }
+        .user-dropdown-item i { width:20px; font-size:1.1rem; text-align:center; color:var(--text-muted); transition:color .2s;
+        }
+        .user-dropdown-item:hover i { color:var(--primary);
+        }
+        .user-dropdown-divider { height:1px; background:var(--border-color); margin:8px 0;
+        }
+        .user-dropdown-item.logout { color:#f87171;
+        }
+        .user-dropdown-item.logout i { color:#f87171;
+        }
+        .user-dropdown-item.logout:hover { background:rgba(248, 113, 113, 0.08); color:#f87171;
+        }
     </style>
 </head>
 <body>
@@ -121,12 +177,59 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" class="search-input" id="searchInput" placeholder="Cari draf naskah...">
             </div>
+            
             <div class="header-actions">
-                <div class="user-header">
-                    <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'P'), 0, 1)) }}</div>
-                    
-                    <div class="user-header-name" style="padding-right: 10px;">
-                        {{ explode(' ', trim(session('user_name', 'User')))[0] }}
+                <div class="notif-wrapper" style="position: relative; display: inline-block;">
+                    <button type="button" class="header-icon-btn" id="notifToggle" title="Notifikasi">
+                        <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
+                    </button>
+
+                    <div class="notif-dropdown" id="notifDropdown" style="position: absolute; top: calc(100% + 12px); right: 0; width: 320px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; display: none; flex-direction: column; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;">
+                        <div style="font-weight: 700; font-size: 0.875rem; padding: 14px 18px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); display: flex; justify-content: space-between; align-items: center;">
+                            <span>Notifikasi</span>
+                            <span style="font-size: 0.75rem; color: var(--primary); font-weight: 500; cursor: pointer;">Tandai dibaca</span>
+                        </div>
+                        
+                        <div style="max-height: 280px; overflow-y: auto;">
+                            <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; gap: 10px;">
+                                    <i class="fa-solid fa-circle-info" style="color: var(--primary); margin-top: 3px;"></i>
+                                    <div>
+                                        <p style="margin: 0; line-height: 1.4;">Naskah <strong>"ya udah"</strong> Anda statusnya berubah menjadi <span style="color: var(--primary);">Dalam Peninjauan</span>.</p>
+                                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Hari ini, 13:37</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; gap: 10px;">
+                                    <i class="fa-solid fa-circle-check" style="color: #4ade80; margin-top: 3px;"></i>
+                                    <div>
+                                        <p style="margin: 0; line-height: 1.4;">Selamat! Akun Kontributor Anda berhasil diverifikasi oleh sistem.</p>
+                                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Kemarin, 10:15</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-divider"></div>
+                
+                <div class="user-wrapper">
+                    <div class="user-header" id="userToggle">
+                        <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'U'), 0, 1)) }}</div>
+                        <div class="user-header-info">
+                            <div class="user-header-name" style="padding-right: 10px;">{{ explode(' ', trim(session('user_name', 'User')))[0] }}</div>
+                            <div class="user-header-role">Kontributor</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                        <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
+                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
                 </div>
             </div>
@@ -204,37 +307,76 @@
             mainContent.classList.toggle('expanded');
         });
 
-        // Search logic
+        // Dropdown User Account Logic
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+        if (userToggle && userDropdown) {
+            userToggle.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                userDropdown.classList.toggle('show'); 
+            });
+        }
+
+        // ==========================================
+        // 🌟 LOGIC JAVASCRIPT DROPDOWN NOTIFIKASI
+        // ==========================================
+        const notifToggle = document.getElementById('notifToggle');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        if (notifToggle && notifDropdown) {
+            notifToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = notifDropdown.style.display === 'none' || notifDropdown.style.display === '';
+                notifDropdown.style.display = isHidden ? 'flex' : 'none';
+                if (userDropdown) userDropdown.classList.remove('show');
+            });
+        }
+
+        // Global Click Event (Tutup semua dropdown pas klik di luar area)
+        document.addEventListener('click', (e) => { 
+            if (userDropdown && userToggle && !userDropdown.contains(e.target) && !userToggle.contains(e.target)) {
+                userDropdown.classList.remove('show'); 
+            }
+            if (notifDropdown && notifToggle && !notifDropdown.contains(e.target) && !notifToggle.contains(e.target)) {
+                notifDropdown.style.display = 'none';
+            }
+        });
+
+        // Search logic bawaan halaman draf
         const searchInput = document.getElementById('searchInput');
         const table = document.getElementById('submissionTable');
         const emptyState = document.getElementById('emptyState');
-        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        
+        if (searchInput && table) {
+            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
-        searchInput.addEventListener('input', function() {
-            const query = searchInput.value.toLowerCase();
-            let totalVisibleRows = 0;
+            searchInput.addEventListener('input', function() {
+                const query = searchInput.value.toLowerCase();
+                let totalVisibleRows = 0;
 
-            for (let i = 0; i < rows.length; i++) {
-                if (rows[i].cells.length === 1) continue; 
-                const titleEl = rows[i].querySelector('.ms-title');
-                if (titleEl) {
-                    const title = titleEl.textContent.toLowerCase();
-                    if (title.includes(query)) {
-                        rows[i].style.display = '';
-                        totalVisibleRows++;
-                    } else {
-                        rows[i].style.display = 'none';
+                for (let i = 0; i < rows.length; i++) {
+                    if (rows[i].cells.length === 1) continue; 
+                    const titleEl = rows[i].querySelector('.ms-title');
+                    if (titleEl) {
+                        const title = titleEl.textContent.toLowerCase();
+                        if (title.includes(query)) {
+                            rows[i].style.display = '';
+                            totalVisibleRows++;
+                        } else {
+                            rows[i].style.display = 'none';
+                        }
                     }
                 }
-            }
-            if (query.length > 0 && totalVisibleRows === 0) {
-                table.style.display = 'none';
-                emptyState.style.display = 'block';
-            } else {
-                table.style.display = '';
-                emptyState.style.display = 'none';
-            }
-        });
+                
+                if (query.length > 0 && totalVisibleRows === 0) {
+                    table.style.display = 'none';
+                    if(emptyState) emptyState.style.display = 'block';
+                } else {
+                    table.style.display = '';
+                    if(emptyState) emptyState.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>

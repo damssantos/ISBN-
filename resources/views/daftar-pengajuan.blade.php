@@ -190,29 +190,62 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" class="search-input" id="searchInput" placeholder="Cari judul naskah atau ID naskah...">
             </div>
+            
             <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
-                </button>
+                <div class="notif-wrapper" style="position: relative; display: inline-block;">
+                    <button type="button" class="header-icon-btn" id="notifToggle" title="Notifikasi">
+                        <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
+                    </button>
+
+                    <div class="notif-dropdown" id="notifDropdown" style="position: absolute; top: calc(100% + 12px); right: 0; width: 320px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; display: none; flex-direction: column; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;">
+                        <div style="font-weight: 700; font-size: 0.875rem; padding: 14px 18px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); display: flex; justify-content: space-between; align-items: center;">
+                            <span>Notifikasi</span>
+                            <span style="font-size: 0.75rem; color: var(--primary); font-weight: 500; cursor: pointer;">Tandai dibaca</span>
+                        </div>
+                        
+                        <div style="max-height: 280px; overflow-y: auto;">
+                            <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; gap: 10px;">
+                                    <i class="fa-solid fa-circle-info" style="color: var(--primary); margin-top: 3px;"></i>
+                                    <div>
+                                        <p style="margin: 0; line-height: 1.4;">Naskah <strong>"ya udah"</strong> Anda statusnya berubah menjadi <span style="color: var(--primary);">Dalam Peninjauan</span>.</p>
+                                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Hari ini, 13:37</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; gap: 10px;">
+                                    <i class="fa-solid fa-circle-check" style="color: #4ade80; margin-top: 3px;"></i>
+                                    <div>
+                                        <p style="margin: 0; line-height: 1.4;">Selamat! Akun Kontributor Anda berhasil diverifikasi oleh sistem.</p>
+                                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Kemarin, 10:15</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="header-divider"></div>
+                
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
-                    <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'P'), 0, 1)) }}</div>
-                    <div class="user-header-info">
-                        <div class="user-header-name">{{ explode(' ', trim(session('user_name', 'User')))[0] }}</div>
-                        <div class="user-header-role">Kontributor</div>
+                        <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'U'), 0, 1)) }}</div>
+                        <div class="user-header-info">
+                            <div class="user-header-name">{{ explode(' ', trim(session('user_name', 'User')))[0] }}</div>
+                            <div class="user-header-role">Kontributor</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
-                    <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
-                </div>
-                <div class="user-dropdown" id="userDropdown">
-                    <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
-                    <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
-                    <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
-                    <div class="user-dropdown-divider"></div>
-                    <a href="/auth-login" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                        <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
+                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                    </div>
                 </div>
             </div>
-        </div>
         </header>
 
         <div class="page-header">
@@ -282,56 +315,91 @@
     <script>
         const sidebar = document.getElementById('sidebar');
         const mainContent = document.getElementById('mainContent');
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+
         document.getElementById('sidebarToggle').addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         });
-        const userToggle = document.getElementById('userToggle');
-        const userDropdown = document.getElementById('userDropdown');
-        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
-        document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
+
+        // Toggle User Dropdown
+        if (userToggle && userDropdown) {
+            userToggle.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                userDropdown.classList.toggle('show'); 
+            });
+        }
+
+        // ==========================================
+        // LOGIC DROPDOWN NOTIFIKASI 
+        // ==========================================
+        const notifToggle = document.getElementById('notifToggle');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        if (notifToggle && notifDropdown) {
+            notifToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = notifDropdown.style.display === 'none' || notifDropdown.style.display === '';
+                notifDropdown.style.display = isHidden ? 'flex' : 'none';
+                
+                // Biar pas notif dibuka, dropdown profil otomatis ngumpet (anti-tabrakan)
+                if (userDropdown) userDropdown.classList.remove('show');
+            });
+        }
+
+        // Global Click Event (Tutup semua dropdown kalau klik di luar area)
+        document.addEventListener('click', (e) => { 
+            if (userDropdown && userToggle && !userDropdown.contains(e.target) && !userToggle.contains(e.target)) {
+                userDropdown.classList.remove('show'); 
+            }
+            if (notifDropdown && notifToggle && !notifDropdown.contains(e.target) && !notifToggle.contains(e.target)) {
+                notifDropdown.style.display = 'none';
+            }
+        });
 
         // Search Filtering Logic Tetap Jalan Sempurna Aman Terkendali
         const searchInput = document.getElementById('searchInput');
         const table = document.getElementById('submissionTable');
         const emptyState = document.getElementById('emptyState');
-        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        
+        if (searchInput && table) {
+            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            
+            searchInput.addEventListener('input', function() {
+                const query = searchInput.value.toLowerCase();
+                let totalVisibleRows = 0;
 
-        searchInput.addEventListener('input', function() {
-            const query = searchInput.value.toLowerCase();
-            let hasResults = false;
-            let totalVisibleRows = 0;
+                for (let i = 0; i < rows.length; i++) {
+                    // Skip jika baris adalah pesan empty state dari forelse
+                    if (rows[i].cells.length === 1) continue; 
 
-            for (let i = 0; i < rows.length; i++) {
-                // Skip jika baris adalah pesan empty state dari forelse
-                if (rows[i].cells.length === 1) continue; 
-
-                const titleEl = rows[i].querySelector('.ms-title');
-                const idEl = rows[i].querySelector('.ms-id');
-                
-                if (titleEl && idEl) {
-                    const title = titleEl.textContent.toLowerCase();
-                    const id = idEl.textContent.toLowerCase();
+                    const titleEl = rows[i].querySelector('.ms-title');
+                    const idEl = rows[i].querySelector('.ms-id');
                     
-                    if (title.includes(query) || id.includes(query)) {
-                        rows[i].style.display = '';
-                        hasResults = true;
-                        totalVisibleRows++;
-                    } else {
-                        rows[i].style.display = 'none';
+                    if (titleEl && idEl) {
+                        const title = titleEl.textContent.toLowerCase();
+                        const id = idEl.textContent.toLowerCase();
+                        
+                        if (title.includes(query) || id.includes(query)) {
+                            rows[i].style.display = '';
+                            totalVisibleRows++;
+                        } else {
+                            rows[i].style.display = 'none';
+                        }
                     }
                 }
-            }
 
-            // Jika ada text pencarian tapi baris data sembunyi semua
-            if (query.length > 0 && totalVisibleRows === 0) {
-                table.style.display = 'none';
-                emptyState.style.display = 'block';
-            } else {
-                table.style.display = '';
-                emptyState.style.display = 'none';
-            }
-        });
+                // Jika ada text pencarian tapi baris data sembunyi semua
+                if (query.length > 0 && totalVisibleRows === 0) {
+                    table.style.display = 'none';
+                    if(emptyState) emptyState.style.display = 'block';
+                } else {
+                    table.style.display = '';
+                    if(emptyState) emptyState.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>

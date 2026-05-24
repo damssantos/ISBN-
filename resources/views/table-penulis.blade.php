@@ -274,17 +274,49 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" class="search-input" id="searchInput" placeholder="Cari nama penulis, email, atau ID...">
             </div>
+            
             <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </button>
+                <div class="notif-wrapper" style="position: relative; display: inline-block;">
+                    <button type="button" class="header-icon-btn" id="notifToggle" title="Notifikasi">
+                        <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
+                    </button>
+
+                    <div class="notif-dropdown" id="notifDropdown" style="position: absolute; top: calc(100% + 12px); right: 0; width: 320px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; display: none; flex-direction: column; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;">
+                        <div style="font-weight: 700; font-size: 0.875rem; padding: 14px 18px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); display: flex; justify-content: space-between; align-items: center;">
+                            <span>Notifikasi</span>
+                            <span style="font-size: 0.75rem; color: var(--primary); font-weight: 500; cursor: pointer;">Tandai dibaca</span>
+                        </div>
+                        
+                        <div style="max-height: 280px; overflow-y: auto;">
+                            <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; gap: 10px;">
+                                    <i class="fa-solid fa-circle-info" style="color: var(--primary); margin-top: 3px;"></i>
+                                    <div>
+                                        <p style="margin: 0; line-height: 1.4;">Naskah <strong>"ya udah"</strong> Anda statusnya berubah menjadi <span style="color: var(--primary);">Dalam Peninjauan</span>.</p>
+                                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Hari ini, 13:37</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 14px 18px; border-bottom: 1px solid var(--border-light); font-size: 0.8125rem; color: var(--text-secondary); transition: background 0.2s; cursor: pointer;" onmouseover="this.style.background='var(--bg-card-hover)'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; gap: 10px;">
+                                    <i class="fa-solid fa-circle-check" style="color: #4ade80; margin-top: 3px;"></i>
+                                    <div>
+                                        <p style="margin: 0; line-height: 1.4;">Selamat! Akun Kontributor Anda berhasil diverifikasi oleh sistem.</p>
+                                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 4px;">Kemarin, 10:15</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="header-divider"></div>
+                
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
-                        <div class="user-avatar">A</div>
+                        <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'U'), 0, 1)) }}</div>
                         <div class="user-header-info">
-                            <div class="user-header-name">Amelia</div>
+                            <div class="user-header-name">{{ explode(' ', trim(session('user_name', 'User')))[0] }}</div>
                             <div class="user-header-role">Kontributor</div>
                         </div>
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
@@ -294,7 +326,7 @@
                         <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
                         <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
                         <div class="user-dropdown-divider"></div>
-                        <a href="/auth-login" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                        <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
                 </div>
             </div>
@@ -401,43 +433,88 @@
     <script>
         const sidebar = document.getElementById('sidebar');
         const mainContent = document.getElementById('mainContent');
-        document.getElementById('sidebarToggle').addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-            mainContent.classList.toggle('expanded');
-        });
         const userToggle = document.getElementById('userToggle');
         const userDropdown = document.getElementById('userDropdown');
-        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
-        document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
 
-        // Search Filtering Logic
+        if (sidebar && sidebarToggle) {
+            document.getElementById('sidebarToggle').addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            });
+        }
+        
+        // Toggle User Dropdown
+        if (userToggle && userDropdown) {
+            userToggle.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                userDropdown.classList.toggle('show'); 
+            });
+        }
+
+        // ==========================================
+        // 🌟 SUNTIK LOGIC DROPDOWN NOTIFIKASI SAKTI
+        // ==========================================
+        const notifToggle = document.getElementById('notifToggle');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        if (notifToggle && notifDropdown) {
+            notifToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = notifDropdown.style.display === 'none' || notifDropdown.style.display === '';
+                notifDropdown.style.display = isHidden ? 'flex' : 'none';
+                
+                // Biar pas notif dibuka, dropdown profil otomatis ngumpet (anti-tabrakan)
+                if (userDropdown) userDropdown.classList.remove('show');
+            });
+        }
+
+        // Global Click Event (Tutup semua dropdown kalau klik di luar area)
+        document.addEventListener('click', (e) => { 
+            if (userDropdown && userToggle && !userDropdown.contains(e.target) && !userToggle.contains(e.target)) {
+                userDropdown.classList.remove('show'); 
+            }
+            if (notifDropdown && notifToggle && !notifDropdown.contains(e.target) && !notifToggle.contains(e.target)) {
+                notifDropdown.style.display = 'none';
+            }
+        });
+
+        // Search Filtering Logic bawaan tabel penulis
         const searchInput = document.getElementById('searchInput');
         const table = document.getElementById('authorTable');
         const emptyState = document.getElementById('emptyState');
-        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        
+        if (searchInput && table) {
+            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            
+            searchInput.addEventListener('input', function() {
+                const query = searchInput.value.toLowerCase();
+                let hasResults = false;
 
-        searchInput.addEventListener('input', function() {
-            const query = searchInput.value.toLowerCase();
-            let hasResults = false;
-
-            for (let i = 0; i < rows.length; i++) {
-                const name = rows[i].querySelector('.author-name').textContent.toLowerCase();
-                const id = rows[i].querySelector('.author-meta').textContent.toLowerCase();
-                const email = rows[i].querySelector('.author-email').textContent.toLowerCase();
-                
-                if (name.includes(query) || id.includes(query) || email.includes(query)) {
-                    rows[i].style.display = '';
-                    hasResults = true;
-                } else {
-                    rows[i].style.display = 'none';
+                for (let i = 0; i < rows.length; i++) {
+                    const nameEl = rows[i].querySelector('.author-name');
+                    const idEl = rows[i].querySelector('.author-meta');
+                    const emailEl = rows[i].querySelector('.author-email');
+                    
+                    if (nameEl && idEl && emailEl) {
+                        const name = nameEl.textContent.toLowerCase();
+                        const id = idEl.textContent.toLowerCase();
+                        const email = emailEl.textContent.toLowerCase();
+                        
+                        if (name.includes(query) || id.includes(query) || email.includes(query)) {
+                            rows[i].style.display = '';
+                            hasResults = true;
+                        } else {
+                            rows[i].style.display = 'none';
+                        }
+                    }
                 }
-            }
 
-            table.style.display = hasResults ? '' : 'none';
-            emptyState.style.display = hasResults ? 'none' : 'block';
-        });
+                table.style.display = hasResults ? '' : 'none';
+                if (emptyState) emptyState.style.display = hasResults ? 'none' : 'block';
+            });
+        }
 
-        // Action Functions
+        // Action Functions Modal & Delete Row bawaan
         function viewDetail(nama, email, afiliasi, telp) {
             document.getElementById('detNama').textContent = nama;
             document.getElementById('detEmail').textContent = email;
@@ -450,20 +527,23 @@
             document.getElementById('detailModal').classList.remove('show');
         }
 
+        // Ubah redirect link biar sesuai rute
         function editAuthor() {
-            window.location.href = '/informasi';
+            window.location.href = '/informasi-penulis';
         }
 
         function deleteRow(btn) {
             if (confirm('Apakah Anda yakin ingin menghapus data penulis ini?')) {
                 const row = btn.closest('tr');
-                row.style.opacity = '0';
-                row.style.transform = 'translateX(20px)';
-                row.style.transition = 'all .3s ease';
-                setTimeout(() => {
-                    row.remove();
-                    alert('Data penulis berhasil dihapus.');
-                }, 300);
+                if (row) {
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateX(20px)';
+                    row.style.transition = 'all .3s ease';
+                    setTimeout(() => {
+                        row.remove();
+                        alert('Data penulis berhasil dihapus.');
+                    }, 300);
+                }
             }
         }
     </script>
