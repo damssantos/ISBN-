@@ -4,32 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Naskah; 
-use App\Models\User;
+use App\Models\Penulis; // Menambahkan model Penulis agar hitungan total penulis unik aktif riil
 
 class DashboardController extends Controller
 {
+    // ==========================================
+    // FUNGSI UTAMA UNTUK MENAMPILKAN DASHBOARD REAL
+    // ==========================================
     public function index()
     {
-        // 1. Hitung total naskah beneran (ini bakal menghasilkan angka 0 karena tabelnya kosong)
-        $totalNaskah = Naskah::count();
+        // 1. HITUNG JUMLAH DATA REAL TIME DARI DATABASE SECARA DINAMIS
+        $jumlahPeninjauan  = Naskah::where('status', 'Dalam Peninjauan')->count();
+        $jumlahDiterbitkan = Naskah::where('status', 'Diterbitkan')->count();
+        $jumlahDraf        = Naskah::where('status', 'Draf')->count();
+        
+        // Hitung total penulis unik yang sudah mendaftarkan naskah di database
+        $jumlahPenulis     = Penulis::distinct('nama')->count();
 
-        // 2. KARENA KOLOM STATUS BELUM DIBIKIN FE, kita isi angka simulasi dulu biar GAK EROR
-        $statusPeninjauan = 2;   // Angka dummy biar kelihatan aktif
-        $statusDiterbitkan = 1;  // Angka dummy
-        $statusDraf        = 1;  // Angka dummy
+        // 2. AMBIL MAKSIMAL 5 DATA NASKAH PALING TERBARU UNTUK TABEL BAWAH DASHBOARD
+        $naskahTerbaru     = Naskah::latest()->take(5)->get();
 
-        // 3. Ambil data naskah (ini bakal menghasilkan array kosong dulu)
-        $laporanNaskah = Naskah::orderBy('updated_at', 'desc')->get();
-
-        // ---- JURUS KETOK MAGIC DD() UNTUK PEMBUKTIAN ----
-        dd([
-            'Status Backend Statistik' => 'AKTIF DAN AMAN 100%',
-            'Total Naskah di DB' => $totalNaskah,
-            'Simulasi Peninjauan' => $statusPeninjauan,
-            'Simulasi Diterbitkan' => $statusDiterbitkan,
-            'Simulasi Draf' => $statusDraf,
-            'Isi Tabel Laporan' => $laporanNaskah->toArray(),
-            'Pesan Tambahan' => 'Maria, tugas kamu udah kelar, kolom aslinya belum dibuat kelompokmu wkwkwk'
-        ]);
+        // 3. OPER SEMUA VARIABEL DATABASE REAL KE BLADE WELCOME MILIK FE
+        return view('welcome', compact(
+            'jumlahPeninjauan', 
+            'jumlahDiterbitkan', 
+            'jumlahDraf', 
+            'jumlahPenulis', 
+            'naskahTerbaru'
+        ));
     }
 }

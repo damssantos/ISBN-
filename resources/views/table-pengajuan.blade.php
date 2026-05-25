@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISBN Tirta Jaya - Detail Naskah</title>
     <title>ISBN YPIK PAM JAYA - Pengajuan Naskah</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,6 +27,11 @@
             --text-muted:     #7A9BAA;
             --status-review-bg:      rgba(59, 130, 246, 0.12);
             --status-review-text:    #60A5FA;
+            --status-published-bg:   rgba(59, 195, 189, 0.15);
+            --status-published-text: #3BC3BD;
+            --status-draft-bg:       rgba(122, 155, 170, 0.15);
+            --status-draft-text:     #7A9BAA;
+            --sidebar-width:           250px;
             --sidebar-width: 280px;
             --sidebar-collapsed-width: 64px;
         }
@@ -128,6 +134,8 @@
         .status-label { font-size:.875rem; font-weight:600; color:var(--text-secondary); }
         .status-badge { display:inline-flex; align-items:center; gap:5px; padding:6px 14px; border-radius:20px; font-size:.8125rem; font-weight:600; }
         .status-review { background:var(--status-review-bg); color:var(--status-review-text); }
+        .status-published { background:var(--status-published-bg); color:var(--status-published-text); }
+        .status-draft { background:var(--status-draft-bg); color:var(--status-draft-text); }
         .manuscript-id { font-size:.875rem; color:var(--text-muted); font-weight:500; }
 
         /* Detail Section */
@@ -139,14 +147,16 @@
 
         /* Authors */
         .author-list { list-style:none; padding:0; }
-        .author-list li { font-size:.9rem; color:var(--text-primary); padding:2px 0; }
+        .author-list li { font-size:.9rem; color:var(--text-primary); padding:4px 0; border-bottom: 1px solid var(--border-light); }
+        .author-list li:last-child { border-bottom: none; }
+        .author-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
         /* File Row */
         .file-row { display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:24px 0; border-top:1px solid var(--border-color); position:relative; z-index:1; }
         .file-group { display:flex; flex-direction:column; gap:6px; }
         .file-label { font-size:.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.5px; }
-        .file-item { display:flex; align-items:center; justify-content:space-between; }
-        .file-name { font-size:.875rem; color:var(--text-primary); }
+        .file-item { display:flex; align-items:center; justify-content:space-between; background: var(--bg-input); padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 8px; }
+        .file-name { font-size:.875rem; color:var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
         .file-link { display:inline-flex; align-items:center; gap:6px; color:var(--primary); text-decoration:none; font-size:.8125rem; font-weight:600; transition:color .2s; }
         .file-link:hover { color:var(--primary-bright); }
         .file-link i { font-size:.75rem; }
@@ -169,48 +179,15 @@
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="/" class="nav-link">
-                    <i class="fa-solid fa-border-all"></i>
-                    <span class="nav-link-text">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/pengajuan" class="nav-link">
-                    <i class="fa-regular fa-file-lines"></i>
-                    <span class="nav-link-text">Pengajuan</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/daftar-pengajuan" class="nav-link">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span class="nav-link-text">Daftar Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/draf" class="nav-link">
-                    <i class="fa-solid fa-inbox"></i>
-                    <span class="nav-link-text">Draf Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/informasi" class="nav-link">
-                    <i class="fa-regular fa-user"></i>
-                    <span class="nav-link-text">Informasi Penulis</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/table-penulis" class="nav-link">
-                    <i class="fa-solid fa-users-viewfinder"></i>
-                    <span class="nav-link-text">Daftar Penulis</span>
-                </a>
-            </li>
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="/pengajuan" class="nav-link"><i class="fa-regular fa-file-lines"></i><span class="nav-link-text">Pengajuan</span></a></li>
+            <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link active"><i class="fa-solid fa-list-check"></i><span class="nav-link-text">Daftar Naskah</span></a></li>
+            <li class="nav-item"><a href="/draf" class="nav-link"><i class="fa-solid fa-inbox"></i><span class="nav-link-text">Draf Naskah</span></a></li>
+            <li class="nav-item"><a href="/informasi" class="nav-link"><i class="fa-regular fa-user"></i><span class="nav-link-text">Informasi Penulis</span></a></li>
+            <li class="nav-item"><a href="/table-penulis" class="nav-link"><i class="fa-solid fa-users-viewfinder"></i><span class="nav-link-text">Daftar Penulis</span></a></li>
         </ul>
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                <span>Keluar</span>
-            </a>
+            <a href="#" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
         </div>
     </aside>
 
@@ -218,8 +195,7 @@
         <header class="top-header">
             <div class="header-actions">
                 <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
+                    <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
                 </button>
                 <div class="header-divider"></div>
                 <div class="user-wrapper">
@@ -250,65 +226,91 @@
         </div>
 
         <div class="detail-card">
-            <!-- Status -->
+            
             <div class="status-bar">
                 <div class="status-left">
                     <span class="status-label">Status :</span>
-                    <span class="status-badge status-review">Dalam Peninjauan</span>
+                    @if($naskah->status == 'Diterbitkan')
+                        <span class="status-badge status-published">Diterbitkan</span>
+                    @elif($naskah->status == 'Draf')
+                        <span class="status-badge status-draft">Draf</span>
+                    @else
+                        <span class="status-badge status-review">Dalam Peninjauan</span>
+                    @endif
                 </div>
-                <span class="manuscript-id">ID: MSN-2024-0892</span>
+                <span class="manuscript-id">ID: MS-{{ str_pad($naskah->id, 4, '0', STR_PAD_LEFT) }}</span>
             </div>
 
-            <!-- Judul Buku -->
             <div class="detail-section">
                 <div class="detail-label">Judul Buku</div>
-                <div class="detail-value">Membangun Masa Depan: Panduan Lengkap Arsitektur Berkelanjutan di Era Digital</div>
+                <div class="detail-value">{{ $naskah->judul }}</div>
             </div>
 
-            <!-- Sub Judul -->
             <div class="detail-section">
                 <div class="detail-label">Sub Judul Buku</div>
-                <div class="detail-value">Implementasi Teknologi Hijau dan Efisiensi Energi untuk Hunian Modern</div>
+                <div class="detail-value">{{ $naskah->sub_judul ?? '-' }}</div>
             </div>
 
-            <!-- Sinopsis -->
             <div class="detail-section">
                 <div class="detail-label">Sinopsis</div>
                 <div class="detail-value">
-                    <p>Buku ini mengeksplorasi pergeseran paradigma dalam dunia arsitektur yang kini lebih menitikberatkan pada keberlanjutan lingkungan. Penulis menjabarkan bagaimana integrasi teknologi cerdas dapat mengurangi jejak karbon bangunan tanpa mengorbankan estetika dan kenyamanan.</p>
+                    <p>{!! nl2br(e($naskah->sinopsis)) ?? 'Tidak ada sinopsis.' !!}</p>
                 </div>
             </div>
 
-            <!-- Nama Penulis -->
             <div class="detail-section">
                 <div class="detail-label">Nama Penulis</div>
                 <div class="detail-value">
                     <ol class="author-list" style="padding-left:18px;">
-                        <li>Dr. Ahmad Subarjo, M.Arch.</li>
-                        <li>Ir. Maya Sartika</li>
+                        @forelse($penuliss as $penulis)
+                            <li>
+                                <strong>{{ $penulis->nama }}</strong>
+                                <div class="author-meta">
+                                    <i class="fa-regular fa-envelope"></i> {{ $penulis->email }} | 
+                                    <i class="fa-regular fa-file-text"></i> Urutan ke-{{ $penulis->urutan }}
+                                </div>
+                                @if($penulis->biodata)
+                                    <div class="author-meta" style="margin-top: 4px; color: var(--text-secondary); font-style: italic;">
+                                        "{{ $penulis->biodata }}"
+                                    </div>
+                                @endif
+                            </li>
+                        @empty
+                            <span style="color: var(--text-muted);">Belum ada informasi penulis.</span>
+                        @endforelse
                     </ol>
                 </div>
             </div>
 
-            <!-- File Naskah & Foto -->
             <div class="file-row">
                 <div class="file-group">
                     <div class="file-label">File Naskah</div>
                     <div class="file-item">
-                        <span class="file-name">Manuscript_Final_V2.pdf</span>
-                        <a href="#" class="file-link">Lihat File <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        <span class="file-name" title="{{ $naskah->file_naskah ?? 'Belum diunggah' }}">
+                            {{ $naskah->file_naskah ? basename($naskah->file_naskah) : 'Belum ada berkas' }}
+                        </span>
+                        @if($naskah->file_naskah)
+                            <a href="{{ asset('storage/' . $naskah->file_naskah) }}" target="_blank" class="file-link">
+                                Lihat File <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <div class="file-group">
-                    <div class="file-label">File Foto (Halaman Cover Belakang)</div>
+                    <div class="file-label">File Foto (Halaman Cover)</div>
                     <div class="file-item">
-                        <span class="file-name">Cover_Belakang.jpg</span>
-                        <a href="#" class="file-link">Lihat File <i class="fa-regular fa-eye"></i></a>
+                        <span class="file-name" title="{{ $naskah->foto_sampul ?? 'Belum diunggah' }}">
+                            {{ $naskah->foto_sampul ? basename($naskah->foto_sampul) : 'Belum ada foto sampul' }}
+                        </span>
+                        @if($naskah->foto_sampul)
+                            <a href="{{ asset('storage/' . $naskah->foto_sampul) }}" target="_blank" class="file-link">
+                                Lihat File <i class="fa-regular fa-eye"></i>
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
 
-            <!-- Dokumen Lainnya -->
             <div class="file-row-full">
                 <div class="file-group">
                     <div class="file-label">Dokumen Lainnya</div>

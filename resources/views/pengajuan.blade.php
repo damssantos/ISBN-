@@ -55,6 +55,16 @@
         .logout-btn:hover { color:#f87171; background:rgba(248,113,113,.08); }
         .sidebar.collapsed .logout-btn span { opacity:0; width:0; overflow:hidden; }
 
+        /* Main Content Luas Maksimal */
+        .main-content { 
+            flex:1 !important; 
+            margin-left:var(--sidebar-width) !important; 
+            padding: 0 40px 48px !important; 
+            transition:margin-left 0.3s cubic-bezier(.4, 0, .2, 1) !important;
+            width: calc(100% - var(--sidebar-width)) !important;
+            max-width: 100% !important;
+        }
+        .main-content.expanded { margin-left:var(--sidebar-collapsed-width) !important; width: calc(100% - var(--sidebar-collapsed-width)) !important; }
         /* Main */
         .main-content { flex:1; margin-left:var(--sidebar-width); padding:0 40px 48px; transition:margin-left 0.3s cubic-bezier(.4, 0, .2, 1); min-width: 0; }
         .main-content.expanded { margin-left:var(--sidebar-collapsed-width); }
@@ -117,6 +127,12 @@
         .breadcrumb .active { color:var(--primary); font-weight:500; }
 
         /* Page Header */
+        .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-top: 4px; }
+        .page-title-section { display:flex; flex-direction:column; gap:6px; margin:0; }
+        .page-title-section h1 { font-size:2rem; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px; line-height:1; margin:0; }
+        .page-subtitle { font-size:.875rem; color:var(--text-muted); margin:0; line-height:1.4; }
+        .page-actions { display:flex; gap:12px; align-items:center; }
+        
         .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
         .page-title-section h1 { font-size:2rem; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px; margin-bottom: 4px; }
         .page-subtitle { font-size:.875rem; color:var(--text-muted); }
@@ -128,6 +144,23 @@
         .btn-outline-action { background:transparent; color:var(--text-secondary); border:1px solid var(--border-color); padding:10px 20px; border-radius:10px; font-size:.875rem; font-weight:500; cursor:pointer; transition:all .2s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
         .btn-outline-action:hover { border-color:var(--primary-dim); color:var(--primary); background:rgba(59, 195, 189, 0.05); }
 
+        /* JURUS GRID UTAMA 2 KOLOM */
+        .form-layout { 
+            display: grid !important; 
+            grid-template-columns: 1.6fr 1fr !important; 
+            gap: 24px !important; 
+            align-items: start !important; 
+            width: 100% !important;
+        }
+        .form-main { display: flex !important; flex-direction: column !important; gap: 24px !important; }
+        .form-sidebar { display: flex !important; flex-direction: column !important; gap: 24px !important; }
+
+        .form-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:12px; padding:28px; position:relative; transition:transform .25s,box-shadow .25s; box-shadow:0 4px 16px rgba(0,0,0,.15); overflow:hidden; display: flex; flex-direction: column; }
+        .form-card::after { content:''; position:absolute; inset:0; border-radius:12px; background:linear-gradient(145deg,rgba(59, 195, 189,.03),transparent 60%); pointer-events:none; }
+        .form-card:hover { transform:translateY(-2px); border-top-color:var(--primary); box-shadow:0 8px 24px rgba(0,0,0,.25),0 0 0 1px rgba(59, 195, 189,.08); }
+        
+        .section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; position:relative; z-index:1; }
+        .section-title { font-size:1.125rem; font-weight:600; color:var(--text-primary); display:flex; align-items:center; gap:10px; position:relative; z-index:1; }
         /* Form Layout */
         .form-layout { display:grid; grid-template-columns: 1fr 340px; gap:24px; }
         .form-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:16px; padding:28px; margin-bottom: 24px; position:relative; box-shadow:0 4px 16px rgba(0,0,0,.15); transition: transform 0.2s; }
@@ -140,6 +173,51 @@
         .link-teal:hover { color:var(--primary-bright); }
 
         /* Form Controls */
+        .form-group { margin-bottom:20px; width: 100%; }
+        .form-row { display:flex; gap:20px; margin-bottom:20px; width: 100%; }
+        .form-row .form-group { margin-bottom:0; flex:1; }
+        label { display:block; font-size:.8125rem; font-weight:500; color:var(--text-secondary); margin-bottom:8px; }
+        .form-control { width:100% !important; padding:10px 14px; background:var(--bg-input); border:1px solid var(--border-color); border-radius:8px; color:var(--text-primary); font-family:'Inter',sans-serif; font-size:.875rem; transition:all .2s; }
+        .form-control:focus { outline:none; border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
+        textarea.form-control { resize:vertical; min-height:80px; }
+        select.form-control { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%233BC3BD'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; background-size:14px; padding-right:36px; }
+
+        /* Upload Areas */
+        .upload-area { border:1px dashed var(--border-color); border-radius:10px; padding:40px 20px; text-align:center; background:rgba(255,255,255,0.02); cursor:pointer; transition:all .2s; display:flex; flex-direction:column; align-items:center; justify-content:center; width: 100%; }
+        .upload-area:hover { border-color:var(--primary); background:rgba(59, 195, 189,0.03); transform: translateY(-2px); }
+        
+        .upload-area-primary { 
+            border: 1px dashed rgba(59, 195, 189, 0.4); 
+            background: rgba(59, 195, 189, 0.02); 
+            border-radius: 16px;
+            padding: 40px 20px;
+        }
+        .upload-area-primary:hover { 
+            border-color: var(--primary); 
+            background: rgba(59, 195, 189, 0.05); 
+            box-shadow: 0 0 20px rgba(59, 195, 189, 0.1);
+        }
+        .upload-icon-circle { 
+            width: 64px; 
+            height: 64px; 
+            background: var(--primary); 
+            color: white; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.5rem; 
+            margin: 0 auto 16px; 
+            box-shadow: 0 8px 24px rgba(59, 195, 189, 0.4); 
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .upload-area-primary:hover .upload-icon-circle { transform: scale(1.1); }
+        .upload-text-vibrant { color: var(--primary-bright); font-weight: 700; font-size: 1.125rem; margin-bottom: 8px; }
+        .upload-hint { font-size:.75rem; color:var(--text-muted); }
+        .text-primary { color:var(--primary); }
+        .font-semibold { font-weight:600; }
+        .btn-remove-author { background:rgba(248,113,113,0.05); border:1px solid rgba(248,113,113,0.2); color:#f87171; padding:8px 16px; border-radius:8px; font-size:0.75rem; font-weight:600; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:8px; }
+        .btn-remove-author:hover { background:rgba(248,113,113,0.1); border-color:#f87171; transform:translateY(-1px); }
         .form-group { margin-bottom:20px; }
         .form-row { display:flex; gap:20px; }
         .form-row .form-group { flex:1; }
@@ -179,57 +257,54 @@
                 <i class="fa-solid fa-book-bookmark brand-icon"></i>
                 <span class="brand-text">ISBN YPIK PAM JAYA</span>
             </div>
-            <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
+            <button type="button" class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
         <ul class="nav-menu">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="/pengajuan" class="nav-link active"><i class="fa-regular fa-file-lines"></i><span class="nav-link-text">Pengajuan</span></a></li>
+            <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link"><i class="fa-solid fa-list-check"></i><span class="nav-link-text">Daftar Naskah</span></a></li>
+            <li class="nav-item"><a href="/draf" class="nav-link"><i class="fa-solid fa-inbox"></i><span class="nav-link-text">Draf Naskah</span></a></li>
             <li class="nav-item">
-                <a href="/" class="nav-link">
-                    <i class="fa-solid fa-border-all"></i>
-                    <span class="nav-link-text">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/pengajuan" class="nav-link active">
-                    <i class="fa-regular fa-file-lines"></i>
-                    <span class="nav-link-text">Pengajuan</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/daftar-pengajuan" class="nav-link">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span class="nav-link-text">Daftar Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/draf" class="nav-link">
-                    <i class="fa-solid fa-inbox"></i>
-                    <span class="nav-link-text">Draf Naskah</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/informasi" class="nav-link">
+                <a href="/informasi-penulis" class="nav-link">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-link-text">Informasi Penulis</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="/table-penulis" class="nav-link">
-                    <i class="fa-solid fa-users-viewfinder"></i>
-                    <span class="nav-link-text">Daftar Penulis</span>
-                </a>
-            </li>
+            <li class="nav-item"><a href="/table-penulis" class="nav-link"><i class="fa-solid fa-users-viewfinder"></i><span class="nav-link-text">Daftar Penulis</span></a></li>
         </ul>
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                <span>Keluar</span>
-            </a>
+            <a href="#" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
         </div>
     </aside>
 
     <main class="main-content" id="mainContent">
+        
+        <form action="{{ route('naskah.store') }}" method="POST" id="formNaskah" enctype="multipart/form-data" style="display: block;">
+            @csrf
+            
+            <header class="top-header">
+                <div class="header-actions">
+                    <button type="button" class="header-icon-btn" title="Notifikasi">
+                        <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
+                    </button>
+                    <div class="header-divider"></div>
+                    <div class="user-wrapper">
+                        <div class="user-header" id="userToggle">
+                            <div class="user-avatar">P</div>
+                            <div class="user-header-info">
+                                <div class="user-header-name">Pradama</div>
+                                <div class="user-header-role">Kontributor</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                        </div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                            <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
+                            <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+                            <div class="user-dropdown-divider"></div>
+                            <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
         <header class="top-header">
             <div class="header-actions">
                 <button class="header-icon-btn" title="Notifikasi">
@@ -244,16 +319,22 @@
                             <div class="user-header-name">Pradama</div>
                             <div class="user-header-role">Kontributor</div>
                         </div>
-                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
-                    </div>
-                    <div class="user-dropdown" id="userDropdown">
-                        <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
-                        <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
-                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
-                        <div class="user-dropdown-divider"></div>
-                        <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
                 </div>
+            </header>
+
+            <div class="breadcrumb">
+                <a href="/">Portal</a> <span style="opacity: 0.5; margin: 0 4px;">/</span> <span class="active">Pengajuan</span>
+            </div>
+
+            <div class="page-header">
+                <div class="page-title-section">
+                    <h1>Detail Naskah</h1>
+                    <p class="page-subtitle">Lengkapi informasi di bawah ini untuk mendaftarkan naskah Anda ke sistem.</p>
+                </div>
+                <div class="page-actions" style="display: flex; gap: 12px;">
+                    <button type="submit" name="action" value="draft" class="btn-outline-action" id="btnDraft">Simpan sebagai Draf</button>
+                    <button type="submit" name="action" value="publish" class="btn-primary" id="btnAjukan">Terbitkan</button>
             </div>
         </header>
 
@@ -296,6 +377,23 @@
                             <input type="text" name="judul" class="form-control" placeholder="Masukkan judul utama naskah Anda..." required>
                         </div>
 
+            @if (session('status'))
+                <div style="background: rgba(5, 150, 105, 0.2); color: #6ee7b7; padding: 16px; border: 1px solid #059669; border-radius: 10px; margin-bottom: 24px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-circle-check"></i>
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <div class="form-layout">
+                
+                <div class="form-main">
+                    
+                    <div class="form-card">
+                        <h2 class="section-title"><span class="title-bar"></span>Informasi Naskah</h2>
+                        
+                        <div class="form-group">
+                            <label>Judul Naskah</label>
+                            <input type="text" name="judul" class="form-control" value="{{ isset($naskah) ? $naskah->judul : '' }}" placeholder="Masukkan judul naskah..." required>
                         <div class="form-group">
                             <label>Sub Judul Naskah (Opsional)</label>
                             <input type="text" name="sub_judul" class="form-control" placeholder="Masukkan sub judul atau keterangan tambahan...">
@@ -347,6 +445,83 @@
                     </div>
                 </div>
 
+                        <div class="form-group">
+                            <label>Sub Judul Naskah</label>
+                            <input type="text" name="sub_judul" class="form-control" value="{{ isset($naskah) ? $naskah->sub_judul : '' }}" placeholder="Masukkan sub judul naskah...">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>Sinopsis</label>
+                            <textarea name="sinopsis" class="form-control" rows="8" placeholder="Tuliskan sinopsis singkat mengenai naskah Anda...">{{ isset($naskah) ? $naskah->sinopsis : '' }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-card" id="authorCard">
+                        <div class="section-header">
+                            <h2 class="section-title"><span class="title-bar"></span>Informasi Penulis</h2>
+                            <a href="javascript:void(0)" class="link-teal" id="addAuthorBtn"><i class="fa-solid fa-plus-circle"></i> Tambahkan Penulis Lainnya</a>
+                        </div>
+                        
+                        <div id="authorsContainer">
+                            <div class="author-item" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border-light);">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Nama Lengkap</label>
+                                        <input type="text" name="penulis[0][nama]" class="form-control" placeholder="Masukkan nama lengkap penulis..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" name="penulis[0][email]" class="form-control" placeholder="Masukkan alamat email aktif..." required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row" style="margin-bottom:0;">
+                                    <div class="form-group" style="flex: 0 0 160px;">
+                                        <label>Urutan Penulis</label>
+                                        <select name="penulis[0][urutan]" class="form-control">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
+                                        <label>Biodata Narasi</label>
+                                        <textarea name="penulis[0][biodata]" class="form-control" style="min-height: 80px;" placeholder="Tuliskan biodata narasi singkat..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-sidebar">
+                    
+                    <div class="form-card">
+                        <h2 class="section-title"><span class="title-bar"></span>Unggah Foto Sampul</h2>
+                        
+                        <div class="form-group" style="flex:1; display:flex; flex-direction:column; margin-bottom:0;">
+                            <input type="file" name="foto_sampul" id="inputCover" accept="image/jpeg,image/png" style="display:none;">
+                            <div class="upload-area upload-area-primary" id="areaCover" style="flex:1;">
+                                <div class="upload-icon-circle" id="iconCover"><i class="fa-regular fa-image"></i></div>
+                                <div class="upload-text-vibrant" id="textCover">Unggah Foto Sampul</div>
+                                <div class="upload-hint" id="hintCover">Format JPEG, PNG (Maks 10MB)</div>
+                                <img id="previewCover" style="display:none; max-width:100%; max-height:240px; border-radius:12px; margin-top:12px; border: 1px solid var(--border-color);" alt="Preview">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-card">
+                        <h2 class="section-title"><span class="title-bar"></span>Unggah Naskah</h2>
+                        
+                        <div class="form-group" style="flex: 1; display: flex; flex-direction: column; margin-bottom:0;">
+                            <input type="file" name="file_naskah" id="inputNaskah" accept=".pdf,.docx,.epub" style="display:none;">
+                            <div class="upload-area upload-area-primary" id="areaNaskah" style="flex: 1;">
+                                <div class="upload-icon-circle" id="iconNaskah"><i class="fa-solid fa-file-arrow-up"></i></div>
+                                <div class="upload-text-vibrant" id="textNaskah">Unggah Naskah</div>
+                                <div class="upload-hint" id="hintNaskah">Format PDF, DOCX, EPUB (Maks 50MB)</div>
                 <div class="form-sidebar">
                     <!-- Unggah Foto Sampul -->
                     <div class="form-card">
@@ -374,7 +549,9 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
         </form>
     </main>
@@ -399,6 +576,8 @@
             if(!userDropdown.contains(e.target) && !userToggle.contains(e.target)) userDropdown.classList.remove('show'); 
         });
 
+        // Upload Berkas Naskah
+        function setupFileUpload(areaId, inputId, iconId, textId, hintId, maxMB) {
         // Universal Upload Handler
         function setupUpload(areaId, inputId, iconId, textId, hintId, previewId = null) {
             const area = document.getElementById(areaId);
@@ -432,15 +611,25 @@
             });
         }
 
+        setupImageUpload('areaCover','inputCover','iconCover','textCover','hintCover','previewCover',10);
+        setupFileUpload('areaNaskah','inputNaskah','iconNaskah','textNaskah','hintNaskah',50);
+
+        // User Dropdown Menu Toggle
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
+        document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
         setupUpload('areaCover', 'inputCover', 'iconCover', 'textCover', 'hintCover', 'previewCover');
         setupUpload('areaNaskah', 'inputNaskah', 'iconNaskah', 'textNaskah', 'hintNaskah');
 
-        // Dynamic Author Addition
+        // Dynamic Multiple Authors Array
         const authorsContainer = document.getElementById('authorsContainer');
         const addAuthorBtn = document.getElementById('addAuthorBtn');
         let authorIndex = 1;
 
         addAuthorBtn.addEventListener('click', () => {
+            authorCount++;
+            const index = authorCount - 1;
             const authorHtml = `
                 <div class="author-item fade-in" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border-light);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
@@ -452,6 +641,34 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>Nama Lengkap</label>
+                            <input type="text" name="penulis[${index}][nama]" class="form-control" placeholder="Masukkan nama lengkap penulis..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="penulis[${index}][email]" class="form-control" placeholder="Masukkan alamat email aktif..." required>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-bottom:0;">
+                        <div class="form-group" style="flex: 0 0 160px;">
+                            <label>Urutan Penulis</label>
+                            <select name="penulis[${index}][urutan]" class="form-control">
+                                <option value="1" ${authorCount===1?'selected':''}>1</option>
+                                <option value="2" ${authorCount===2?'selected':''}>2</option>
+                                <option value="3" ${authorCount===3?'selected':''}>3</option>
+                                <option value="4" ${authorCount===4?'selected':''}>4</option>
+                                <option value="5" ${authorCount===5?'selected':''}>5</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
+                            <label>Biodata Narasi</label>
+                            <textarea name="penulis[${index}][biodata]" class="form-control" style="min-height: 80px;" placeholder="Tuliskan biodata narasi singkat..."></textarea>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                        <button type="button" class="btn-remove-author" onclick="this.closest('.author-item').remove()">
+                            <i class="fa-solid fa-trash-can"></i> Hapus Penulis
+                        </button>
+                    </div>
                             <input type="text" name="penulis[${authorIndex}][nama]" class="form-control" placeholder="Nama sesuai identitas..." required>
                         </div>
                         <div class="form-group">
@@ -481,6 +698,15 @@
             authorIndex++;
         });
 
+        // Inject CSS Animation Keyframe
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
         // Draft Button Feedback
         document.getElementById('btnDraft').addEventListener('click', function() {
             const btn = this;
@@ -501,6 +727,5 @@
             }, 1000);
         });
     </script>
-
 </body>
 </html>
