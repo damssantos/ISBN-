@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISBN Tirta Jaya - Dashboard</title>
+    <title>ISBN YPIK PAM JAYA - Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -30,7 +30,7 @@
             --status-published-text: #3BC3BD;
             --status-draft-bg:       rgba(122, 155, 170, 0.15);
             --status-draft-text:     #7A9BAA;
-            --sidebar-width: 250px;
+            --sidebar-width: 280px;
             --sidebar-collapsed-width: 64px;
         }
 
@@ -283,7 +283,7 @@
         <div class="brand">
             <div class="brand-content">
                 <i class="fa-solid fa-book-bookmark brand-icon"></i>
-                <span class="brand-text">ISBN TIRTA JAYA</span>
+                <span class="brand-text">ISBN YPIK PAM JAYA</span>
             </div>
             <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
                 <i class="fa-solid fa-bars"></i>

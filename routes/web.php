@@ -65,3 +65,36 @@ Route::get('/akun', function () { return view('akun'); });
 Route::get('/pengaturan', function () { return view('pengaturan'); });
 Route::get('/table-penulis', function () { return view('table-penulis'); });
 Route::get('/pengajuan/detail', function () { return view('table-pengajuan'); });
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->name('admin.dashboard');
+
+Route::get('/admin/review-naskah', function () {
+    return view('admin.review-naskah');
+})->name('admin.review-naskah');
+
+Route::get('/admin/detail-review-naskah', function () {
+    return view('admin.detail-review-naskah');
+});
+
+// Admin Buku Terbit page
+Route::get('/admin/buku-terbit', function () {
+    return view('admin.buku-terbit');
+})->name('admin.buku-terbit');
+
+// Admin Pengguna page
+Route::get('/admin/pengguna', function () {
+    return view('admin.pengguna');
+})->name('admin.pengguna');
+
+// Superadmin Dashboard
+Route::get('/superadmin/dashboard', function () {
+    return view('superadmin.dashboard-superadmin');
+})->name('superadmin.dashboard');
+
+// Superadmin Cek Pembayaran
+Route::get('/superadmin/cek-pembayaran', function () {
+    return view('superadmin.cek-pembayaran');
+})->name('superadmin.cek-pembayaran');

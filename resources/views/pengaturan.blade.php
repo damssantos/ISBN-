@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISBN Tirta Jaya - Pengajuan Naskah</title>
+    <title>ISBN YPIK PAM JAYA - Pengajuan Naskah</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -20,7 +20,7 @@
             --text-primary:   #F0F6FA;
             --text-secondary: #B8CDD8;
             --text-muted:     #7A9BAA;
-            --sidebar-width:  250px;
+            --sidebar-width: 280px;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
@@ -59,7 +59,7 @@
     <aside class="sidebar">
         <div class="brand">
             <i class="fa-solid fa-book-bookmark" style="color:var(--primary); font-size:1.2rem;"></i>
-            <span class="brand-text">ISBN TIRTA JAYA</span>
+            <span class="brand-text">ISBN YPIK PAM JAYA</span>
         </div>
         <ul class="nav-menu">
             <li class="nav-item"><a href="/" class="nav-link"><i class="fa-solid fa-border-all"></i>Dashboard</a></li>

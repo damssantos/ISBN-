@@ -12,10 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('naskahs', function (Blueprint $table) {
-            $table->string('judul')->after('id');
-            $table->string('sub_judul')->nullable()->after('judul');
-            $table->text('sinopsis')->nullable()->after('sub_judul');
-            $table->string('status')->default('Draf')->after('sinopsis');
+            $table->string('status')->default('Draf');
         });
     }
 
@@ -25,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('naskahs', function (Blueprint $table) {
-            $table->dropColumn(['judul', 'sub_judul', 'sinopsis', 'status']);
+            $table->dropColumn(['status']);
         });
     }
 };

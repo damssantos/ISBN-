@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISBN Tirta Jaya - Pengajuan</title>
+    <title>ISBN YPIK PAM JAYA - Pengajuan</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -24,12 +24,12 @@
             --text-primary:   #F0F6FA;
             --text-secondary: #B8CDD8;
             --text-muted:     #7A9BAA;
-            --sidebar-width:           250px;
+            --sidebar-width: 280px;
             --sidebar-collapsed-width: 64px;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
-        body { background:var(--bg-body); color:var(--text-primary); display:flex; min-height:100vh; font-size:14px; line-height:1.5; }
+        body { background:var(--bg-body); color:var(--text-primary); display:flex; min-height:100vh; font-size:14px; line-height:1.5; overflow-x: hidden; }
 
         /* Sidebar */
         .sidebar { width:var(--sidebar-width); background:var(--bg-sidebar); border-right:1px solid var(--border-color); display:flex; flex-direction:column; position:fixed; height:100vh; transition:width .3s cubic-bezier(.4,0,.2,1); overflow:hidden; z-index:100; }
@@ -65,6 +65,9 @@
             max-width: 100% !important;
         }
         .main-content.expanded { margin-left:var(--sidebar-collapsed-width) !important; width: calc(100% - var(--sidebar-collapsed-width)) !important; }
+        /* Main */
+        .main-content { flex:1; margin-left:var(--sidebar-width); padding:0 40px 48px; transition:margin-left 0.3s cubic-bezier(.4, 0, .2, 1); min-width: 0; }
+        .main-content.expanded { margin-left:var(--sidebar-collapsed-width); }
 
         /* Header */
         .top-header { display:flex; justify-content:flex-end; align-items:center; padding:16px 0 8px; }
@@ -106,6 +109,7 @@
             transform-origin: top right;
             animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        @keyframes dropdownFadeIn { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
         .user-dropdown.show { display:flex; }
         .user-dropdown-item { padding:14px 20px; display:flex; align-items:center; gap:16px; color:var(--text-secondary); text-decoration:none; font-size:.875rem; font-weight:500; transition:all .2s; cursor:pointer; }
         .user-dropdown-item:hover { background:var(--bg-card-hover); color:var(--primary); padding-left:24px; }
@@ -129,11 +133,16 @@
         .page-subtitle { font-size:.875rem; color:var(--text-muted); margin:0; line-height:1.4; }
         .page-actions { display:flex; gap:12px; align-items:center; }
         
+        .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+        .page-title-section h1 { font-size:2rem; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px; margin-bottom: 4px; }
+        .page-subtitle { font-size:.875rem; color:var(--text-muted); }
+        .page-actions { display:flex; gap:12px; }
+
         /* Buttons */
-        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; box-shadow:0 4px 12px rgba(59, 195, 189,.2); }
+        .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:10px; font-size:.875rem; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; box-shadow:0 4px 12px rgba(59, 195, 189,.2); text-decoration: none; }
         .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(59, 195, 189,.3); }
-        .btn-outline-action { background:transparent; color:var(--text-secondary); border:1px solid var(--border-color); padding:10px 20px; border-radius:8px; font-size:.875rem; font-weight:500; font-family:'Inter',sans-serif; cursor:pointer; transition:all .2s; }
-        .btn-outline-action:hover { border-color:var(--primary-dim); color:var(--primary); background:var(--bg-elevated); }
+        .btn-outline-action { background:transparent; color:var(--text-secondary); border:1px solid var(--border-color); padding:10px 20px; border-radius:10px; font-size:.875rem; font-weight:500; cursor:pointer; transition:all .2s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-outline-action:hover { border-color:var(--primary-dim); color:var(--primary); background:rgba(59, 195, 189, 0.05); }
 
         /* JURUS GRID UTAMA 2 KOLOM */
         .form-layout { 
@@ -152,9 +161,15 @@
         
         .section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; position:relative; z-index:1; }
         .section-title { font-size:1.125rem; font-weight:600; color:var(--text-primary); display:flex; align-items:center; gap:10px; position:relative; z-index:1; }
+        /* Form Layout */
+        .form-layout { display:grid; grid-template-columns: 1fr 340px; gap:24px; }
+        .form-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:16px; padding:28px; margin-bottom: 24px; position:relative; box-shadow:0 4px 16px rgba(0,0,0,.15); transition: transform 0.2s; }
+        .form-card:hover { border-top-color:var(--primary); }
+        
+        .section-title { font-size:1.125rem; font-weight:600; color:var(--text-primary); display:flex; align-items:center; gap:10px; margin-bottom:24px; }
         .title-bar { width:4px; height:18px; background:var(--primary); border-radius:2px; }
         
-        .link-teal { color:var(--primary); text-decoration:none; font-size:.8125rem; font-weight:500; transition:color .2s; display:flex; align-items:center; gap:6px; }
+        .link-teal { color:var(--primary); text-decoration:none; font-size:.8125rem; font-weight:600; transition:color .2s; display:flex; align-items:center; gap:6px; cursor: pointer; }
         .link-teal:hover { color:var(--primary-bright); }
 
         /* Form Controls */
@@ -203,6 +218,35 @@
         .font-semibold { font-weight:600; }
         .btn-remove-author { background:rgba(248,113,113,0.05); border:1px solid rgba(248,113,113,0.2); color:#f87171; padding:8px 16px; border-radius:8px; font-size:0.75rem; font-weight:600; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:8px; }
         .btn-remove-author:hover { background:rgba(248,113,113,0.1); border-color:#f87171; transform:translateY(-1px); }
+        .form-group { margin-bottom:20px; }
+        .form-row { display:flex; gap:20px; }
+        .form-row .form-group { flex:1; }
+        label { display:block; font-size:.8125rem; font-weight:600; color:var(--text-secondary); margin-bottom:8px; }
+        .form-control { width:100%; padding:11px 14px; background:var(--bg-input); border:1px solid var(--border-color); border-radius:10px; color:var(--text-primary); font-size:.875rem; transition:all .2s; outline: none; }
+        .form-control:focus { border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
+        .form-control::placeholder { color: var(--text-muted); opacity: 0.6; }
+        textarea.form-control { resize:vertical; min-height:120px; }
+        select.form-control { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%233BC3BD'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; background-size:14px; padding-right:36px; }
+
+        /* Upload Areas */
+        .upload-area { border: 1px dashed rgba(59, 195, 189, 0.4); border-radius: 16px; padding: 32px 20px; text-align: center; background: rgba(59, 195, 189, 0.02); cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .upload-area:hover { border-color: var(--primary); background: rgba(59, 195, 189, 0.06); box-shadow: 0 0 20px rgba(59, 195, 189, 0.1); transform: translateY(-2px); }
+        
+        .upload-icon-circle { width: 56px; height: 56px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(59, 195, 189, 0.3); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .upload-area:hover .upload-icon-circle { transform: scale(1.1); }
+        .upload-text-vibrant { color: var(--primary-bright); font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+        .upload-hint { font-size:.75rem; color:var(--text-muted); }
+        
+        .btn-remove-author { background:rgba(248,113,113,0.05); border:1px solid rgba(248,113,113,0.2); color:#f87171; padding:8px 14px; border-radius:8px; font-size:0.75rem; font-weight:600; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:8px; }
+        .btn-remove-author:hover { background:rgba(248,113,113,0.1); border-color:#f87171; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+
+        @media (max-width: 1024px) {
+            .form-layout { grid-template-columns: 1fr; }
+            .main-content { padding: 0 20px 48px; }
+        }
     </style>
 </head>
 <body>
@@ -211,7 +255,7 @@
         <div class="brand">
             <div class="brand-content">
                 <i class="fa-solid fa-book-bookmark brand-icon"></i>
-                <span class="brand-text">ISBN TIRTA JAYA</span>
+                <span class="brand-text">ISBN YPIK PAM JAYA</span>
             </div>
             <button type="button" class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
                 <i class="fa-solid fa-bars"></i>
@@ -261,6 +305,19 @@
                             <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
                             <div class="user-dropdown-divider"></div>
                             <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+        <header class="top-header">
+            <div class="header-actions">
+                <button class="header-icon-btn" title="Notifikasi">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notif-dot"></span>
+                </button>
+                <div class="header-divider"></div>
+                <div class="user-wrapper">
+                    <div class="user-header" id="userToggle">
+                        <div class="user-avatar">P</div>
+                        <div class="user-header-info">
+                            <div class="user-header-name">Pradama</div>
+                            <div class="user-header-role">Kontributor</div>
                         </div>
                     </div>
                 </div>
@@ -278,8 +335,47 @@
                 <div class="page-actions" style="display: flex; gap: 12px;">
                     <button type="submit" name="action" value="draft" class="btn-outline-action" id="btnDraft">Simpan sebagai Draf</button>
                     <button type="submit" name="action" value="publish" class="btn-primary" id="btnAjukan">Terbitkan</button>
+            </div>
+        </header>
+
+        <div class="breadcrumb">
+            <a href="/">Portal</a> <span style="opacity: 0.5; margin: 0 4px;">/</span> <span class="active">Pengajuan Baru</span>
+        </div>
+
+        <form action="{{ route('naskah.store') }}" method="POST" id="formNaskah" enctype="multipart/form-data">
+            @csrf
+            <div class="page-header">
+                <div class="page-title-section">
+                    <h1>Detail Naskah</h1>
+                    <p class="page-subtitle">Lengkapi informasi di bawah ini untuk mendaftarkan naskah Anda.</p>
+                </div>
+                <div class="page-actions">
+                    <button type="button" class="btn-outline-action" id="btnDraft">
+                        <i class="fa-regular fa-floppy-disk"></i> Simpan Draf
+                    </button>
+                    <button type="submit" class="btn-primary" id="btnAjukan">
+                        <i class="fa-solid fa-paper-plane"></i> Ajukan Naskah
+                    </button>
                 </div>
             </div>
+
+            @if (session('status'))
+                <div style="background: rgba(5, 150, 105, 0.1); color: #6ee7b7; padding: 16px; border: 1px solid rgba(5, 150, 105, 0.3); border-radius: 12px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;" class="fade-in">
+                    <i class="fa-solid fa-circle-check"></i>
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <div class="form-layout">
+                <div class="form-main">
+                    <!-- Informasi Naskah -->
+                    <div class="form-card">
+                        <h2 class="section-title"><span class="title-bar"></span>Informasi Naskah</h2>
+                        
+                        <div class="form-group">
+                            <label>Judul Naskah</label>
+                            <input type="text" name="judul" class="form-control" placeholder="Masukkan judul utama naskah Anda..." required>
+                        </div>
 
             @if (session('status'))
                 <div style="background: rgba(5, 150, 105, 0.2); color: #6ee7b7; padding: 16px; border: 1px solid #059669; border-radius: 10px; margin-bottom: 24px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
@@ -298,7 +394,56 @@
                         <div class="form-group">
                             <label>Judul Naskah</label>
                             <input type="text" name="judul" class="form-control" value="{{ isset($naskah) ? $naskah->judul : '' }}" placeholder="Masukkan judul naskah..." required>
+                        <div class="form-group">
+                            <label>Sub Judul Naskah (Opsional)</label>
+                            <input type="text" name="sub_judul" class="form-control" placeholder="Masukkan sub judul atau keterangan tambahan...">
                         </div>
+
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>Sinopsis</label>
+                            <textarea name="sinopsis" class="form-control" placeholder="Tuliskan ringkasan singkat mengenai isi naskah Anda..." required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Informasi Penulis -->
+                    <div class="form-card" id="authorCard">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                            <h2 class="section-title" style="margin-bottom:0;"><span class="title-bar"></span>Informasi Penulis</h2>
+                            <span class="link-teal" id="addAuthorBtn"><i class="fa-solid fa-plus-circle"></i> Tambah Penulis</span>
+                        </div>
+                        
+                        <div id="authorsContainer">
+                            <!-- Author Item 1 -->
+                            <div class="author-item" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border-light);">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Nama Lengkap</label>
+                                        <input type="text" name="penulis[0][nama]" class="form-control" placeholder="Nama sesuai identitas..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" name="penulis[0][email]" class="form-control" placeholder="Alamat email aktif..." required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row" style="margin-bottom:0;">
+                                    <div class="form-group" style="flex: 0 0 140px;">
+                                        <label>Urutan</label>
+                                        <select name="penulis[0][urutan]" class="form-control">
+                                            <option value="1">Utama (1)</option>
+                                            <option value="2">Kedua (2)</option>
+                                            <option value="3">Ketiga (3)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Biodata Singkat</label>
+                                        <textarea name="penulis[0][biodata]" class="form-control" style="min-height: 80px;" placeholder="Profil singkat penulis..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                         <div class="form-group">
                             <label>Sub Judul Naskah</label>
@@ -377,6 +522,30 @@
                                 <div class="upload-icon-circle" id="iconNaskah"><i class="fa-solid fa-file-arrow-up"></i></div>
                                 <div class="upload-text-vibrant" id="textNaskah">Unggah Naskah</div>
                                 <div class="upload-hint" id="hintNaskah">Format PDF, DOCX, EPUB (Maks 50MB)</div>
+                <div class="form-sidebar">
+                    <!-- Unggah Foto Sampul -->
+                    <div class="form-card">
+                        <h2 class="section-title"><span class="title-bar"></span>Sampul Naskah</h2>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <input type="file" name="cover" id="inputCover" accept="image/jpeg,image/png" style="display:none;">
+                            <div class="upload-area" id="areaCover">
+                                <div class="upload-icon-circle" id="iconCover"><i class="fa-regular fa-image"></i></div>
+                                <div class="upload-text-vibrant" id="textCover">Unggah Sampul</div>
+                                <div class="upload-hint" id="hintCover">JPEG, PNG (Maks 10MB)</div>
+                                <img id="previewCover" style="display:none; max-width:100%; border-radius:12px; margin-top:12px; border: 1px solid var(--border-color);" alt="Preview">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unggah File Naskah -->
+                    <div class="form-card">
+                        <h2 class="section-title"><span class="title-bar"></span>File Naskah</h2>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <input type="file" name="file_naskah" id="inputNaskah" accept=".pdf,.docx,.epub" style="display:none;" required>
+                            <div class="upload-area" id="areaNaskah">
+                                <div class="upload-icon-circle" id="iconNaskah"><i class="fa-solid fa-file-arrow-up"></i></div>
+                                <div class="upload-text-vibrant" id="textNaskah">Unggah File</div>
+                                <div class="upload-hint" id="hintNaskah">PDF, DOCX, EPUB (Maks 50MB)</div>
                             </div>
                         </div>
                     </div>
@@ -388,6 +557,7 @@
     </main>
 
     <script>
+        // Sidebar Toggle
         const sidebar = document.getElementById('sidebar');
         const mainContent = document.getElementById('mainContent');
         document.getElementById('sidebarToggle').addEventListener('click', () => {
@@ -395,63 +565,50 @@
             mainContent.classList.toggle('expanded');
         });
 
-        // Upload Foto Cover
-        function setupImageUpload(areaId, inputId, iconId, textId, hintId, previewId, maxMB) {
-            const area = document.getElementById(areaId);
-            const input = document.getElementById(inputId);
-            const icon = document.getElementById(iconId);
-            const text = document.getElementById(textId);
-            const hint = document.getElementById(hintId);
-            const preview = document.getElementById(previewId);
-
-            area.addEventListener('click', () => input.click());
-            area.addEventListener('dragover', (e) => { e.preventDefault(); area.style.borderColor='var(--primary)'; });
-            area.addEventListener('dragleave', () => { area.style.borderColor=''; });
-            area.addEventListener('drop', (e) => {
-                e.preventDefault(); area.style.borderColor='';
-                if(e.dataTransfer.files.length){ input.files=e.dataTransfer.files; showPreview(input.files[0]); }
-            });
-            input.addEventListener('change', () => { if(input.files.length) showPreview(input.files[0]); });
-
-            function showPreview(file) {
-                if(file.size > maxMB*1024*1024){ alert('Ukuran file maksimal '+maxMB+'MB'); return; }
-                icon.style.display='none'; hint.style.display='none';
-                if(file.type.startsWith('image/')){
-                    const reader = new FileReader();
-                    reader.onload = (e) => { preview.src=e.target.result; preview.style.display='block'; };
-                    reader.readAsDataURL(file);
-                    text.innerHTML='<span class="text-primary font-semibold">'+file.name+'</span>';
-                } else {
-                    preview.style.display='none';
-                    text.innerHTML='<i class="fa-solid fa-file-check" style="font-size:2rem;color:var(--primary);margin-bottom:8px;"></i><br><span class="text-primary font-semibold">'+file.name+'</span>';
-                }
-            }
-        }
+        // User Dropdown
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+        userToggle.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            userDropdown.classList.toggle('show'); 
+        });
+        document.addEventListener('click', (e) => { 
+            if(!userDropdown.contains(e.target) && !userToggle.contains(e.target)) userDropdown.classList.remove('show'); 
+        });
 
         // Upload Berkas Naskah
         function setupFileUpload(areaId, inputId, iconId, textId, hintId, maxMB) {
+        // Universal Upload Handler
+        function setupUpload(areaId, inputId, iconId, textId, hintId, previewId = null) {
             const area = document.getElementById(areaId);
             const input = document.getElementById(inputId);
             const icon = document.getElementById(iconId);
             const text = document.getElementById(textId);
             const hint = document.getElementById(hintId);
+            const preview = previewId ? document.getElementById(previewId) : null;
 
             area.addEventListener('click', () => input.click());
-            area.addEventListener('dragover', (e) => { e.preventDefault(); area.style.borderColor='var(--primary)'; });
-            area.addEventListener('dragleave', () => { area.style.borderColor=''; });
-            area.addEventListener('drop', (e) => {
-                e.preventDefault(); area.style.borderColor='';
-                if(e.dataTransfer.files.length){ input.files=e.dataTransfer.files; showFile(input.files[0]); }
+            
+            input.addEventListener('change', () => {
+                if(input.files.length) {
+                    const file = input.files[0];
+                    text.innerHTML = `<span style="color:var(--primary-bright)">${file.name}</span>`;
+                    hint.innerHTML = '<i class="fa-solid fa-check" style="color:var(--primary)"></i> File terpilih';
+                    
+                    if(preview && file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                            icon.style.display = 'none';
+                        };
+                        reader.readAsDataURL(file);
+                    } else if(preview) {
+                        preview.style.display = 'none';
+                        icon.style.display = 'flex';
+                    }
+                }
             });
-            input.addEventListener('change', () => { if(input.files.length) showFile(input.files[0]); });
-
-            function showFile(file) {
-                if(file.size > maxMB*1024*1024){ alert('Ukuran file maksimal '+maxMB+'MB'); return; }
-                icon.innerHTML='<i class="fa-solid fa-file-circle-check" style="font-size:1.5rem;"></i>';
-                icon.style.background='var(--primary)'; icon.style.boxShadow='0 4px 16px rgba(59, 195, 189,.4)';
-                text.innerHTML=file.name;
-                hint.innerHTML='<i class="fa-solid fa-check" style="color:var(--primary);"></i> File berhasil diunggah';
-            }
         }
 
         setupImageUpload('areaCover','inputCover','iconCover','textCover','hintCover','previewCover',10);
@@ -462,19 +619,24 @@
         const userDropdown = document.getElementById('userDropdown');
         userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
         document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
+        setupUpload('areaCover', 'inputCover', 'iconCover', 'textCover', 'hintCover', 'previewCover');
+        setupUpload('areaNaskah', 'inputNaskah', 'iconNaskah', 'textNaskah', 'hintNaskah');
 
         // Dynamic Multiple Authors Array
         const authorsContainer = document.getElementById('authorsContainer');
         const addAuthorBtn = document.getElementById('addAuthorBtn');
-        let authorCount = 1;
+        let authorIndex = 1;
 
         addAuthorBtn.addEventListener('click', () => {
             authorCount++;
             const index = authorCount - 1;
             const authorHtml = `
-                <div class="author-item" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border-light); animation: fadeIn 0.3s ease-out;">
-                    <div class="section-header" style="margin-bottom: 16px;">
-                        <h3 style="font-size: 0.875rem; color: var(--primary); font-weight: 600;">Penulis #${authorCount}</h3>
+                <div class="author-item fade-in" style="padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border-light);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-size: 0.875rem; color: var(--primary); font-weight: 700;">Penulis Tambahan</h3>
+                        <button type="button" class="btn-remove-author" onclick="this.closest('.author-item').remove()">
+                            <i class="fa-solid fa-trash-can"></i> Hapus
+                        </button>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
@@ -507,9 +669,33 @@
                             <i class="fa-solid fa-trash-can"></i> Hapus Penulis
                         </button>
                     </div>
+                            <input type="text" name="penulis[${authorIndex}][nama]" class="form-control" placeholder="Nama sesuai identitas..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="penulis[${authorIndex}][email]" class="form-control" placeholder="Alamat email aktif..." required>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-bottom:0;">
+                        <div class="form-group" style="flex: 0 0 140px;">
+                            <label>Urutan</label>
+                            <select name="penulis[${authorIndex}][urutan]" class="form-control">
+                                <option value="1">Utama (1)</option>
+                                <option value="2">Kedua (2)</option>
+                                <option value="3">Ketiga (3)</option>
+                                <option value="4">Keempat (4)</option>
+                                <option value="5">Kelima (5)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Biodata Singkat</label>
+                            <textarea name="penulis[${authorIndex}][biodata]" class="form-control" style="min-height: 80px;" placeholder="Profil singkat penulis..."></textarea>
+                        </div>
+                    </div>
                 </div>
             `;
             authorsContainer.insertAdjacentHTML('beforeend', authorHtml);
+            authorIndex++;
         });
 
         // Inject CSS Animation Keyframe
@@ -521,6 +707,25 @@
             }
         `;
         document.head.appendChild(style);
+        // Draft Button Feedback
+        document.getElementById('btnDraft').addEventListener('click', function() {
+            const btn = this;
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Menyimpan...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Tersimpan!';
+                btn.style.borderColor = 'var(--primary)';
+                btn.style.color = 'var(--primary)';
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 2000);
+            }, 1000);
+        });
     </script>
 </body>
 </html>
