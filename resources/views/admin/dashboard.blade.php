@@ -111,8 +111,6 @@
             box-shadow:0 10px 25px rgba(0,0,0,0.2); 
             position:relative; 
             overflow:hidden; 
-            display: flex;
-            flex-direction: column;
             transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
         }
         .stat-card::after { content:''; position:absolute; inset:0; border-radius:18px; background:linear-gradient(145deg, rgba(59, 195, 189, 0.05), transparent 60%); pointer-events:none; }
@@ -121,24 +119,17 @@
             border-top-color:var(--primary); 
             box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 195, 189, 0.1); 
         }
-        
-        .stat-icon-wrapper { 
-            width:42px; 
-            height:42px; 
-            border-radius:12px; 
-            display:flex; 
-            align-items:center; 
-            justify-content:center; 
-            font-size:1.15rem; 
-            transition: transform 0.3s; 
-        }
-        .stat-card:hover .stat-icon-wrapper { transform: scale(1.1) rotate(5deg); }
+        .stat-main { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+        .stat-title { font-size:.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
+        .stat-value { font-size:2rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; }
+        .stat-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; transition: transform 0.3s; }
+        .stat-card:hover .stat-icon { transform: scale(1.1) rotate(5deg); }
         
         /* Stat Icon Themes */
-        .stat-icon-wrapper.blue { background: rgba(59, 130, 246, 0.15); color: #60A5FA; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1); }
-        .stat-icon-wrapper.purple { background: rgba(168, 85, 247, 0.15); color: #C084FC; box-shadow: 0 8px 20px rgba(168, 85, 247, 0.1); }
-        .stat-icon-wrapper.green { background: rgba(16, 185, 129, 0.15); color: #34D399; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1); }
-        .stat-icon-wrapper.orange { background: rgba(245, 158, 11, 0.15); color: #FBBF24; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.1); }
+        .stat-icon.blue   { background: rgba(59, 130, 246, 0.15); color: #60A5FA; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1); }
+        .stat-icon.purple { background: rgba(168, 85, 247, 0.15); color: #C084FC; box-shadow: 0 8px 20px rgba(168, 85, 247, 0.1); }
+        .stat-icon.green  { background: rgba(16, 185, 129, 0.15); color: #34D399; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1); }
+        .stat-icon.orange { background: rgba(245, 158, 11, 0.15); color: #FBBF24; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.1); }
 
         .stat-badge-green { 
             background: rgba(16, 185, 129, 0.15); 
@@ -148,10 +139,12 @@
             padding: 4px 10px; 
             border-radius: 12px; 
             border: 1px solid rgba(16, 185, 129, 0.2);
+            display: inline-block;
         }
 
-        .stat-label { font-size:.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; margin-top: 16px; margin-bottom: 4px; }
-        .stat-value { font-size:2.25rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; }
+        .stat-subtitle { font-size:.875rem; color:var(--text-secondary); margin-bottom:16px; font-weight: 500; }
+        .stat-link { font-size:.75rem; color:var(--primary-bright); text-decoration:none; font-weight:700; display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
+        .stat-link:hover { gap:10px; }
 
         /* Bottom Layout */
         .bottom-layout { display:grid; grid-template-columns: 2.2fr 1fr; gap:24px; margin-top:28px; }
@@ -164,12 +157,14 @@
             padding:28px; 
             box-shadow:0 10px 30px rgba(0,0,0,0.2); 
             position:relative; 
+            overflow:hidden;
             transition: transform 0.25s, box-shadow 0.25s;
         }
         .card::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg, rgba(59, 195, 189, 0.03), transparent 60%); pointer-events:none; }
         .card:hover { 
+            transform: translateY(-4px);
             border-top-color:var(--primary); 
-            box-shadow:0 12px 36px rgba(0,0,0,0.3); 
+            box-shadow: 0 12px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(59, 195, 189, 0.1); 
         }
 
         .card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
@@ -189,18 +184,31 @@
         
         /* Status Badges */
         .status-badge { 
-            display:inline-flex; 
-            align-items:center; 
-            padding:5px 12px; 
-            border-radius:24px; 
-            font-size:.725rem; 
-            font-weight:700; 
-            text-align: center;
+            display: inline-flex; 
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            font-size: .75rem; 
+            font-weight: 600; 
+            white-space: nowrap;
         }
-        .status-badge.peninjauan { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.2); }
-        .status-badge.disetujui { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .status-badge.revisi { background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.2); }
-        .status-badge.ditolak { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .status-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .status-badge.disetujui { background: rgba(59, 195, 189, 0.15); color: #3BC3BD; }
+        .status-badge.disetujui::before { background: #3BC3BD; }
+        .status-badge.peninjauan { background: rgba(59, 130, 246, 0.12); color: #60A5FA; }
+        .status-badge.peninjauan::before { background: #60A5FA; }
+        .status-badge.revisi { background: rgba(156, 163, 175, 0.15); color: #9CA3AF; }
+        .status-badge.revisi::before { background: #9CA3AF; }
+        .status-badge.ditolak { background: rgba(239, 68, 68, 0.12); color: #F87171; }
+        .status-badge.ditolak::before { background: #F87171; }
         
         .waktu-text { font-size:.825rem; color:var(--text-muted); font-weight: 500; }
         
@@ -342,47 +350,54 @@
         <section class="stats-grid">
             <!-- Total Naskah Terupload -->
             <div class="stat-card">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div class="stat-icon-wrapper blue">
-                        <i class="fa-regular fa-file-lines"></i>
+                <div class="stat-main">
+                    <div>
+                        <div class="stat-title">Total Naskah</div>
+                        <div class="stat-value">1,284</div>
                     </div>
-                    <span class="stat-badge-green">+12 minggu ini</span>
+                    <div class="stat-icon blue"><i class="fa-regular fa-file-lines"></i></div>
                 </div>
-                <span class="stat-label">Total Naskah Terupload</span>
-                <span class="stat-value">1,284</span>
+                <div class="stat-subtitle">Total naskah yang diupload</div>
+                <a href="/admin/review-naskah" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             
             <!-- Total Pengguna -->
             <div class="stat-card">
-                <div style="display: flex; align-items: center;">
-                    <div class="stat-icon-wrapper purple">
-                        <i class="fa-solid fa-users"></i>
+                <div class="stat-main">
+                    <div>
+                        <div class="stat-title">Total Pengguna</div>
+                        <div class="stat-value">856</div>
                     </div>
+                    <div class="stat-icon purple"><i class="fa-solid fa-users"></i></div>
                 </div>
-                <span class="stat-label">Total Pengguna</span>
-                <span class="stat-value">856</span>
+                <div class="stat-subtitle">Total pengguna terdaftar</div>
+                <a href="/admin/pengguna" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             
             <!-- Naskah Disetujui -->
             <div class="stat-card">
-                <div style="display: flex; align-items: center;">
-                    <div class="stat-icon-wrapper green">
-                        <i class="fa-regular fa-circle-check"></i>
+                <div class="stat-main">
+                    <div>
+                        <div class="stat-title">Naskah Disetujui</div>
+                        <div class="stat-value">942</div>
                     </div>
+                    <div class="stat-icon green"><i class="fa-regular fa-circle-check"></i></div>
                 </div>
-                <span class="stat-label">Naskah Disetujui</span>
-                <span class="stat-value">942</span>
+                <div class="stat-subtitle">Naskah telah disetujui</div>
+                <a href="/admin/review-naskah" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             
             <!-- Dalam Peninjauan -->
             <div class="stat-card">
-                <div style="display: flex; align-items: center;">
-                    <div class="stat-icon-wrapper orange">
-                        <i class="fa-solid fa-hourglass-half"></i>
+                <div class="stat-main">
+                    <div>
+                        <div class="stat-title">Dalam Peninjauan</div>
+                        <div class="stat-value">42</div>
                     </div>
+                    <div class="stat-icon orange"><i class="fa-solid fa-hourglass-half"></i></div>
                 </div>
-                <span class="stat-label">Dalam Peninjauan</span>
-                <span class="stat-value">42</span>
+                <div class="stat-subtitle">Naskah dalam peninjauan</div>
+                <a href="/admin/review-naskah" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
         </section>
 
@@ -420,7 +435,7 @@
                                     <span class="waktu-text">09:45 WIB</span>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn-review">Review</a>
+                                    <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
                                 </td>
                             </tr>
                             <tr>
@@ -437,7 +452,7 @@
                                     <span class="waktu-text">08:30 WIB</span>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn-review">Review</a>
+                                    <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
                                 </td>
                             </tr>
                             <tr>
@@ -454,7 +469,7 @@
                                     <span class="waktu-text">Kemarin, 16:20</span>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn-review">Review</a>
+                                    <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
                                 </td>
                             </tr>
                             <tr>
@@ -471,7 +486,7 @@
                                     <span class="waktu-text">Kemarin, 14:15</span>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn-review">Review</a>
+                                    <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
                                 </td>
                             </tr>
                         </tbody>

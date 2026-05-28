@@ -46,6 +46,10 @@ Route::get('/daftar-pengajuan', function () {
     return view('daftar-pengajuan');
 });
 
+Route::get('/pembayaran', function () {
+    return view('pembayaran');
+});
+
 use App\Http\Controllers\AuthController;
 
 // Ganti url /register jadi /auth-register biar gak nabrak
