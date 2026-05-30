@@ -15,8 +15,8 @@
             --accent:         #3BC3BD;
             --bg-body:        #0f1d26;
             --bg-sidebar:     #0c1a22;
-            --bg-card:        #12222d;
-            --bg-card-hover:  #1b2e3c;
+            --bg-card:        #1B2B38;
+            --bg-card-hover:  #2e4255;
             --bg-input:       #111f2a;
             --bg-elevated:    #2B3D49;
             --border-color:   #2e4459;
@@ -24,6 +24,12 @@
             --text-primary:   #F0F6FA;
             --text-secondary: #B8CDD8;
             --text-muted:     #7A9BAA;
+            --status-review-bg:      rgba(59, 130, 246, 0.12);
+            --status-review-text:    #60A5FA;
+            --status-published-bg:   rgba(59, 195, 189, 0.15);
+            --status-published-text: #3BC3BD;
+            --status-draft-bg:       rgba(122, 155, 170, 0.15);
+            --status-draft-text:     #7A9BAA;
             --sidebar-width: 280px;
             --sidebar-collapsed-width: 64px;
         }
@@ -38,9 +44,11 @@
         .brand { padding:18px 14px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border-color); min-height:66px; }
         .brand-content { display:flex; align-items:center; gap:10px; overflow:hidden; }
         .brand-icon { font-size:1.2rem; color:var(--primary); flex-shrink:0; width:28px; text-align:center; }
+        .brand-info { overflow:hidden; }
         .brand-text { font-size:.9375rem; font-weight:700; color:var(--primary); white-space:nowrap; transition:opacity 0.2s; }
-        .sidebar.collapsed .brand-text { opacity:0; width:0; }
-        .sidebar.collapsed .brand-subtitle { display:none; }
+        .brand-subtitle { font-size:.72rem; color:var(--text-muted); white-space:nowrap; margin-top:1px; }
+        .sidebar.collapsed .brand-text,
+        .sidebar.collapsed .brand-subtitle { opacity:0; width:0; }
         .sidebar-toggle { width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; color:var(--text-muted); border-radius:7px; cursor:pointer; flex-shrink:0; font-size:.95rem; transition:background 0.2s, color 0.2s; }
         .sidebar-toggle:hover { background:var(--bg-card); color:var(--primary); }
 
@@ -67,7 +75,7 @@
         .top-header { display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
         .search-container { position:relative; width:340px; }
         .search-container i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:.875rem; }
-        .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:rgba(18,34,45,0.8); border-radius:10px; font-size:.875rem; outline:none; color:var(--text-primary); transition:border-color 0.2s, box-shadow 0.2s; }
+        .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:var(--bg-card); border-radius:10px; font-size:.875rem; outline:none; color:var(--text-primary); transition:border-color 0.2s, box-shadow 0.2s; }
         .search-input::placeholder { color:var(--text-muted); }
         .search-input:focus { border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
 
@@ -76,8 +84,41 @@
         .header-icon-btn:hover { background:rgba(255,255,255,0.05); color:var(--primary-bright); }
         .header-divider { width:1px; height:24px; background:var(--border-color); margin:0 12px 0 8px; opacity:0.6; }
         .notif-dot { position:absolute; top:10px; right:10px; width:6px; height:6px; background:#f87171; border-radius:50%; border:1.5px solid var(--bg-card); }
-        .user-avatar-circle { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); display:flex; align-items:center; justify-content:center; overflow:hidden; border:1px solid var(--border-color); box-shadow:0 4px 10px rgba(0,0,0,0.2); }
-        .user-avatar-circle img { width:100%; height:100%; object-fit:cover; }
+        
+        .user-wrapper { position:relative; }
+        .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
+        .user-header:hover { background:rgba(255,255,255,0.05); }
+        .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(59, 195, 189,0.3); overflow:hidden; }
+        .user-header-info { display:flex; flex-direction:column; gap:0; }
+        .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
+        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
+
+        .user-dropdown {
+            position:absolute;
+            top:calc(100% + 12px);
+            right:0;
+            width:240px;
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(59, 195, 189,0.08);
+            display:none;
+            flex-direction:column;
+            z-index:1000;
+            overflow:hidden;
+            transform-origin: top right;
+            animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes dropdownFadeIn { from{opacity:0;transform:scale(.95) translateY(-10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+        .user-dropdown.show { display:flex; }
+        .user-dropdown-item { padding:14px 20px; display:flex; align-items:center; gap:16px; color:var(--text-secondary); text-decoration:none; font-size:.875rem; font-weight:500; transition:all .2s; cursor:pointer; }
+        .user-dropdown-item:hover { background:var(--bg-card-hover); color:var(--primary); padding-left:24px; }
+        .user-dropdown-item i { width:20px; font-size:1.1rem; text-align:center; color:var(--text-muted); transition:color .2s; }
+        .user-dropdown-item:hover i { color:var(--primary); }
+        .user-dropdown-divider { height:1px; background:var(--border-color); margin:8px 0; }
+        .user-dropdown-item.logout { color:#f87171; }
+        .user-dropdown-item.logout i { color:#f87171; }
+        .user-dropdown-item.logout:hover { background:rgba(248,113,113,0.08); color:#f87171; }
 
         /* ─── Page Header ────────────────────────────────────────── */
         .page-header { margin-top:10px; margin-bottom:28px; }
@@ -108,6 +149,29 @@
         .stat-info { display:flex; flex-direction:column; flex:1; }
         .stat-title { font-size:.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
         .stat-value { font-size:2rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; margin-bottom: 6px; text-align: left; }
+        .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:28px; }
+
+        .stat-card {
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-top:3px solid var(--primary-dim);
+            border-radius:18px;
+            padding:24px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.2);
+            position:relative;
+            overflow:hidden;
+            transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .stat-card::after { content:''; position:absolute; inset:0; border-radius:18px; background:linear-gradient(145deg, rgba(59, 195, 189, 0.05), transparent 60%); pointer-events:none; }
+        .stat-card:hover {
+            transform:translateY(-8px);
+            border-top-color:var(--primary);
+            box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 195, 189, 0.1);
+        }
+
+        .stat-card-top { display:flex; align-items:flex-start; justify-content:space-between; }
+        .stat-label { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:var(--text-muted); line-height:1; }
+        .stat-value { font-size:2.4rem; font-weight:800; color:var(--text-primary); letter-spacing:-1px; line-height:1; }
         .stat-value.danger { color:#f87171; }
         .stat-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; transition: transform 0.3s; }
         .stat-card:hover .stat-icon { transform: scale(1.1) rotate(5deg); }
@@ -123,7 +187,18 @@
         .stat-link:hover { gap:10px; }
 
         /* ─── Transaksi Section ──────────────────────────────────── */
-        .section-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:20px; padding:28px; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+        .section-card {
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-top:2px solid var(--primary-dim);
+            border-radius:20px;
+            padding:28px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.2);
+            position:relative;
+            transition:transform .25s, box-shadow .25s;
+        }
+        .section-card::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg,rgba(59, 195, 189,0.03),transparent 60%); pointer-events:none; }
+        .section-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(59, 195, 189,0.1); }
 
         .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
         .section-title-group {}
@@ -149,12 +224,43 @@
         .tanggal-text { font-size:.875rem; color:var(--text-secondary); }
         .metode-text { font-size:.875rem; color:var(--text-muted); }
 
-        /* Status Badges */
-        .status-badge { display:inline-flex; align-items:center; padding:5px 14px; border-radius:24px; font-size:.7rem; font-weight:700; text-align:center; white-space:nowrap; }
-        .status-badge.cek-bayar  { background:rgba(59,195,189,0.12); color:var(--primary-bright); border:1px solid rgba(59,195,189,0.25); }
-        .status-badge.published  { background:rgba(16,185,129,0.1);  color:#34D399;               border:1px solid rgba(16,185,129,0.2); }
-        .status-badge.proses-isbn{ background:rgba(168,85,247,0.1);  color:#C084FC;               border:1px solid rgba(168,85,247,0.25); }
-        .status-badge.rejected   { background:rgba(239,68,68,0.1);   color:#F87171;               border:1px solid rgba(239,68,68,0.2); }
+        /* Status Badges — sama persis dengan daftar-pengajuan */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .status-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        /* Menunggu — abu-abu (seperti status-draft di daftar naskah) */
+        .status-badge.waiting {
+            background: rgba(122, 155, 170, 0.15);
+            color: #7A9BAA;
+        }
+        .status-badge.waiting::before { background: #7A9BAA; }
+        /* Disetujui — teal (seperti status-published di daftar naskah) */
+        .status-badge.approved {
+            background: rgba(59, 195, 189, 0.15);
+            color: #3BC3BD;
+        }
+        .status-badge.approved::before { background: #3BC3BD; }
+        /* Ditolak — merah soft, tone gelap yang nyaman di mata */
+        .status-badge.rejected {
+            background: rgba(239, 68, 68, 0.12);
+            color: #F87171;
+        }
+        .status-badge.rejected::before { background: #F87171; }
 
         /* Action Icon Button */
         .aksi-btn { width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; color:var(--primary); font-size:1.1rem; cursor:pointer; border-radius:8px; transition:all 0.2s; }
@@ -281,10 +387,10 @@
     <aside class="sidebar" id="sidebar">
         <div class="brand">
             <div class="brand-content">
-                <i class="fa-solid fa-book-bookmark brand-icon" style="font-size:1.25rem; color:var(--primary);"></i>
-                <div style="display:flex; flex-direction:column; overflow:hidden;">
-                    <span class="brand-text">ISBN Registry</span>
-                    <span class="brand-subtitle" style="font-size:0.7rem; color:var(--text-muted); font-weight:500; margin-top:-2px;">Super Admin Portal</span>
+                <div class="brand-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                <div class="brand-info">
+                    <div class="brand-text">ISBN YPIK PAM JAYA</div>
+                    <div class="brand-subtitle">Super Admin Portal</div>
                 </div>
             </div>
             <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
@@ -342,8 +448,24 @@
                     <span class="notif-dot"></span>
                 </button>
                 <div class="header-divider"></div>
-                <div class="user-avatar-circle">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&fit=crop&q=80" alt="Super Admin">
+                <div class="user-wrapper">
+                    <div class="user-header" id="userToggle">
+                        <div class="user-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&fit=crop&q=80" alt="Super Admin" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+                        </div>
+                        <div class="user-header-info">
+                            <div class="user-header-name">Super Admin</div>
+                            <div class="user-header-role">Super Admin</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                        <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
+                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                    </div>
                 </div>
             </div>
         </header>
@@ -416,6 +538,7 @@
                             <th>Jumlah</th>
                             <th>Tanggal</th>
                             <th>Metode</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -427,6 +550,7 @@
                             <td><span class="jumlah-text">Rp 2.500.000</span></td>
                             <td><span class="tanggal-text">24 Oct 2023</span></td>
                             <td><span class="metode-text">Bank Transfer</span></td>
+                            <td><span class="status-badge waiting">Menunggu</span></td>
                             <td>
                                 <button class="aksi-btn" title="Lihat Detail"
                                     data-inv="#INV-2023-0891" data-penulis="Dr. Ahmad Subagyo"
@@ -446,13 +570,14 @@
                             <td><span class="jumlah-text">Rp 1.200.000</span></td>
                             <td><span class="tanggal-text">23 Oct 2023</span></td>
                             <td><span class="metode-text">E-Wallet</span></td>
+                            <td><span class="status-badge approved">Disetujui</span></td>
                             <td>
                                 <button class="aksi-btn" title="Lihat Detail"
                                     data-inv="#INV-2023-0890" data-penulis="Siti Aminah, M.Pd"
                                     data-jumlah="Rp 1.200.000" data-tanggal="23 Oktober 2023"
                                     data-metode="E-Wallet" data-status="Published"
                                     data-bank="GoPay" data-norek="08123456789"
-                                    data-bukti="bukti_ewallet_0890.png"
+                                    data-bukti="https://via.placeholder.com/600x400"
                                     onclick="openModal(this)">
                                     <i class="fa-regular fa-eye"></i>
                                 </button>
@@ -465,6 +590,7 @@
                             <td><span class="jumlah-text">Rp 3.750.000</span></td>
                             <td><span class="tanggal-text">23 Oct 2023</span></td>
                             <td><span class="metode-text">Credit Card</span></td>
+                            <td><span class="status-badge waiting">Menunggu</span></td>
                             <td>
                                 <button class="aksi-btn" title="Lihat Detail"
                                     data-inv="#INV-2023-0889" data-penulis="Budi Santoso"
@@ -484,6 +610,7 @@
                             <td><span class="jumlah-text">Rp 2.000.000</span></td>
                             <td><span class="tanggal-text">22 Oct 2023</span></td>
                             <td><span class="metode-text">Bank Transfer</span></td>
+                            <td><span class="status-badge rejected">Ditolak</span></td>
                             <td>
                                 <button class="aksi-btn" title="Lihat Detail"
                                     data-inv="#INV-2023-0888" data-penulis="Prof. Laila Sari"
@@ -573,17 +700,18 @@
                 <!-- Bukti Pembayaran -->
                 <div>
                     <div class="modal-section-label"><i class="fa-solid fa-image" style="margin-right:6px;"></i>Bukti Pembayaran</div>
-                    <div class="bukti-box">
-                        <div class="bukti-thumb">
-                            <i class="fa-solid fa-file-image"></i>
+                    <div class="bukti-box" style="flex-direction:column; align-items:flex-start; gap:12px;">
+                        <div style="display:flex; align-items:center; gap:10px; width:100%;">
+                            <div class="bukti-thumb">
+                                <i class="fa-solid fa-image"></i>
+                            </div>
+                            <div class="bukti-info">
+                                <div class="bukti-name" id="mBuktiName">bukti_transfer.pdf</div>
+                                <div class="bukti-size">PNG / JPG &bull; Diunggah oleh Penulis</div>
+                            </div>
                         </div>
-                        <div class="bukti-info">
-                            <div class="bukti-name" id="mBuktiName">bukti_transfer.pdf</div>
-                            <div class="bukti-size">PDF / PNG &bull; Diunggah oleh Penulis</div>
-                        </div>
-                        <button class="bukti-download">
-                            <i class="fa-solid fa-download"></i> Unduh
-                        </button>
+                        <img id="buktiImg" src="" alt="Bukti Pembayaran"
+                             style="width:100%; max-height:320px; object-fit:contain; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-body);">
                     </div>
                 </div>
             </div>
@@ -603,6 +731,11 @@
             mainContent.classList.toggle('expanded');
         });
 
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
+        document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
+
         function openModal(btn) {
             const d = btn.dataset;
             document.getElementById('mInvId').textContent    = d.inv;
@@ -614,6 +747,7 @@
             document.getElementById('mBank').textContent     = d.bank;
             document.getElementById('mNorek').textContent    = d.norek;
             document.getElementById('mBuktiName').textContent= d.bukti;
+            document.getElementById('buktiImg').src = d.bukti;
             document.getElementById('modalSubtitle').textContent = d.inv + ' · ' + d.penulis;
             document.getElementById('invoiceModal').classList.add('open');
             document.body.style.overflow = 'hidden';

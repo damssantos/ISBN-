@@ -15,8 +15,8 @@
             --accent:         #3BC3BD;
             --bg-body:        #0f1d26;
             --bg-sidebar:     #0c1a22;
-            --bg-card:        #12222d;
-            --bg-card-hover:  #1b2e3c;
+            --bg-card:        #1B2B38;
+            --bg-card-hover:  #2e4255;
             --bg-input:       #111f2a;
             --bg-elevated:    #2B3D49;
             --border-color:   #2e4459;
@@ -66,7 +66,7 @@
         .top-header { display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
         .search-container { position:relative; width:340px; }
         .search-container i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:.875rem; }
-        .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:rgba(18, 34, 45, 0.8); border-radius:10px; font-size:.875rem; outline:none; color:var(--text-primary); transition:border-color 0.2s, box-shadow 0.2s; }
+        .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:var(--bg-card); border-radius:10px; font-size:.875rem; outline:none; color:var(--text-primary); transition:border-color 0.2s, box-shadow 0.2s; }
         .search-input::placeholder { color:var(--text-muted); }
         .search-input:focus { border-color:var(--primary-dim); box-shadow:0 0 0 3px var(--primary-glow); }
 
@@ -132,32 +132,50 @@
             font-weight: 700;
         }
 
-        /* Review Naskah Main Card Table */
-        .table-card {
-            background: rgba(18, 34, 45, 0.7);
+        /* Review Naskah Main Card Table — sama seperti buku-terbit */
+        .table-card, .card {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
+            border-top: 2px solid var(--primary-dim);
+            border-radius: 14px;
             padding: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 20px rgba(0,0,0,.2);
+            position: relative;
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s;
             margin-bottom: 24px;
+        }
+        .table-card::after, .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            background: linear-gradient(145deg, rgba(59, 195, 189, 0.03), transparent 60%);
+            pointer-events: none;
+        }
+        .table-card:hover, .card:hover {
+            transform: translateY(-4px);
+            border-top-color: var(--primary);
+            box-shadow: 0 12px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(59, 195, 189, 0.1);
         }
 
         .table-container { width: 100%; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; }
         th { 
             text-align: left; 
-            padding: 12px 16px 20px; 
+            padding: 0 0 14px; 
             font-size: .75rem; 
             color: var(--text-muted); 
-            font-weight: 700; 
+            font-weight: 600; 
             text-transform: uppercase; 
-            letter-spacing: 0.8px; 
+            letter-spacing: .4px; 
             border-bottom: 1px solid var(--border-color); 
         }
         td { 
-            padding: 20px 16px; 
-            border-bottom: 1px solid rgba(46, 68, 89, 0.3); 
+            padding: 16px 0; 
+            border-bottom: 1px solid var(--border-light); 
             vertical-align: middle; 
+            font-size: .875rem;
         }
         tr:last-child td { border-bottom: none; }
         
@@ -167,19 +185,33 @@
         
         .penulis-name { font-size: .875rem; color: var(--text-secondary); font-weight: 500; }
         
-        /* Status Badges */
+        /* Status Badges — sama seperti buku-terbit */
         .status-badge { 
             display: inline-flex; 
-            align-items: center; 
-            padding: 5px 14px; 
-            border-radius: 24px; 
-            font-size: .725rem; 
-            font-weight: 700; 
-            text-align: center;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            font-size: .75rem; 
+            font-weight: 600; 
+            white-space: nowrap;
         }
-        .status-badge.disetujui { background: rgba(16, 185, 129, 0.1); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .status-badge.peninjauan { background: rgba(245, 158, 11, 0.1); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.2); }
-        .status-badge.ditolak { background: rgba(239, 68, 68, 0.1); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .status-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .status-badge.disetujui { background: rgba(59, 195, 189, 0.15); color: #3BC3BD; }
+        .status-badge.disetujui::before { background: #3BC3BD; }
+        .status-badge.peninjauan { background: rgba(59, 130, 246, 0.12); color: #60A5FA; }
+        .status-badge.peninjauan::before { background: #60A5FA; }
+        .status-badge.ditolak { background: rgba(239, 68, 68, 0.12); color: #F87171; }
+        .status-badge.ditolak::before { background: #F87171; }
+        .status-badge.revisi { background: rgba(156, 163, 175, 0.15); color: #9CA3AF; }
+        .status-badge.revisi::before { background: #9CA3AF; }
         
         .waktu-wrapper { display: flex; flex-direction: column; gap: 2px; }
         .waktu-text { font-size: .825rem; color: var(--text-primary); font-weight: 500; }
@@ -336,6 +368,7 @@
             <button class="filter-pill active" onclick="filterStatus('all', this)">Semua</button>
             <button class="filter-pill" onclick="filterStatus('disetujui', this)">Disetujui</button>
             <button class="filter-pill" onclick="filterStatus('peninjauan', this)">Peninjauan</button>
+            <button class="filter-pill" onclick="filterStatus('revisi', this)">Revisi</button>
             <button class="filter-pill" onclick="filterStatus('ditolak', this)">Ditolak</button>
         </div>
 
@@ -450,7 +483,7 @@
                             </td>
                         </tr>
                         <!-- Row 5 -->
-                        <tr data-status="peninjauan">
+                        <tr data-status="revisi">
                             <td>
                                 <div class="judul-wrapper">
                                     <span class="judul-naskah">Psikologi Pendidikan di Era Gen-Z</span>
@@ -461,7 +494,7 @@
                                 <span class="penulis-name">Rina Kartika, M.Psi</span>
                             </td>
                             <td>
-                                <span class="status-badge peninjauan">Peninjauan</span>
+                                <span class="status-badge revisi">Revisi</span>
                             </td>
                             <td>
                                 <div class="waktu-wrapper">

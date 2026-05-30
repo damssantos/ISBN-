@@ -24,6 +24,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 // Form Login (Sign In) - Menembak URL kustom /auth-login bawaan desain FE kamu
 Route::get('/auth-login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/auth-login', [AuthController::class, 'login'])->name('login.store');
+Route::get('/pembayaran', function () {
+    return view('pembayaran');
+});
+
+use App\Http\Controllers\AuthController;
 
 // Form Register (Sign Up) - Menembak URL kustom /auth-register bawaan desain FE kamu
 Route::get('/auth-register', [AuthController::class, 'showRegister'])->name('register');
@@ -97,3 +102,12 @@ Route::get('/superadmin/dashboard', function () {
 Route::get('/superadmin/cek-pembayaran', function () {
     return view('superadmin.cek-pembayaran');
 })->name('superadmin.cek-pembayaran');
+
+// User routes
+Route::get('/user/buku-terbit', function () {
+    return view('user.buku-terbit');
+})->name('user.buku-terbit');
+
+Route::get('/user/detail-buku', function () {
+    return view('user.detail-buku');
+})->name('user.detail-buku');
