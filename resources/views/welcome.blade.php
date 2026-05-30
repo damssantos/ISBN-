@@ -56,7 +56,8 @@
         .sidebar.collapsed .nav-link-text { opacity:0; width:0; overflow:hidden; }
         .nav-link.active { background:linear-gradient(90deg, rgba(59, 195, 189, 0.16), rgba(59, 195, 189, 0.06)); color:var(--primary-bright); font-weight:600; border-left:2px solid var(--primary); }
         .nav-link:hover:not(.active) { background:var(--bg-card); color:var(--text-secondary); }
-        .sidebar-footer { padding:14px 8px; border-top:1px solid var(--border-color); }
+        
+        .sidebar-footer { padding:14px 8px; border-top:1px solid var(--border-color); display: flex; flex-direction: column; gap: 4px; }
         .logout-btn { display:flex; align-items:center; gap:12px; padding:10px 12px; color:var(--text-muted); text-decoration:none; font-weight:500; font-size:.875rem; border-radius:10px; transition:all 0.2s; white-space:nowrap; }
         .logout-btn i { width:20px; min-width:20px; text-align:center; flex-shrink:0; }
         .logout-btn:hover { color:#f87171; background:rgba(248, 113, 113, 0.08); }
@@ -206,9 +207,10 @@
             border-top-color:var(--primary); 
             box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 195, 189, 0.1); 
         }
-        .stat-main { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+        .stat-main { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+        .stat-info { display:flex; flex-direction:column; flex:1; }
         .stat-title { font-size:.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
-        .stat-value { font-size:2rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; }
+        .stat-value { font-size:2rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; margin-bottom: 6px; }
         .stat-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; transition: transform 0.3s; }
         .stat-card:hover .stat-icon { transform: scale(1.1) rotate(5deg); }
         
@@ -217,7 +219,7 @@
         .icon-orange { background:rgba(245, 158, 11, 0.15); color:#FBBF24; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.1); }
         .icon-gray { background:rgba(107, 114, 128, 0.15); color:#D1D5DB; box-shadow: 0 8px 20px rgba(107, 114, 128, 0.1); }
         
-        .stat-subtitle { font-size:.875rem; color:var(--text-secondary); margin-bottom:16px; font-weight: 500; }
+        .stat-subtitle { font-size:.875rem; color:var(--text-secondary); margin-bottom:12px; font-weight: 500; }
         .stat-link { font-size:.75rem; color:var(--primary-bright); text-decoration:none; font-weight:700; display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
         .stat-link:hover { gap:10px; }
 
@@ -294,11 +296,11 @@
             <li class="nav-item"><a href="/pengajuan" class="nav-link"><i class="fa-regular fa-file-lines"></i><span class="nav-link-text">Pengajuan</span></a></li>
             <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link"><i class="fa-solid fa-list-check"></i><span class="nav-link-text">Daftar Naskah</span></a></li>
             <li class="nav-item"><a href="/draf" class="nav-link"><i class="fa-solid fa-inbox"></i><span class="nav-link-text">Draf Naskah</span></a></li>
-            <li class="nav-item"><a href="/informasi" class="nav-link"><i class="fa-regular fa-user"></i><span class="nav-link-text">Informasi Penulis</span></a></li>
+            <li class="nav-item"><a href="/informasi-penulis" class="nav-link"><i class="fa-regular fa-user"></i><span class="nav-link-text">Informasi Penulis</span></a></li>
             <li class="nav-item"><a href="/table-penulis" class="nav-link"><i class="fa-solid fa-users-viewfinder"></i><span class="nav-link-text">Daftar Penulis</span></a></li>
         </ul>
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+            <a href="/auth-login" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
         </div>
     </aside>
 
@@ -330,9 +332,9 @@
                 <div class="header-divider"></div>
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
-                        <div class="user-avatar">P</div>
+                        <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'P'), 0, 1)) }}</div>
                         <div class="user-header-info">
-                            <div class="user-header-name">Pradama</div>
+                            <div class="user-header-name">{{ session('user_name', 'Pradama') }}</div>
                             <div class="user-header-role">Kontributor</div>
                         </div>
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
@@ -342,22 +344,21 @@
                         <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
                         <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
                         <div class="user-dropdown-divider"></div>
-                        <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                        <a href="/auth-login" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Welcome Greeting -->
         <section class="welcome-section">
             <div class="welcome-content">
-                <h1>Selamat Datang Kembali, <span class="highlight">Pradama!</span> 👋</h1>
+                <h1>Selamat Datang Kembali, <span class="highlight">{{ session('user_name', 'User') }}!</span></h1>
                 <p>Kelola naskah dan pantau status publikasi Anda dengan mudah di sini.</p>
             </div>
             <div class="welcome-meta">
                 <div class="welcome-date">
                     <i class="fa-regular fa-calendar-days"></i>
-                    <span>Jumat, 08 Mei 2026</span>
+                    <span>{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}</span>
                 </div>
             </div>
         </section>
@@ -365,35 +366,47 @@
         <section class="stats-grid">
             <div class="stat-card">
                 <div class="stat-main">
-                    <div><div class="stat-title">Peninjauan</div><div class="stat-value">12</div></div>
+                    <div class="stat-info">
+                        <div class="stat-title">Peninjauan</div>
+                        <div class="stat-value">{{ $jumlahPeninjauan }}</div>
+                        <div class="stat-subtitle">Naskah dalam peninjauan</div>
+                        <a href="/daftar-pengajuan" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
                     <div class="stat-icon icon-purple"><i class="fa-regular fa-file-lines"></i></div>
                 </div>
-                <div class="stat-subtitle">Naskah dalam peninjauan</div>
-                <a href="/daftar-pengajuan" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             <div class="stat-card">
                 <div class="stat-main">
-                    <div><div class="stat-title">Diterbitkan</div><div class="stat-value">48</div></div>
+                    <div class="stat-info">
+                        <div class="stat-title">Diterbitkan</div>
+                        <div class="stat-value">{{ $jumlahDiterbitkan }}</div>
+                        <div class="stat-subtitle">Naskah telah diterbitkan</div>
+                        <a href="/daftar-pengajuan" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
                     <div class="stat-icon icon-emerald"><i class="fa-solid fa-check-double"></i></div>
                 </div>
-                <div class="stat-subtitle">Naskah telah diterbitkan</div>
-                <a href="/daftar-pengajuan" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             <div class="stat-card">
                 <div class="stat-main">
-                    <div><div class="stat-title">Penulis</div><div class="stat-value">07</div></div>
+                    <div class="stat-info">
+                        <div class="stat-title">Penulis</div>
+                        <div class="stat-value">{{ $jumlahPenulis ?? 0 }}</div>
+                        <div class="stat-subtitle">Total penulis terdaftar</div>
+                        <a href="/table-penulis" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
                     <div class="stat-icon icon-orange"><i class="fa-regular fa-user"></i></div>
                 </div>
-                <div class="stat-subtitle">Total penulis terdaftar</div>
-                <a href="/table-penulis" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             <div class="stat-card">
                 <div class="stat-main">
-                    <div><div class="stat-title">Draf</div><div class="stat-value">03</div></div>
+                    <div class="stat-info">
+                        <div class="stat-title">Draf</div>
+                        <div class="stat-value">{{ str_pad($jumlahDraf, 2, '0', STR_PAD_LEFT) }}</div>
+                        <div class="stat-subtitle">Total draf naskah</div>
+                        <a href="/draf" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
                     <div class="stat-icon icon-gray"><i class="fa-solid fa-inbox"></i></div>
                 </div>
-                <div class="stat-subtitle">Total draf naskah</div>
-                <a href="/draf" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
         </section>
 
@@ -407,24 +420,34 @@
                     <table>
                         <thead><tr><th>Judul Naskah</th><th>Status</th><th>Terakhir Diperbarui</th><th style="text-align:center">Aksi</th></tr></thead>
                         <tbody>
-                            <tr>
-                                <td><div class="ms-title">Analisis Perubahan Iklim 2024</div><div class="ms-id">ID: MS-8829</div></td>
-                                <td><span class="status-badge status-review">Peninjauan</span></td>
-                                <td><div class="date-text">12 Okt 2023</div></td>
-                                <td style="text-align:center"><a href="/pengajuan/detail" class="action-btn" title="Lihat detail"><i class="fa-regular fa-eye"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td><div class="ms-title">Metodologi Medan Kuantum</div><div class="ms-id">ID: MS-7741</div></td>
-                                <td><span class="status-badge status-published">Diterbitkan</span></td>
-                                <td><div class="date-text">28 Sep 2023</div></td>
-                                <td style="text-align:center"><a href="/pengajuan/detail" class="action-btn" title="Lihat detail"><i class="fa-regular fa-eye"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td><div class="ms-title">Dinamika Perencanaan Kota</div><div class="ms-id">ID: MS-4122</div></td>
-                                <td><span class="status-badge status-draft">Draf</span></td>
-                                <td><div class="date-text">15 Sep 2023</div></td>
-                                <td style="text-align:center"><a href="/pengajuan/detail" class="action-btn" title="Lihat detail"><i class="fa-regular fa-eye"></i></a></td>
-                            </tr>
+                            @forelse($naskahTerbaru as $naskah)
+                                <tr>
+                                    <td>
+                                        <div class="ms-title">{{ $naskah->judul }}</div>
+                                        <div class="ms-id">ID: MS-{{ str_pad($naskah->id, 4, '0', STR_PAD_LEFT) }}</div>
+                                    </td>
+                                    <td>
+                                        @if($naskah->status == 'Draf')
+                                            <span class="status-badge status-draft">Draf</span>
+                                        @elseif($naskah->status == 'Diterbitkan')
+                                            <span class="status-badge status-published">Diterbitkan</span>
+                                        @else
+                                            <span class="status-badge status-review">Peninjauan</span>
+                                        @endif
+                                    </td>
+                                    <td><div class="date-text">{{ $naskah->updated_at->translatedFormat('d M Y') }}</div></td>
+                                    <td style="text-align:center">
+                                        <a href="/pengajuan/{{ $naskah->id }}" class="action-btn" title="Lihat detail"><i class="fa-regular fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                        <i class="fa-solid fa-folder-open" style="font-size: 2rem; margin-bottom: 12px; display: block;"></i>
+                                        Belum ada aktivitas naskah terbaru di database.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

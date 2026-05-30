@@ -132,6 +132,22 @@
         /* ─── Stats Grid ──────────────────────────────────────── */
         .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:10px; }
 
+        .stat-card { 
+            background:var(--bg-card); 
+            border:1px solid var(--border-color); 
+            border-top:3px solid var(--primary-dim); 
+            border-radius:18px; 
+            padding:24px; 
+            box-shadow:0 10px 25px rgba(0,0,0,0.2); 
+            position:relative; 
+            overflow:hidden; 
+            transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        .stat-card::after { content:''; position:absolute; inset:0; border-radius:18px; background:linear-gradient(145deg, rgba(59, 195, 189, 0.05), transparent 60%); pointer-events:none; }
+        .stat-card:hover { 
+            transform:translateY(-8px); 
+            border-top-color:var(--primary); 
+            box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 195, 189, 0.1); 
         .stat-card {
             background:var(--bg-card);
             border:1px solid var(--border-color);
@@ -149,6 +165,21 @@
             border-top-color:var(--primary);
             box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 195, 189, 0.1);
         }
+        .stat-main { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+        .stat-info { display:flex; flex-direction:column; flex:1; }
+        .stat-title { font-size:.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
+        .stat-value { font-size:2rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; margin-bottom: 6px; text-align: left; }
+        .stat-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; transition: transform 0.3s; }
+        .stat-card:hover .stat-icon { transform: scale(1.1) rotate(5deg); }
+        
+        .icon-purple { background:rgba(59, 195, 189, 0.15); color:var(--primary-bright); box-shadow: 0 8px 20px rgba(59, 195, 189, 0.1); }
+        .icon-emerald { background:rgba(16, 185, 129, 0.15); color:#5CD9D4; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1); }
+        .icon-orange { background:rgba(245, 158, 11, 0.15); color:#FBBF24; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.1); }
+        .icon-gray { background:rgba(107, 114, 128, 0.15); color:#D1D5DB; box-shadow: 0 8px 20px rgba(107, 114, 128, 0.1); }
+        
+        .stat-subtitle { font-size:.875rem; color:var(--text-secondary); margin-bottom:12px; font-weight: 500; text-align: left; }
+        .stat-link { font-size:.75rem; color:var(--primary-bright); text-decoration:none; font-weight:700; display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
+        .stat-link:hover { gap:10px; }
 
         .stat-main { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
         .stat-title { font-size:.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
@@ -228,6 +259,21 @@
     </style>
 </head>
 <body>
+
+@php
+    $jumlahPeninjauan  = \DB::table('naskahs')->where('status', 'Dalam Peninjauan')->count();
+    $jumlahDiterbitkan = \DB::table('naskahs')->where('status', 'Diterbitkan')->count();
+    $jumlahDraf        = \DB::table('naskahs')->where('status', 'Draf')->count();
+    try {
+        $jumlahPenulis = \DB::table('penulis')->count();
+    } catch (\Exception $e) {
+        try {
+            $jumlahPenulis = \DB::table('akun_pengguna')->count();
+        } catch (\Exception $ex) {
+            $jumlahPenulis = 0;
+        }
+    }
+@endphp
 
     <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
     <aside class="sidebar" id="sidebar">
@@ -317,11 +363,17 @@
         </div>
 
         <!-- ─── Stats Grid ─── -->
-        <div class="stats-grid">
-
-            <!-- Card 1: Peninjauan -->
+        <section class="stats-grid">
             <div class="stat-card">
                 <div class="stat-main">
+                    <div class="stat-info">
+                        <div class="stat-title">Peninjauan</div>
+                        <div class="stat-value">{{ $jumlahPeninjauan }}</div>
+                        <div class="stat-subtitle">Naskah dalam peninjauan</div>
+                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
+                    <div class="stat-icon icon-purple"><i class="fa-regular fa-file-lines"></i></div>
+                </div>
                     <div>
                         <div class="stat-title">Peninjauan</div>
                         <div class="stat-value">12</div>
@@ -331,10 +383,16 @@
                 <div class="stat-subtitle">Naskah dalam peninjauan</div>
                 <a href="/superadmin/verifikasi" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
-
-            <!-- Card 2: Diterbitkan -->
             <div class="stat-card">
                 <div class="stat-main">
+                    <div class="stat-info">
+                        <div class="stat-title">Diterbitkan</div>
+                        <div class="stat-value">{{ $jumlahDiterbitkan }}</div>
+                        <div class="stat-subtitle">Naskah telah diterbitkan</div>
+                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
+                    <div class="stat-icon icon-emerald"><i class="fa-solid fa-check-double"></i></div>
+                </div>
                     <div>
                         <div class="stat-title">Diterbitkan</div>
                         <div class="stat-value">48</div>
@@ -344,10 +402,16 @@
                 <div class="stat-subtitle">Naskah telah diterbitkan</div>
                 <a href="/superadmin/finalisasi" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
-
-            <!-- Card 3: Penulis -->
             <div class="stat-card">
                 <div class="stat-main">
+                    <div class="stat-info">
+                        <div class="stat-title">Penulis</div>
+                        <div class="stat-value">{{ $jumlahPenulis ?? 0 }}</div>
+                        <div class="stat-subtitle">Total penulis terdaftar</div>
+                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
+                    <div class="stat-icon icon-orange"><i class="fa-regular fa-user"></i></div>
+                </div>
                     <div>
                         <div class="stat-title">Penulis</div>
                         <div class="stat-value">07</div>
@@ -357,10 +421,16 @@
                 <div class="stat-subtitle">Total penulis terdaftar</div>
                 <a href="/superadmin/verifikasi" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
-
-            <!-- Card 4: Draf -->
             <div class="stat-card">
                 <div class="stat-main">
+                    <div class="stat-info">
+                        <div class="stat-title">Draf</div>
+                        <div class="stat-value">{{ str_pad($jumlahDraf, 2, '0', STR_PAD_LEFT) }}</div>
+                        <div class="stat-subtitle">Total draf naskah</div>
+                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
+                    <div class="stat-icon icon-gray"><i class="fa-solid fa-inbox"></i></div>
+                </div>
                     <div>
                         <div class="stat-title">Draf</div>
                         <div class="stat-value">03</div>
@@ -370,8 +440,7 @@
                 <div class="stat-subtitle">Total draf naskah</div>
                 <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
-
-        </div>
+        </section>
 
         <!-- ─── Workflow Log ─── -->
         <div class="section-header">

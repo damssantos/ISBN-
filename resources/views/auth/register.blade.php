@@ -54,7 +54,7 @@
 
         @if ($errors->any())
             <div class="alert-error">
-                {{ $errors->first() }}
+                <i class="fa-solid fa-triangle-exclamation"></i> {{ $errors->first() }}
             </div>
         @endif
 
@@ -113,14 +113,12 @@
                 passwordInput.type = "text";
                 icon.classList.remove('fa-eye-slash');
                 icon.classList.add('fa-eye');
-                // Berubah jadi warna primer cerah pas melek aktif
                 buttonElement.style.background = 'var(--primary)';
                 buttonElement.style.color = '#0f1d26';
             } else {
                 passwordInput.type = "password";
                 icon.classList.remove('fa-eye');
                 icon.classList.add('fa-eye-slash');
-                // Balikin ke warna redup semula
                 buttonElement.style.background = '#1b2e3c';
                 buttonElement.style.color = 'var(--primary)';
             }

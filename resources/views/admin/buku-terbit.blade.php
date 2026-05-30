@@ -399,6 +399,7 @@
                 <div class="user-avatar-circle">
                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80" alt="Admin Avatar">
                 </div>
+                <span class="user-name" style="margin-left:8px;color:var(--text-primary);font-size:0.9rem;">{{ Auth::user()->name }}</span>
             </div>
         </header>
 
