@@ -65,7 +65,6 @@ Route::get('/akun', function () { return view('akun'); });
 Route::get('/pengaturan', function () { return view('pengaturan'); });
 Route::get('/table-penulis', function () { return view('table-penulis'); });
 Route::get('/pengajuan/detail', function () { return view('table-pengajuan'); });
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');

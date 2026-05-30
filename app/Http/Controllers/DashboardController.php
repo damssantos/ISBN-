@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Naskah; 
-use App\Models\Penulis; // Menambahkan model Penulis agar hitungan total penulis unik aktif riil
+
 
 class DashboardController extends Controller
 {
@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $jumlahDraf        = Naskah::where('status', 'Draf')->count();
         
         // Hitung total penulis unik yang sudah mendaftarkan naskah di database
-        $jumlahPenulis     = Penulis::distinct('nama')->count();
+        
 
         // 2. AMBIL MAKSIMAL 5 DATA NASKAH PALING TERBARU UNTUK TABEL BAWAH DASHBOARD
         $naskahTerbaru     = Naskah::latest()->take(5)->get();
@@ -29,7 +29,7 @@ class DashboardController extends Controller
             'jumlahPeninjauan', 
             'jumlahDiterbitkan', 
             'jumlahDraf', 
-            'jumlahPenulis', 
+ 
             'naskahTerbaru'
         ));
     }

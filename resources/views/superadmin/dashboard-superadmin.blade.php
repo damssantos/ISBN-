@@ -84,61 +84,38 @@
         /* ─── Stats Grid ──────────────────────────────────────── */
         .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:10px; }
 
-        .stat-card {
-            background:var(--bg-card);
-            border:1px solid var(--border-color);
-            border-radius:16px;
-            padding:22px 22px 20px;
-            position:relative;
-            overflow:hidden;
-            display:flex;
-            flex-direction:column;
-            gap:10px;
-            transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
-            box-shadow:0 4px 16px rgba(0,0,0,0.18);
+        .stat-card { 
+            background:var(--bg-card); 
+            border:1px solid var(--border-color); 
+            border-top:3px solid var(--primary-dim); 
+            border-radius:18px; 
+            padding:24px; 
+            box-shadow:0 10px 25px rgba(0,0,0,0.2); 
+            position:relative; 
+            overflow:hidden; 
+            transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
         }
-        .stat-card::after { content:''; position:absolute; inset:0; border-radius:16px; background:linear-gradient(145deg, rgba(59,195,189,0.04), transparent 55%); pointer-events:none; }
-        .stat-card:hover { transform:translateY(-4px); box-shadow:0 16px 36px rgba(0,0,0,0.3); border-color:rgba(59,195,189,0.3); }
-
-        .stat-card-top {
-            display:flex;
-            align-items:flex-start;
-            justify-content:space-between;
+        .stat-card::after { content:''; position:absolute; inset:0; border-radius:18px; background:linear-gradient(145deg, rgba(59, 195, 189, 0.05), transparent 60%); pointer-events:none; }
+        .stat-card:hover { 
+            transform:translateY(-8px); 
+            border-top-color:var(--primary); 
+            box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 195, 189, 0.1); 
         }
-        .stat-label {
-            font-size:.68rem;
-            font-weight:700;
-            text-transform:uppercase;
-            letter-spacing:1.1px;
-            color:var(--text-muted);
-            line-height:1;
-        }
-        .stat-icon-box {
-            width:38px; height:38px;
-            border-radius:10px;
-            display:flex; align-items:center; justify-content:center;
-            font-size:1rem;
-            flex-shrink:0;
-        }
-        .stat-icon-box.teal   { background:rgba(59,195,189,0.13);  color:var(--primary); }
-        .stat-icon-box.yellow { background:rgba(245,158,11,0.13);  color:#FBBF24; }
-        .stat-icon-box.red    { background:rgba(239,68,68,0.13);   color:#f87171; }
-        .stat-icon-box.purple { background:rgba(168,85,247,0.13);  color:#C084FC; }
-        .stat-icon-box.gray   { background:rgba(120,150,170,0.13); color:var(--text-muted); }
-
-        .stat-value {
-            font-size:2.4rem;
-            font-weight:800;
-            color:var(--text-primary);
-            letter-spacing:-1px;
-            line-height:1;
-        }
-        .stat-desc {
-            font-size:.8rem;
-            color:var(--text-muted);
-            line-height:1.45;
-            margin-top:2px;
-        }
+        .stat-main { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+        .stat-info { display:flex; flex-direction:column; flex:1; }
+        .stat-title { font-size:.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
+        .stat-value { font-size:2rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; margin-bottom: 6px; text-align: left; }
+        .stat-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; transition: transform 0.3s; }
+        .stat-card:hover .stat-icon { transform: scale(1.1) rotate(5deg); }
+        
+        .icon-purple { background:rgba(59, 195, 189, 0.15); color:var(--primary-bright); box-shadow: 0 8px 20px rgba(59, 195, 189, 0.1); }
+        .icon-emerald { background:rgba(16, 185, 129, 0.15); color:#5CD9D4; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1); }
+        .icon-orange { background:rgba(245, 158, 11, 0.15); color:#FBBF24; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.1); }
+        .icon-gray { background:rgba(107, 114, 128, 0.15); color:#D1D5DB; box-shadow: 0 8px 20px rgba(107, 114, 128, 0.1); }
+        
+        .stat-subtitle { font-size:.875rem; color:var(--text-secondary); margin-bottom:12px; font-weight: 500; text-align: left; }
+        .stat-link { font-size:.75rem; color:var(--primary-bright); text-decoration:none; font-weight:700; display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
+        .stat-link:hover { gap:10px; }
 
         /* ─── Workflow Log Table ──────────────────────────────── */
         .section-header { display:flex; align-items:center; justify-content:space-between; margin:32px 0 20px; }
@@ -191,6 +168,21 @@
     </style>
 </head>
 <body>
+
+@php
+    $jumlahPeninjauan  = \DB::table('naskahs')->where('status', 'Dalam Peninjauan')->count();
+    $jumlahDiterbitkan = \DB::table('naskahs')->where('status', 'Diterbitkan')->count();
+    $jumlahDraf        = \DB::table('naskahs')->where('status', 'Draf')->count();
+    try {
+        $jumlahPenulis = \DB::table('penulis')->count();
+    } catch (\Exception $e) {
+        try {
+            $jumlahPenulis = \DB::table('akun_pengguna')->count();
+        } catch (\Exception $ex) {
+            $jumlahPenulis = 0;
+        }
+    }
+@endphp
 
     <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
     <aside class="sidebar" id="sidebar">
@@ -264,49 +256,52 @@
         </div>
 
         <!-- ─── Stats Grid ─── -->
-        <div class="stats-grid">
-
-            <!-- Card 1: Peninjauan -->
+        <section class="stats-grid">
             <div class="stat-card">
-                <div class="stat-card-top">
-                    <span class="stat-label">Peninjauan</span>
-                    <div class="stat-icon-box teal"><i class="fa-regular fa-file-lines"></i></div>
+                <div class="stat-main">
+                    <div class="stat-info">
+                        <div class="stat-title">Peninjauan</div>
+                        <div class="stat-value">{{ $jumlahPeninjauan }}</div>
+                        <div class="stat-subtitle">Naskah dalam peninjauan</div>
+                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
+                    <div class="stat-icon icon-purple"><i class="fa-regular fa-file-lines"></i></div>
                 </div>
-                <div class="stat-value">12</div>
-                <div class="stat-desc">Naskah dalam peninjauan</div>
             </div>
-
-            <!-- Card 2: Diterbitkan -->
             <div class="stat-card">
-                <div class="stat-card-top">
-                    <span class="stat-label">Diterbitkan</span>
-                    <div class="stat-icon-box teal"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="stat-main">
+                    <div class="stat-info">
+                        <div class="stat-title">Diterbitkan</div>
+                        <div class="stat-value">{{ $jumlahDiterbitkan }}</div>
+                        <div class="stat-subtitle">Naskah telah diterbitkan</div>
+                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
+                    <div class="stat-icon icon-emerald"><i class="fa-solid fa-check-double"></i></div>
                 </div>
-                <div class="stat-value">48</div>
-                <div class="stat-desc">Naskah telah diterbitkan</div>
             </div>
-
-            <!-- Card 3: Penulis -->
             <div class="stat-card">
-                <div class="stat-card-top">
-                    <span class="stat-label">Penulis</span>
-                    <div class="stat-icon-box yellow"><i class="fa-solid fa-user"></i></div>
+                <div class="stat-main">
+                    <div class="stat-info">
+                        <div class="stat-title">Penulis</div>
+                        <div class="stat-value">{{ $jumlahPenulis ?? 0 }}</div>
+                        <div class="stat-subtitle">Total penulis terdaftar</div>
+                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
+                    <div class="stat-icon icon-orange"><i class="fa-regular fa-user"></i></div>
                 </div>
-                <div class="stat-value">07</div>
-                <div class="stat-desc">Total penulis terdaftar</div>
             </div>
-
-            <!-- Card 4: Draf -->
             <div class="stat-card">
-                <div class="stat-card-top">
-                    <span class="stat-label">Draf</span>
-                    <div class="stat-icon-box gray"><i class="fa-regular fa-inbox"></i></div>
+                <div class="stat-main">
+                    <div class="stat-info">
+                        <div class="stat-title">Draf</div>
+                        <div class="stat-value">{{ str_pad($jumlahDraf, 2, '0', STR_PAD_LEFT) }}</div>
+                        <div class="stat-subtitle">Total draf naskah</div>
+                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
+                    <div class="stat-icon icon-gray"><i class="fa-solid fa-inbox"></i></div>
                 </div>
-                <div class="stat-value">03</div>
-                <div class="stat-desc">Total draf naskah</div>
             </div>
-
-        </div>
+        </section>
 
         <!-- ─── Workflow Log ─── -->
         <div class="section-header">

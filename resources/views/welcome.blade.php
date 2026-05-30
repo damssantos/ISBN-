@@ -207,9 +207,10 @@
             border-top-color:var(--primary); 
             box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 195, 189, 0.1); 
         }
-        .stats-main { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+        .stat-main { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+        .stat-info { display:flex; flex-direction:column; flex:1; }
         .stat-title { font-size:.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
-        .stat-value { font-size:2rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; }
+        .stat-value { font-size:2rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; margin-bottom: 6px; }
         .stat-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; transition: transform 0.3s; }
         .stat-card:hover .stat-icon { transform: scale(1.1) rotate(5deg); }
         
@@ -218,7 +219,7 @@
         .icon-orange { background:rgba(245, 158, 11, 0.15); color:#FBBF24; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.1); }
         .icon-gray { background:rgba(107, 114, 128, 0.15); color:#D1D5DB; box-shadow: 0 8px 20px rgba(107, 114, 128, 0.1); }
         
-        .stat-subtitle { font-size:.875rem; color:var(--text-secondary); margin-bottom:16px; font-weight: 500; }
+        .stat-subtitle { font-size:.875rem; color:var(--text-secondary); margin-bottom:12px; font-weight: 500; }
         .stat-link { font-size:.75rem; color:var(--primary-bright); text-decoration:none; font-weight:700; display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
         .stat-link:hover { gap:10px; }
 
@@ -365,35 +366,47 @@
         <section class="stats-grid">
             <div class="stat-card">
                 <div class="stat-main">
-                    <div><div class="stat-title">Peninjauan</div><div class="stat-value">{{ $jumlahPeninjauan }}</div></div>
+                    <div class="stat-info">
+                        <div class="stat-title">Peninjauan</div>
+                        <div class="stat-value">{{ $jumlahPeninjauan }}</div>
+                        <div class="stat-subtitle">Naskah dalam peninjauan</div>
+                        <a href="/daftar-pengajuan" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
                     <div class="stat-icon icon-purple"><i class="fa-regular fa-file-lines"></i></div>
                 </div>
-                <div class="stat-subtitle">Naskah dalam peninjauan</div>
-                <a href="/daftar-pengajuan" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             <div class="stat-card">
                 <div class="stat-main">
-                    <div><div class="stat-title">Diterbitkan</div><div class="stat-value">{{ $jumlahDiterbitkan }}</div></div>
+                    <div class="stat-info">
+                        <div class="stat-title">Diterbitkan</div>
+                        <div class="stat-value">{{ $jumlahDiterbitkan }}</div>
+                        <div class="stat-subtitle">Naskah telah diterbitkan</div>
+                        <a href="/daftar-pengajuan" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
                     <div class="stat-icon icon-emerald"><i class="fa-solid fa-check-double"></i></div>
                 </div>
-                <div class="stat-subtitle">Naskah telah diterbitkan</div>
-                <a href="/daftar-pengajuan" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             <div class="stat-card">
                 <div class="stat-main">
-                    <div><div class="stat-title">Penulis</div><div class="stat-value">{{ str_pad($jumlahPenulis, 2, '0', STR_PAD_LEFT) }}</div></div>
+                    <div class="stat-info">
+                        <div class="stat-title">Penulis</div>
+                        <div class="stat-value">{{ $jumlahPenulis ?? 0 }}</div>
+                        <div class="stat-subtitle">Total penulis terdaftar</div>
+                        <a href="/table-penulis" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
                     <div class="stat-icon icon-orange"><i class="fa-regular fa-user"></i></div>
                 </div>
-                <div class="stat-subtitle">Total penulis terdaftar</div>
-                <a href="/table-penulis" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             <div class="stat-card">
                 <div class="stat-main">
-                    <div><div class="stat-title">Draf</div><div class="stat-value">{{ str_pad($jumlahDraf, 2, '0', STR_PAD_LEFT) }}</div></div>
+                    <div class="stat-info">
+                        <div class="stat-title">Draf</div>
+                        <div class="stat-value">{{ str_pad($jumlahDraf, 2, '0', STR_PAD_LEFT) }}</div>
+                        <div class="stat-subtitle">Total draf naskah</div>
+                        <a href="/draf" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                    </div>
                     <div class="stat-icon icon-gray"><i class="fa-solid fa-inbox"></i></div>
                 </div>
-                <div class="stat-subtitle">Total draf naskah</div>
-                <a href="/draf" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
         </section>
 
