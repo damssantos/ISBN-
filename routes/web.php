@@ -5,6 +5,7 @@ use App\Http\Controllers\NaskahController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\AuthController; 
+use App\Http\Controllers\AdminController;
 
 // ==========================================
 // 1. GERBANG UTAMA & RE-DIRECTION PORTAL
@@ -28,7 +29,6 @@ Route::get('/pembayaran', function () {
     return view('pembayaran');
 });
 
-use App\Http\Controllers\AuthController;
 
 // Form Register (Sign Up) - Menembak URL kustom /auth-register bawaan desain FE kamu
 Route::get('/auth-register', [AuthController::class, 'showRegister'])->name('register');
@@ -71,27 +71,16 @@ Route::get('/pengaturan', function () { return view('pengaturan'); });
 Route::get('/table-penulis', function () { return view('table-penulis'); });
 Route::get('/pengajuan/detail', function () { return view('table-pengajuan'); });
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
-
-Route::get('/admin/review-naskah', function () {
-    return view('admin.review-naskah');
-})->name('admin.review-naskah');
-
-Route::get('/admin/detail-review-naskah', function () {
-    return view('admin.detail-review-naskah');
-});
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('/admin/review-naskah', [AdminController::class, 'reviewNaskah'])->name('admin.review-naskah');
+Route::get('/admin/detail-review-naskah/{id}', [AdminController::class, 'detailReviewNaskah'])->name('admin.detail-review-naskah');
+Route::post('/admin/detail-review-naskah/{id}/update', [AdminController::class, 'updateStatus'])->name('admin.update-status');
 
 // Admin Buku Terbit page
-Route::get('/admin/buku-terbit', function () {
-    return view('admin.buku-terbit');
-})->name('admin.buku-terbit');
+Route::get('/admin/buku-terbit', [AdminController::class, 'bukuTerbit'])->name('admin.buku-terbit');
 
 // Admin Pengguna page
-Route::get('/admin/pengguna', function () {
-    return view('admin.pengguna');
-})->name('admin.pengguna');
+Route::get('/admin/pengguna', [AdminController::class, 'pengguna'])->name('admin.pengguna');
 
 // Superadmin Dashboard
 Route::get('/superadmin/dashboard', function () {

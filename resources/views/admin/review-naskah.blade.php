@@ -122,6 +122,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-block;
+            text-decoration: none;
         }
         .filter-pill:hover {
             color: var(--text-primary);
@@ -365,11 +367,11 @@
 
         <!-- Filter Pills Container -->
         <div class="filter-container">
-            <button class="filter-pill active" onclick="filterStatus('all', this)">Semua</button>
-            <button class="filter-pill" onclick="filterStatus('disetujui', this)">Disetujui</button>
-            <button class="filter-pill" onclick="filterStatus('peninjauan', this)">Peninjauan</button>
-            <button class="filter-pill" onclick="filterStatus('revisi', this)">Revisi</button>
-            <button class="filter-pill" onclick="filterStatus('ditolak', this)">Ditolak</button>
+            <a href="/admin/review-naskah?status=all" class="filter-pill {{ $status === 'all' ? 'active' : '' }}">Semua</a>
+            <a href="/admin/review-naskah?status=disetujui" class="filter-pill {{ $status === 'disetujui' ? 'active' : '' }}">Disetujui</a>
+            <a href="/admin/review-naskah?status=peninjauan" class="filter-pill {{ $status === 'peninjauan' ? 'active' : '' }}">Peninjauan</a>
+            <a href="/admin/review-naskah?status=revisi" class="filter-pill {{ $status === 'revisi' ? 'active' : '' }}">Revisi</a>
+            <a href="/admin/review-naskah?status=ditolak" class="filter-pill {{ $status === 'ditolak' ? 'active' : '' }}">Ditolak</a>
         </div>
 
         <!-- Main Card Table -->
@@ -386,164 +388,89 @@
                         </tr>
                     </thead>
                     <tbody id="naskahTableBody">
-                        <!-- Row 1 -->
-                        <tr data-status="disetujui">
+                        @forelse($naskahs as $naskah)
+                        <tr>
                             <td>
                                 <div class="judul-wrapper">
-                                    <span class="judul-naskah">Analisis Ekonomi Digital di Asia Tenggara 2024</span>
-                                    <span class="naskah-id">ID: MS-8829</span>
+                                    <span class="judul-naskah">{{ $naskah->judul }}</span>
+                                    <span class="naskah-id">ID: MS-{{ str_pad($naskah->id, 4, '0', STR_PAD_LEFT) }}</span>
                                 </div>
                             </td>
                             <td>
-                                <span class="penulis-name">Dr. Aris Setiawan</span>
+                                <span class="penulis-name">{{ $naskah->penuliss->first()->nama ?? 'Anonim' }}</span>
                             </td>
                             <td>
-                                <span class="status-badge disetujui">Disetujui</span>
+                                @php
+                                    $statusClass = '';
+                                    $statusLabel = $naskah->status;
+                                    switch(strtolower($naskah->status)) {
+                                        case 'disetujui':
+                                            $statusClass = 'disetujui';
+                                            break;
+                                        case 'dalam peninjauan':
+                                            $statusClass = 'peninjauan';
+                                            $statusLabel = 'Peninjauan';
+                                            break;
+                                        case 'revisi':
+                                            $statusClass = 'revisi';
+                                            break;
+                                        case 'ditolak':
+                                            $statusClass = 'ditolak';
+                                            break;
+                                        default:
+                                            $statusClass = 'revisi';
+                                    }
+                                @endphp
+                                <span class="status-badge {{ $statusClass }}">{{ $statusLabel }}</span>
                             </td>
                             <td>
                                 <div class="waktu-wrapper">
-                                    <span class="waktu-text">24 Okt 2023</span>
-                                    <span class="waktu-jam">14:20</span>
+                                    <span class="waktu-text">{{ $naskah->created_at->format('d M Y') }}</span>
+                                    <span class="waktu-jam">{{ $naskah->created_at->format('H:i') }}</span>
                                 </div>
                             </td>
                             <td>
-                                <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
+                                <a href="{{ route('admin.detail-review-naskah', $naskah->id) }}" class="btn-review">Review</a>
                             </td>
                         </tr>
-                        <!-- Row 2 -->
-                        <tr data-status="peninjauan">
-                            <td>
-                                <div class="judul-wrapper">
-                                    <span class="judul-naskah">Implementasi AI dalam Sistem Kesehatan Nasional</span>
-                                    <span class="naskah-id">ID: MS-7741</span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="penulis-name">Siti Aminah, M.Kom</span>
-                            </td>
-                            <td>
-                                <span class="status-badge peninjauan">Peninjauan</span>
-                            </td>
-                            <td>
-                                <div class="waktu-wrapper">
-                                    <span class="waktu-text">25 Okt 2023</span>
-                                    <span class="waktu-jam">09:15</span>
-                                </div>
-                            </td>
-                            <td>
-                                <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
-                            </td>
+                        @empty
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">Belum ada naskah.</td>
                         </tr>
-                        <!-- Row 3 -->
-                        <tr data-status="ditolak">
-                            <td>
-                                <div class="judul-wrapper">
-                                    <span class="judul-naskah">Sejarah Maritim Nusantara: Perspektif Baru</span>
-                                    <span class="naskah-id">ID: MS-3356</span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="penulis-name">Prof. Bambang Hidayat</span>
-                            </td>
-                            <td>
-                                <span class="status-badge ditolak">Ditolak</span>
-                            </td>
-                            <td>
-                                <div class="waktu-wrapper">
-                                    <span class="waktu-text">25 Okt 2023</span>
-                                    <span class="waktu-jam">16:45</span>
-                                </div>
-                            </td>
-                            <td>
-                                <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
-                            </td>
-                        </tr>
-                        <!-- Row 4 -->
-                        <tr data-status="disetujui">
-                            <td>
-                                <div class="judul-wrapper">
-                                    <span class="judul-naskah">Teknik Budidaya Hidroponik Skala Industri</span>
-                                    <span class="naskah-id">ID: MS-9120</span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="penulis-name">Ir. Hendra Wijaya</span>
-                            </td>
-                            <td>
-                                <span class="status-badge disetujui">Disetujui</span>
-                            </td>
-                            <td>
-                                <div class="waktu-wrapper">
-                                    <span class="waktu-text">26 Okt 2023</span>
-                                    <span class="waktu-jam">11:30</span>
-                                </div>
-                            </td>
-                            <td>
-                                <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
-                            </td>
-                        </tr>
-                        <!-- Row 5 -->
-                        <tr data-status="revisi">
-                            <td>
-                                <div class="judul-wrapper">
-                                    <span class="judul-naskah">Psikologi Pendidikan di Era Gen-Z</span>
-                                    <span class="naskah-id">ID: MS-4482</span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="penulis-name">Rina Kartika, M.Psi</span>
-                            </td>
-                            <td>
-                                <span class="status-badge revisi">Revisi</span>
-                            </td>
-                            <td>
-                                <div class="waktu-wrapper">
-                                    <span class="waktu-text">27 Okt 2023</span>
-                                    <span class="waktu-jam">08:50</span>
-                                </div>
-                            </td>
-                            <td>
-                                <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
-                            </td>
-                        </tr>
-                        <!-- Row 6 -->
-                        <tr data-status="disetujui">
-                            <td>
-                                <div class="judul-wrapper">
-                                    <span class="judul-naskah">Optimasi Jaringan 5G untuk Kota Cerdas</span>
-                                    <span class="naskah-id">ID: MS-1593</span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="penulis-name">Andi Pratama, Ph.D</span>
-                            </td>
-                            <td>
-                                <span class="status-badge disetujui">Disetujui</span>
-                            </td>
-                            <td>
-                                <div class="waktu-wrapper">
-                                    <span class="waktu-text">27 Okt 2023</span>
-                                    <span class="waktu-jam">15:10</span>
-                                </div>
-                            </td>
-                            <td>
-                                <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
-                            </td>
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
 
             <!-- Table Footer / Pagination -->
             <div class="table-footer">
-                <span class="footer-text" id="footerText">Menampilkan 1–6 dari 48 naskah</span>
+                <span class="footer-text" id="footerText">
+                    Menampilkan {{ $naskahs->firstItem() ?? 0 }}–{{ $naskahs->lastItem() ?? 0 }} dari {{ $naskahs->total() }} naskah
+                </span>
+                
+                @if ($naskahs->hasPages())
                 <div class="pagination-container">
-                    <button class="page-btn disabled"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                    @if ($naskahs->onFirstPage())
+                        <span class="page-btn disabled"><i class="fa-solid fa-chevron-left"></i></span>
+                    @else
+                        <a href="{{ $naskahs->previousPageUrl() }}" class="page-btn"><i class="fa-solid fa-chevron-left"></i></a>
+                    @endif
+
+                    @foreach ($naskahs->getUrlRange(1, $naskahs->lastPage()) as $page => $url)
+                        @if ($page == $naskahs->currentPage())
+                            <span class="page-btn active">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="page-btn">{{ $page }}</a>
+                        @endif
+                    @endforeach
+
+                    @if ($naskahs->hasMorePages())
+                        <a href="{{ $naskahs->nextPageUrl() }}" class="page-btn"><i class="fa-solid fa-chevron-right"></i></a>
+                    @else
+                        <span class="page-btn disabled"><i class="fa-solid fa-chevron-right"></i></span>
+                    @endif
                 </div>
+                @endif
             </div>
         </div>
     </main>
@@ -556,37 +483,6 @@
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         });
-
-        // Filter status simulation logic
-        function filterStatus(status, element) {
-            // Remove active class from all pills
-            const pills = document.querySelectorAll('.filter-pill');
-            pills.forEach(pill => pill.classList.remove('active'));
-            // Add active class to clicked pill
-            element.classList.add('active');
-
-            const rows = document.querySelectorAll('#naskahTableBody tr');
-            let visibleCount = 0;
-            let totalCount = rows.length;
-
-            rows.forEach(row => {
-                const rowStatus = row.getAttribute('data-status');
-                if (status === 'all' || rowStatus === status) {
-                    row.style.display = '';
-                    visibleCount++;
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-
-            // Update footer text based on visibility
-            const footerText = document.getElementById('footerText');
-            if (status === 'all') {
-                footerText.textContent = `Menampilkan 1–${visibleCount} dari 48 naskah`;
-            } else {
-                footerText.textContent = `Menampilkan 1–${visibleCount} dari ${visibleCount} naskah (Filter: ${status.charAt(0).toUpperCase() + status.slice(1)})`;
-            }
-        }
     </script>
 </body>
 </html>

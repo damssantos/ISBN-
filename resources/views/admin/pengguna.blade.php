@@ -314,10 +314,10 @@
 
     <main class="main-content" id="mainContent">
         <header class="top-header">
-            <div class="search-container">
+            <form action="/admin/pengguna" method="GET" class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="search-input" id="searchInput" placeholder="Cari naskah atau ISBN...">
-            </div>
+                <input type="text" name="search" class="search-input" id="searchInput" placeholder="Cari nama, email, atau nomor HP..." value="{{ $search }}">
+            </form>
             <div class="header-actions">
                 <button class="header-icon-btn" title="Notifikasi">
                     <i class="fa-regular fa-bell"></i>
@@ -339,7 +339,7 @@
             <div class="stats-card-main">
                 <span class="stats-label">Statistik Utama</span>
                 <div class="stats-val-wrapper">
-                    <span class="stats-value">1,284</span>
+                    <span class="stats-value">{{ number_format($totalPengguna) }}</span>
                     <span class="stats-subtext">Total Pengguna</span>
                 </div>
             </div>
@@ -357,81 +357,39 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($users as $user)
                         <tr>
-                            <td><div class="user-name">Ahmad Hidayat</div></td>
-                            <td><div class="user-email">ahmad.h@example.com</div></td>
-                            <td><div class="user-phone">0812–3456–7890</div></td>
+                            <td><div class="user-name">{{ $user->name }}</div></td>
+                            <td><div class="user-email">{{ $user->email }}</div></td>
+                            <td><div class="user-phone">{{ $user->no_hp ?? '-' }}</div></td>
                         </tr>
+                        @empty
                         <tr>
-                            <td><div class="user-name">Budi Santoso</div></td>
-                            <td><div class="user-email">budi.s@example.com</div></td>
-                            <td><div class="user-phone">0812–4567–8901</div></td>
+                            <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 24px;">Pengguna tidak ditemukan.</td>
                         </tr>
-                        <tr>
-                            <td><div class="user-name">Citra Lestari</div></td>
-                            <td><div class="user-email">citra.l@example.com</div></td>
-                            <td><div class="user-phone">0813–5678–9012</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-name">Dian Pratama</div></td>
-                            <td><div class="user-email">dian.p@example.com</div></td>
-                            <td><div class="user-phone">0815–6789–0123</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-name">Eko Wahyudi</div></td>
-                            <td><div class="user-email">eko.w@example.com</div></td>
-                            <td><div class="user-phone">0856–7890–1234</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-name">Fanny Kurniawan</div></td>
-                            <td><div class="user-email">fanny.k@example.com</div></td>
-                            <td><div class="user-phone">0817–8901–2345</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-name">Gita Permata</div></td>
-                            <td><div class="user-email">gita.p@example.com</div></td>
-                            <td><div class="user-phone">0819–9012–3456</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-name">Hendra Wijaya</div></td>
-                            <td><div class="user-email">hendra.w@example.com</div></td>
-                            <td><div class="user-phone">0812–0123–4567</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-name">Indra Kusuma</div></td>
-                            <td><div class="user-email">indra.k@example.com</div></td>
-                            <td><div class="user-phone">0813–1234–5678</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-name">Joko Susilo</div></td>
-                            <td><div class="user-email">joko.s@example.com</div></td>
-                            <td><div class="user-phone">0815–2345–6789</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-name">Kartika Sari</div></td>
-                            <td><div class="user-email">kartika.s@example.com</div></td>
-                            <td><div class="user-phone">0856–3456–7890</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="user-name">Luluk Amelia</div></td>
-                            <td><div class="user-email">luluk.a@example.com</div></td>
-                            <td><div class="user-phone">0817–4567–8901</div></td>
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
-                <div id="emptyState" class="empty-state">
-                    <i class="fa-solid fa-magnifying-glass" style="font-size: 2rem; margin-bottom: 12px; display: block;"></i>
-                    Pengguna tidak ditemukan.
-                </div>
             </div>
 
             <!-- Table Footer / Pagination -->
             <div class="table-footer">
-                <span class="footer-text">Menampilkan 1–12 dari 1,284</span>
+                <span class="footer-text">Menampilkan {{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }} dari {{ $users->total() }}</span>
+                @if ($users->hasPages())
                 <div class="pagination-container">
-                    <button class="page-arrow disabled" title="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="page-arrow" title="Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+                    @if ($users->onFirstPage())
+                        <span class="page-arrow disabled" title="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></span>
+                    @else
+                        <a href="{{ $users->previousPageUrl() }}" class="page-arrow" title="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></a>
+                    @endif
+
+                    @if ($users->hasMorePages())
+                        <a href="{{ $users->nextPageUrl() }}" class="page-arrow" title="Berikutnya"><i class="fa-solid fa-chevron-right"></i></a>
+                    @else
+                        <span class="page-arrow disabled" title="Berikutnya"><i class="fa-solid fa-chevron-right"></i></span>
+                    @endif
                 </div>
+                @endif
             </div>
         </div>
     </main>
@@ -442,33 +400,6 @@
         document.getElementById('sidebarToggle').addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
-        });
-
-        // Search Filter
-        const searchInput = document.getElementById('searchInput');
-        const userTable = document.getElementById('userTable');
-        const emptyState = document.getElementById('emptyState');
-        const rows = userTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.toLowerCase();
-            let hasResults = false;
-
-            for (let i = 0; i < rows.length; i++) {
-                const name = rows[i].querySelector('.user-name').textContent.toLowerCase();
-                const email = rows[i].querySelector('.user-email').textContent.toLowerCase();
-                const phone = rows[i].querySelector('.user-phone').textContent.toLowerCase();
-
-                if (name.includes(query) || email.includes(query) || phone.includes(query)) {
-                    rows[i].style.display = '';
-                    hasResults = true;
-                } else {
-                    rows[i].style.display = 'none';
-                }
-            }
-
-            userTable.style.display = hasResults ? '' : 'none';
-            emptyState.style.display = hasResults ? 'none' : 'block';
         });
     </script>
 </body>

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Penulis extends Model
 {
-    //
+    protected $guarded = [];
 }

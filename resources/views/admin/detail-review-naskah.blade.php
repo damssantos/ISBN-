@@ -518,7 +518,7 @@
         
         <div class="title-bar">
             <h1 class="page-title">Detail Review Naskah</h1>
-            <span class="status-badge-lg">Dalam Peninjauan</span>
+            <span class="status-badge-lg">{{ $naskah->status }}</span>
         </div>
 
         <!-- Detail Layout Split Column -->
@@ -528,7 +528,7 @@
             <div class="cover-section">
                 <span class="label-muted">Foto Cover</span>
                 <div class="cover-card">
-                    <img src="/images/book_cover_ai_dasar.png" alt="AI Dasar untuk Pemula Cover" class="cover-image">
+                    <img src="{{ $naskah->foto_sampul ? asset('storage/' . $naskah->foto_sampul) : 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=300&fit=crop&q=80' }}" alt="{{ $naskah->judul }} Cover" class="cover-image">
                 </div>
             </div>
 
@@ -538,66 +538,75 @@
                 <!-- Judul Buku -->
                 <div class="info-item">
                     <span class="label-muted">Judul Buku</span>
-                    <span class="info-value-title">AI Dasar untuk Pemula</span>
+                    <span class="info-value-title">{{ $naskah->judul }}</span>
                 </div>
 
                 <!-- Sub Judul -->
                 <div class="info-item">
                     <span class="label-muted">Sub Judul</span>
-                    <span class="info-value-text">Pengenalan Machine Learning</span>
+                    <span class="info-value-text">{{ $naskah->sub_judul ?? '-' }}</span>
                 </div>
 
                 <!-- Nama Penulis -->
                 <div class="info-item">
                     <span class="label-muted">Nama Penulis</span>
-                    <span class="info-value-text">Pratama Yudha</span>
+                    <span class="info-value-text">{{ $naskah->penuliss->pluck('nama')->implode(', ') ?: 'Anonim' }}</span>
                 </div>
 
                 <!-- Sinopsis -->
                 <div class="info-item">
                     <span class="label-muted">Sinopsis</span>
                     <p class="info-value-paragraph">
-                        Buku ini dirancang khusus bagi mereka yang ingin memahami dasar-dasar kecerdasan buatan tanpa latar belakang teknis yang mendalam. Penulis menguraikan konsep machine learning melalui analogi kehidupan sehari hari, mulai dari bagaimana komputer belajar dari data hingga implementasi praktis dalam industri modern.
+                        {{ $naskah->sinopsis }}
                     </p>
                 </div>
 
                 <!-- File Naskah -->
                 <div class="info-item">
                     <span class="label-muted">File Naskah</span>
+                    @if($naskah->file_naskah)
                     <div class="naskah-card" onclick="openDocViewer()">
                         <div class="naskah-info">
                             <div class="naskah-icon-wrapper">
                                 <i class="fa-regular fa-file-pdf"></i>
                             </div>
                             <div class="naskah-name-group">
-                                <span class="naskah-filename">naskah_ai_dasar_v2.pdf</span>
-                                <span class="naskah-meta">PDF • 4.2 MB</span>
+                                <span class="naskah-filename">{{ basename($naskah->file_naskah) }}</span>
+                                <span class="naskah-meta">PDF • Klik untuk Pratinjau</span>
                             </div>
                         </div>
-                        <span class="naskah-link" title="Buka File Naskah">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </span>
+                        <a href="{{ asset('storage/' . $naskah->file_naskah) }}" download class="naskah-link" title="Unduh File Naskah" onclick="event.stopPropagation();">
+                            <i class="fa-solid fa-download"></i>
+                        </a>
                     </div>
+                    @else
+                    <div style="color:var(--text-muted); font-style:italic;">File naskah tidak tersedia.</div>
+                    @endif
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="actions-grid">
-                    <button class="btn-action-lg tolak" onclick="alert('Naskah ditolak')">
-                        <i class="fa-solid fa-xmark"></i> Tolak
-                    </button>
-                    <button class="btn-action-lg revisi" onclick="alert('Naskah memerlukan revisi')">
-                        <i class="fa-solid fa-list-check"></i> Revisi
-                    </button>
-                    <button class="btn-action-lg setujui" onclick="alert('Naskah disetujui')">
-                        <i class="fa-regular fa-circle-check"></i> Setujui
-                    </button>
-                </div>
+                <!-- Form untuk Update Status -->
+                <form action="{{ route('admin.update-status', $naskah->id) }}" method="POST">
+                    @csrf
+                    
+                    <!-- Action Buttons -->
+                    <div class="actions-grid">
+                        <button type="submit" name="action" value="tolak" class="btn-action-lg tolak" onclick="return confirm('Apakah Anda yakin ingin menolak naskah ini?')">
+                            <i class="fa-solid fa-xmark"></i> Tolak
+                        </button>
+                        <button type="submit" name="action" value="revisi" class="btn-action-lg revisi">
+                            <i class="fa-solid fa-list-check"></i> Revisi
+                        </button>
+                        <button type="submit" name="action" value="setujui" class="btn-action-lg setujui" onclick="return confirm('Apakah Anda yakin ingin menyetujui naskah ini?')">
+                            <i class="fa-regular fa-circle-check"></i> Setujui
+                        </button>
+                    </div>
 
-                <!-- Catatan Revisi -->
-                <div class="info-item">
-                    <span class="catatan-label">Catatan Revisi</span>
-                    <textarea class="textarea-revisi" placeholder="Tuliskan poin-poin perbaikan yang diperlukan..."></textarea>
-                </div>
+                    <!-- Catatan Revisi -->
+                    <div class="info-item" style="margin-top: 20px;">
+                        <span class="catatan-label">Catatan Revisi (Diperlukan jika status Revisi)</span>
+                        <textarea name="catatan_revisi" class="textarea-revisi" placeholder="Tuliskan poin-poin perbaikan yang diperlukan...">{{ $naskah->catatan_revisi }}</textarea>
+                    </div>
+                </form>
 
             </div>
         </div>
@@ -609,7 +618,7 @@
             <div class="doc-viewer-header">
                 <div class="doc-viewer-title">
                     <i class="fa-regular fa-file-pdf"></i>
-                    <span>Pratinjau Dokumen - naskah_ai_dasar_v2.pdf</span>
+                    <span>Pratinjau Dokumen - {{ $naskah->file_naskah ? basename($naskah->file_naskah) : '' }}</span>
                 </div>
                 <div class="doc-viewer-controls">
                     <button class="control-btn" onclick="zoomOut()" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
@@ -619,7 +628,9 @@
                 </div>
                 <div class="doc-viewer-actions">
                     <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin-right: 12px;" id="pageIndicator">Halaman 1 dari 3</span>
-                    <a href="/images/book_cover_ai_dasar.png" download class="control-btn" title="Unduh Dokumen"><i class="fa-solid fa-download"></i></a>
+                    @if($naskah->file_naskah)
+                    <a href="{{ asset('storage/' . $naskah->file_naskah) }}" download class="control-btn" title="Unduh Dokumen"><i class="fa-solid fa-download"></i></a>
+                    @endif
                     <button class="btn-close-viewer" onclick="closeDocViewer()"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
@@ -633,21 +644,20 @@
                             <span>Halaman 1</span>
                         </div>
                         <div class="doc-page-content">
-                            <h2 class="doc-page-title">BAB I: Pendahuluan & Pengenalan AI</h2>
-                            <h3 class="doc-page-subtitle">1.1 Definisi Kecerdasan Buatan</h3>
+                            <h2 class="doc-page-title">{{ $naskah->judul }}</h2>
+                            <h3 class="doc-page-subtitle">{{ $naskah->sub_judul }}</h3>
                             <p class="doc-page-p">
-                                Kecerdasan Buatan (Artificial Intelligence atau AI) adalah bidang ilmu komputer yang dikhususkan untuk memecahkan masalah kognitif yang umumnya terkait dengan kecerdasan manusia, seperti pembelajaran, pemecahan masalah, dan pengenalan pola. AI memampukan mesin untuk belajar dari pengalaman, menyesuaikan diri dengan input baru, dan melakukan tugas seperti manusia.
+                                <strong>Sinopsis:</strong><br>
+                                {{ $naskah->sinopsis }}
                             </p>
+                            <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 16px 0;">
+                            <h3 class="doc-page-subtitle">Detail Dokumen</h3>
                             <p class="doc-page-p">
-                                Melalui teknologi ini, sistem komputer dapat diprogram untuk menganalisis data dalam skala besar secara cepat, mengidentifikasi pola yang kompleks, dan mengambil keputusan atau prediksi berdasarkan data tersebut dengan tingkat akurasi yang semakin meningkat dari waktu ke waktu.
-                            </p>
-                            <h3 class="doc-page-subtitle">1.2 Sejarah Perkembangan</h3>
-                            <p class="doc-page-p">
-                                Istilah "Artificial Intelligence" pertama kali dicetuskan pada tahun 1956 dalam Dartmouth Conference oleh John McCarthy. Sejak saat itu, AI mengalami berbagai siklus antusiasme yang tinggi yang diikuti oleh periode skeptisisme dan minimnya pendanaan yang dikenal dengan sebutan "AI Winter". Namun, dengan meledaknya ketersediaan data besar (Big Data) dan kemajuan unit pemrosesan grafis (GPU) di abad ke-21, AI kembali bangkit dengan teknik Deep Learning yang merevolusi cara komputer mengenali suara, gambar, dan bahasa alami manusia.
+                                Dokumen ini merupakan manuskrip digital yang diunggah oleh penulis <strong>{{ $naskah->penuliss->pluck('nama')->implode(', ') ?: 'Anonim' }}</strong> untuk proses pengajuan ISBN di YPIK PAM JAYA.
                             </p>
                         </div>
                         <div class="doc-page-footer">
-                            <span>AI Dasar untuk Pemula - Pratama Yudha</span>
+                            <span>{{ $naskah->judul }}</span>
                             <span>1 / 3</span>
                         </div>
                     </div>
@@ -659,24 +669,17 @@
                             <span>Halaman 2</span>
                         </div>
                         <div class="doc-page-content">
-                            <h2 class="doc-page-title">BAB II: Apa itu Machine Learning?</h2>
-                            <h3 class="doc-page-subtitle">2.1 Perbedaan Pemrograman Tradisional & Machine Learning</h3>
+                            <h2 class="doc-page-title">BAB I: Pendahuluan</h2>
+                            <h3 class="doc-page-subtitle">1.1 Latar Belakang</h3>
                             <p class="doc-page-p">
-                                Pada pemrograman tradisional, seorang pengembang menulis kode instruksi secara manual beserta data input ke dalam komputer, dan komputer akan menghasilkan output berupa hasil kerja dari aturan tersebut. Contohnya, jika ingin mendeteksi email spam, programmer harus menulis aturan kata kunci spam secara spesifik seperti "hadiah", "gratis", atau "menang lotre".
+                                Latar belakang dari penulisan buku ini didasari oleh pentingnya penyebaran pengetahuan yang komprehensif terkait topik ini kepada masyarakat luas. Dengan adanya platform pengajuan ISBN dari YPIK PAM JAYA, diharapkan naskah-naskah berkualitas tinggi dapat terbit dengan identitas resmi nasional.
                             </p>
                             <p class="doc-page-p">
-                                Sebaliknya, dalam Machine Learning (Pembelajaran Mesin), kita memasukkan data input beserta contoh output (label) ke dalam komputer. Algoritma pembelajaran mesin kemudian akan menganalisis data tersebut untuk memformulasikan aturannya sendiri. Aturan otomatis ini disebut sebagai "Model". Ketika model ini sudah terlatih, ia dapat memprediksi label untuk data baru yang belum pernah dilihat sebelumnya secara akurat tanpa memerlukan pembaruan aturan secara manual dari programmer.
-                            </p>
-                            <h3 class="doc-page-subtitle">2.2 Tiga Kategori Utama Machine Learning</h3>
-                            <p class="doc-page-p">
-                                Pembelajaran mesin secara umum dibagi menjadi tiga jenis utama:
-                            </p>
-                            <p class="doc-page-p">
-                                <strong>1. Supervised Learning:</strong> Pembelajaran terarah di mana model dilatih menggunakan dataset yang sudah memiliki label jawaban yang benar. Contohnya adalah klasifikasi gambar kucing dan anjing atau prediksi harga rumah.
+                                Manuskrip ini menjelaskan secara sistematis poin-poin utama secara mendalam agar mudah dipahami baik oleh akademisi maupun praktisi di bidang terkait.
                             </p>
                         </div>
                         <div class="doc-page-footer">
-                            <span>AI Dasar untuk Pemula - Pratama Yudha</span>
+                            <span>{{ $naskah->judul }}</span>
                             <span>2 / 3</span>
                         </div>
                     </div>
@@ -688,20 +691,16 @@
                             <span>Halaman 3</span>
                         </div>
                         <div class="doc-page-content">
-                            <h3 class="doc-page-subtitle">2.3 Unsupervised & Reinforcement Learning</h3>
+                            <h2 class="doc-page-title">BAB II: Pembahasan Utama</h2>
                             <p class="doc-page-p">
-                                <strong>2. Unsupervised Learning:</strong> Pembelajaran mandiri di mana model menganalisis dataset tanpa label untuk menemukan pola tersembunyi atau pengelompokan alami. Contoh populernya adalah segmentasi pelanggan untuk target pemasaran berdasarkan perilaku belanja mereka.
+                                Bagian ini berisi analisis detail dan metodologi yang digunakan dalam penyusunan isi buku. Penulis memaparkan temuan penting, data pendukung, serta referensi yang relevan untuk memperkuat keandalan isi naskah.
                             </p>
                             <p class="doc-page-p">
-                                <strong>3. Reinforcement Learning:</strong> Pembelajaran berbasis penghargaan dan hukuman. Agen cerdas belajar mengambil keputusan optimal di lingkungan yang dinamis melalui interaksi uji coba (trial-and-error). Contoh penerapannya adalah AI yang mengendalikan robot berjalan, menyetir mobil otonom, atau mengalahkan juara dunia dalam permainan catur dan Go.
-                            </p>
-                            <h3 class="doc-page-subtitle">2.4 Alur Kerja Pengembangan Model ML</h3>
-                            <p class="doc-page-p">
-                                Proses pengembangan model ML dimulai dari pengumpulan data mentah, pembersihan data (data preprocessing) untuk membuang anomali atau data kosong, pembagian dataset menjadi data latih (training) dan uji (testing), pelatihan model menggunakan algoritma pilihan, evaluasi performa model menggunakan metrik akurasi, dan penyebaran model ke sistem produksi (deployment).
+                                Kesimpulan dan rekomendasi disajikan di bagian akhir untuk memberikan nilai tambah yang praktis bagi para pembaca.
                             </p>
                         </div>
                         <div class="doc-page-footer">
-                            <span>AI Dasar untuk Pemula - Pratama Yudha</span>
+                            <span>{{ $naskah->judul }}</span>
                             <span>3 / 3</span>
                         </div>
                     </div>

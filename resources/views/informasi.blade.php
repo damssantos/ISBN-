@@ -299,11 +299,11 @@
                 <div class="form-grid form-grid-2" style="margin-bottom:20px;">
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" value="{{ $user->email ?? 'email@gmail.com' }}" disabled style="opacity: 0.6;">
+                        <input type="email" class="form-control" value="{{ $user->email ?? '' }}" disabled style="opacity: 0.6;">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nomor HP</label>
-                        <input type="text" class="form-control" value="081234567890" disabled style="opacity: 0.5;">
+                        <input type="text" name="no_hp" class="form-control" value="{{ $user->no_hp ?? '' }}" placeholder="Masukkan nomor HP aktif Anda...">
                     </div>
                 </div>
                 <div class="form-grid form-grid-2">

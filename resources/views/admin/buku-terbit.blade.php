@@ -399,7 +399,7 @@
                 <div class="user-avatar-circle">
                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80" alt="Admin Avatar">
                 </div>
-                <span class="user-name" style="margin-left:8px;color:var(--text-primary);font-size:0.9rem;">{{ Auth::user()->name }}</span>
+                <span class="user-name" style="margin-left:8px;color:var(--text-primary);font-size:0.9rem;">{{ session('user_name', 'Admin') }}</span>
             </div>
         </header>
 
@@ -415,11 +415,11 @@
                         <i class="fa-solid fa-filter"></i> Filter <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; margin-left: 4px;"></i>
                     </button>
                     <div id="filterDropdown" class="dropdown-content">
-                        <a href="#">Urutkan dari terbaru</a>
-                        <a href="#">Urutkan dari terlama</a>
+                        <a href="/admin/buku-terbit?sort=newest">Urutkan dari terbaru</a>
+                        <a href="/admin/buku-terbit?sort=oldest">Urutkan dari terlama</a>
                     </div>
                 </div>
-                <button class="btn-export">
+                <button class="btn-export" onclick="alert('Fitur ekspor data dalam pengembangan')">
                     <i class="fa-solid fa-download"></i> Ekspor Data
                 </button>
             </div>
@@ -438,95 +438,56 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($naskahs as $naskah)
                         <tr>
                             <td>
-                                <div class="judul-naskah-terbit">Arsitektur Digital Masa Depan</div>
+                                <div class="judul-naskah-terbit">{{ $naskah->judul }}</div>
                             </td>
                             <td>
-                                <div class="penulis-naskah-terbit">Dr. Ahmad Subarjo</div>
+                                <div class="penulis-naskah-terbit">{{ $naskah->penuliss->pluck('nama')->implode(', ') ?: 'Anonim' }}</div>
                             </td>
                             <td>
-                                <div class="waktu-naskah-terbit">12 Okt 2023, 14:20</div>
+                                <div class="waktu-naskah-terbit">{{ $naskah->updated_at->format('d M Y, H:i') }}</div>
                             </td>
                             <td>
-                                <div class="isbn-naskah-terbit">978-602-433-123-4</div>
+                                <div class="isbn-naskah-terbit">{{ $naskah->isbn }}</div>
                             </td>
-
                         </tr>
+                        @empty
                         <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Logika Pemrograman Lanjut</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Siti Aminah, M.Kom</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">10 Okt 2023, 09:15</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-623-111-567-8</div>
-                            </td>
-
+                            <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">Belum ada buku terbit.</td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Seni Menulis Kreatif</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Budi Darmawan</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">08 Okt 2023, 16:45</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-602-000-888-0</div>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Data Science Untuk Bisnis</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Prof. Dr. Hendra Wijaya</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">05 Okt 2023, 11:30</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-623-456-789-0</div>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Inovasi Bioteknologi Terapan</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Dr. Lisa Permata</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">01 Okt 2023, 15:10</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-602-888-222-1</div>
-                            </td>
-
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
 
             <!-- Table Footer / Pagination -->
             <div class="table-footer">
-                <span class="footer-text">Menampilkan 5 dari 128 naskah</span>
+                <span class="footer-text">Menampilkan {{ $naskahs->firstItem() ?? 0 }}–{{ $naskahs->lastItem() ?? 0 }} dari {{ $naskahs->total() }} naskah</span>
+                @if ($naskahs->hasPages())
                 <div class="pagination-container">
-                    <button class="page-btn disabled" title="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn" title="Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+                    @if ($naskahs->onFirstPage())
+                        <span class="page-btn disabled" title="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></span>
+                    @else
+                        <a href="{{ $naskahs->previousPageUrl() }}" class="page-btn" title="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></a>
+                    @endif
+
+                    @foreach ($naskahs->getUrlRange(1, $naskahs->lastPage()) as $page => $url)
+                        @if ($page == $naskahs->currentPage())
+                            <span class="page-btn active">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="page-btn">{{ $page }}</a>
+                        @endif
+                    @endforeach
+
+                    @if ($naskahs->hasMorePages())
+                        <a href="{{ $naskahs->nextPageUrl() }}" class="page-btn" title="Berikutnya"><i class="fa-solid fa-chevron-right"></i></a>
+                    @else
+                        <span class="page-btn disabled" title="Berikutnya"><i class="fa-solid fa-chevron-right"></i></span>
+                    @endif
                 </div>
+                @endif
             </div>
         </div>
     </main>

@@ -353,7 +353,7 @@
                 <div class="stat-main">
                     <div>
                         <div class="stat-title">Total Naskah</div>
-                        <div class="stat-value">1,284</div>
+                        <div class="stat-value">{{ number_format($totalNaskah) }}</div>
                     </div>
                     <div class="stat-icon blue"><i class="fa-regular fa-file-lines"></i></div>
                 </div>
@@ -366,7 +366,7 @@
                 <div class="stat-main">
                     <div>
                         <div class="stat-title">Total Pengguna</div>
-                        <div class="stat-value">856</div>
+                        <div class="stat-value">{{ number_format($totalPengguna) }}</div>
                     </div>
                     <div class="stat-icon purple"><i class="fa-solid fa-users"></i></div>
                 </div>
@@ -379,12 +379,12 @@
                 <div class="stat-main">
                     <div>
                         <div class="stat-title">Naskah Disetujui</div>
-                        <div class="stat-value">942</div>
+                        <div class="stat-value">{{ number_format($naskahDisetujui) }}</div>
                     </div>
                     <div class="stat-icon green"><i class="fa-regular fa-circle-check"></i></div>
                 </div>
                 <div class="stat-subtitle">Naskah telah disetujui</div>
-                <a href="/admin/review-naskah" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                <a href="/admin/review-naskah?status=disetujui" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
             
             <!-- Dalam Peninjauan -->
@@ -392,12 +392,12 @@
                 <div class="stat-main">
                     <div>
                         <div class="stat-title">Dalam Peninjauan</div>
-                        <div class="stat-value">42</div>
+                        <div class="stat-value">{{ number_format($dalamPeninjauan) }}</div>
                     </div>
                     <div class="stat-icon orange"><i class="fa-solid fa-hourglass-half"></i></div>
                 </div>
                 <div class="stat-subtitle">Naskah dalam peninjauan</div>
-                <a href="/admin/review-naskah" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                <a href="/admin/review-naskah?status=peninjauan" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
         </section>
 
@@ -421,74 +421,53 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($naskahTerbaru as $naskah)
                             <tr>
                                 <td>
-                                    <div class="judul-naskah">Arsitektur Modern<br>Indonesia</div>
+                                    <div class="judul-naskah">{{ $naskah->judul }}</div>
+                                    @if($naskah->sub_judul)
+                                    <div style="font-size:0.75rem; color:var(--text-muted);">{{ $naskah->sub_judul }}</div>
+                                    @endif
                                 </td>
                                 <td>
-                                    <div class="penulis-name">Budi Santoso</div>
+                                    <div class="penulis-name">{{ $naskah->penuliss->first()->nama ?? 'Anonim' }}</div>
                                 </td>
                                 <td>
-                                    <span class="status-badge peninjauan">Dalam Peninjauan</span>
+                                    @php
+                                        $statusClass = '';
+                                        $statusLabel = $naskah->status;
+                                        switch(strtolower($naskah->status)) {
+                                            case 'disetujui':
+                                                $statusClass = 'disetujui';
+                                                break;
+                                            case 'dalam peninjauan':
+                                                $statusClass = 'peninjauan';
+                                                $statusLabel = 'Peninjauan';
+                                                break;
+                                            case 'revisi':
+                                                $statusClass = 'revisi';
+                                                break;
+                                            case 'ditolak':
+                                                $statusClass = 'ditolak';
+                                                break;
+                                            default:
+                                                $statusClass = 'revisi';
+                                        }
+                                    @endphp
+                                    <span class="status-badge {{ $statusClass }}">{{ $statusLabel }}</span>
                                 </td>
                                 <td>
-                                    <span class="waktu-text">09:45 WIB</span>
+                                    <span class="waktu-text">{{ $naskah->created_at->format('d M Y') }}</span>
                                 </td>
                                 <td>
-                                    <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
+                                    <a href="{{ route('admin.detail-review-naskah', $naskah->id) }}" class="btn-review">Review</a>
                                 </td>
                             </tr>
+                            @empty
                             <tr>
-                                <td>
-                                    <div class="judul-naskah">Kumpulan Puisi<br>Senja</div>
-                                </td>
-                                <td>
-                                    <div class="penulis-name">Chelsea</div>
-                                </td>
-                                <td>
-                                    <span class="status-badge disetujui">Disetujui</span>
-                                </td>
-                                <td>
-                                    <span class="waktu-text">08:30 WIB</span>
-                                </td>
-                                <td>
-                                    <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
-                                </td>
+                                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">Belum ada naskah.</td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="judul-naskah">Data Science<br>for Business</div>
-                                </td>
-                                <td>
-                                    <div class="penulis-name">Pradama</div>
-                                </td>
-                                <td>
-                                    <span class="status-badge revisi">Revisi</span>
-                                </td>
-                                <td>
-                                    <span class="waktu-text">Kemarin, 16:20</span>
-                                </td>
-                                <td>
-                                    <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="judul-naskah">Ekonomi Mikro<br>Dasar</div>
-                                </td>
-                                <td>
-                                    <div class="penulis-name">Aulia Rahman</div>
-                                </td>
-                                <td>
-                                    <span class="status-badge ditolak">Ditolak</span>
-                                </td>
-                                <td>
-                                    <span class="waktu-text">Kemarin, 14:15</span>
-                                </td>
-                                <td>
-                                    <a href="/admin/detail-review-naskah" class="btn-review">Review</a>
-                                </td>
-                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -500,42 +479,18 @@
                     <h2 class="card-title">Pengguna</h2>
                 </div>
                 <div class="user-list">
-                    <!-- User 1 -->
+                    @forelse($usersTerbaru as $user)
                     <div class="user-item">
                         <div class="user-info">
                             <div class="user-avatar-sm">
-                                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&fit=crop&q=80" alt="Pradama">
+                                {{ strtoupper(substr($user->name, 0, 1)) }}
                             </div>
-                            <span class="user-name">Pradama</span>
+                            <span class="user-name">{{ $user->name }}</span>
                         </div>
                     </div>
-                    <!-- User 2 -->
-                    <div class="user-item">
-                        <div class="user-info">
-                            <div class="user-avatar-sm" style="background: #2e4459;">
-                                <!-- empty grey state -->
-                            </div>
-                            <span class="user-name">Chelsea</span>
-                        </div>
-                    </div>
-                    <!-- User 3 -->
-                    <div class="user-item">
-                        <div class="user-info">
-                            <div class="user-avatar-sm">
-                                <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=80&fit=crop&q=80" alt="Budi Santoso">
-                            </div>
-                            <span class="user-name">Budi Santoso</span>
-                        </div>
-                    </div>
-                    <!-- User 4 -->
-                    <div class="user-item">
-                        <div class="user-info">
-                            <div class="user-avatar-sm">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&fit=crop&q=80" alt="Aulia Rahman">
-                            </div>
-                            <span class="user-name">Aulia Rahman</span>
-                        </div>
-                    </div>
+                    @empty
+                    <div style="color: var(--text-muted); padding: 12px; text-align: center;">Belum ada pengguna.</div>
+                    @endforelse
                 </div>
                 <button class="btn-outline-users" onclick="window.location.href='/admin/pengguna'">Lihat Semua Pengguna</button>
             </div>
