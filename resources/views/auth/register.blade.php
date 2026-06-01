@@ -4,125 +4,408 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISBN YPIK PAM JAYA - Daftar Akun</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #3BC3BD;
+            --primary-bright: #4ce5de;
             --primary-dim: #2E9B96;
-            --bg-body: #0f1d26;
-            --bg-card: #1B2B38;
-            --border-color: #2e4459;
+            --primary-glow: rgba(59, 195, 189, 0.15);
+            --bg-body: #080f14;
+            --bg-card: rgba(27, 43, 56, 0.65);
+            --border-color: rgba(46, 68, 89, 0.6);
+            --border-focus: rgba(59, 195, 189, 0.6);
             --text-primary: #F0F6FA;
+            --text-secondary: #B9D1DC;
             --text-muted: #7A9BAA;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg-body); color: var(--text-primary); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        .auth-card { background: var(--bg-card); border: 1px solid var(--border-color); border-top: 3px solid var(--primary); border-radius: 16px; padding: 40px; width: 100%; max-width: 400px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-        .brand { text-align: center; margin-bottom: 32px; }
-        .brand i { font-size: 2.5rem; color: var(--primary); margin-bottom: 12px; }
-        .brand h1 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
-        
-        /* Tambahan style flex biar input dan tombol mata sejajar horizontal tanpa merusak css lama */
-        .input-wrapper { position: relative; display: flex; align-items: center; background: #111f2a; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
-        .input-wrapper i.fa-solid, .input-wrapper i.fa-regular:not(.toggle-icon) { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
-        
-        /* Form control diatur flex 1 dan border bawaannya dilepas karena dipindah ke wrapper */
-        .form-control { flex: 1; padding: 12px 40px 12px 40px; background: transparent; border: none; color: var(--text-primary); outline: none; transition: all 0.2s; height: 100%; }
-        
-        /* Efek fokus dipindah ke input-wrapper biar estetik */
-        .input-wrapper:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 195, 189, 0.15); }
-        
-        /* Style tombol mata ala UI/UX profesional */
-        .btn-toggle-password { background: #1b2e3c; border: none; color: var(--primary); padding: 0 15px; height: 45px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; border-left: 1px solid var(--border-color); }
-        
-        .btn-submit { width: 100%; background: linear-gradient(135deg, var(--primary), var(--primary-dim)); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 10px; }
-        .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59, 195, 189, 0.3); }
-        .auth-footer { text-align: center; margin-top: 24px; font-size: 0.875rem; color: var(--text-muted); }
-        .auth-footer a { color: var(--primary); text-decoration: none; font-weight: 500; }
-        .alert-error { background: rgba(248, 113, 113, 0.15); border: 1px solid #f87171; color: #f87171; padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 0.875rem; font-weight: 500; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-body);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 195, 189, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(46, 155, 150, 0.08) 0px, transparent 50%);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Decorative Blur Blobs */
+        .ambient-blob-1 {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(59, 195, 189, 0.12) 0%, transparent 70%);
+            top: 15%;
+            left: 10%;
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: 0;
+            animation: float-blob-1 12s infinite alternate ease-in-out;
+        }
+
+        .ambient-blob-2 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(46, 155, 150, 0.1) 0%, transparent 70%);
+            bottom: 10%;
+            right: 5%;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            animation: float-blob-2 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes float-blob-1 {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(40px) scale(1.1); }
+        }
+
+        @keyframes float-blob-2 {
+            0% { transform: translateY(0) scale(1.1); }
+            100% { transform: translateY(-45px) scale(0.9); }
+        }
+
+        /* Glassmorphism Auth Card */
+        .auth-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 460px;
+            animation: card-appear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--primary);
+            border-radius: 24px;
+            padding: 40px 36px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 195, 189, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(59, 195, 189, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        @keyframes card-appear {
+            0% { opacity: 0; transform: translateY(30px) scale(0.97); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Brand / Logo section */
+        .brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(59, 195, 189, 0.1);
+            border: 1px solid rgba(59, 195, 189, 0.3);
+            border-radius: 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 24px rgba(59, 195, 189, 0.15);
+            position: relative;
+        }
+
+        .logo-container i {
+            font-size: 1.6rem;
+            color: var(--primary);
+            z-index: 2;
+        }
+
+        .logo-container::after {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            background: var(--primary);
+            filter: blur(15px);
+            opacity: 0.25;
+            z-index: 1;
+        }
+
+        .brand h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .brand p {
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i.field-icon {
+            position: absolute;
+            left: 16px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: color 0.2s;
+            pointer-events: none;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 13px 44px 13px 46px;
+            background: rgba(13, 25, 36, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-control::placeholder {
+            color: rgba(122, 155, 170, 0.6);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            background: rgba(13, 25, 36, 0.95);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .form-control:focus + i.field-icon {
+            color: var(--primary);
+        }
+
+        /* Password Visibility Toggle */
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s;
+            font-size: 1rem;
+            padding: 4px;
+            user-select: none;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dim));
+            color: #080f14;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 0.925rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(59, 195, 189, 0.15);
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, var(--primary-bright), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 195, 189, 0.35);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* Footer links */
+        .auth-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+            margin-left: 2px;
+        }
+
+        .auth-footer a:hover {
+            color: var(--primary-bright);
+            text-decoration: underline;
+        }
+
+        /* Beautiful Modern Alerts */
+        .alert-error {
+            background: rgba(248, 113, 113, 0.08);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            border-left: 4px solid #f87171;
+            color: #fca5a5;
+            padding: 13px 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: alert-shake 0.4s ease;
+        }
+
+        @keyframes alert-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
     </style>
 </head>
 <body>
-    <div class="auth-card">
-        <div class="brand">
-            <i class="fa-solid fa-book-bookmark"></i>
-            <h1>ISBN YPIK PAM JAYA</h1>
-        </div>
+    <!-- Decorative background blobs -->
+    <div class="ambient-blob-1"></div>
+    <div class="ambient-blob-2"></div>
 
-        @if ($errors->any())
-            <div class="alert-error">
-                {{ $errors->first() }}
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="brand">
+                <div class="logo-container">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <h1>ISBN YPIK PAM JAYA</h1>
+                <p>Buat akun baru untuk mulai mengajukan naskah</p>
             </div>
-        @endif
 
-        <form action="{{ route('register.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label>Nama Lengkap</label>
-                <div class="input-wrapper">
-                    <i class="fa-regular fa-user"></i>
-                    <input type="text" name="name" class="form-control" placeholder="Nama lengkap Anda" required value="{{ old('name') }}">
+            @if ($errors->any())
+                <div class="alert-error">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>{{ $errors->first() }}</span>
                 </div>
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <div class="input-wrapper">
-                    <i class="fa-regular fa-envelope"></i>
-                    <input type="email" name="email" class="form-control" placeholder="Email aktif Anda" required value="{{ old('email') }}">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label>Password (Min. 8 Karakter)</label>
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Buat password baru" required>
-                    <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('password', this)">
-                        <i class="fa-regular fa-eye-slash toggle-icon"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label>Konfirmasi Password</label>
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Ulangi password baru" required>
-                    <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('password_confirmation', this)">
-                        <i class="fa-regular fa-eye-slash toggle-icon"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <button type="submit" class="btn-submit">Daftar Akun</button>
-        </form>
+            @endif
 
-        <div class="auth-footer">Sudah punya akun? <a href="/auth-login">Masuk ke Sistem</a>
+            <form action="{{ route('register.store') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="inputName">Nama Lengkap</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="inputName" name="name" class="form-control" placeholder="Nama lengkap Anda" required value="{{ old('name') }}">
+                        <i class="fa-regular fa-user field-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputEmail">Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email aktif Anda" required value="{{ old('email') }}">
+                        <i class="fa-regular fa-envelope field-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputPassword">Password (Min. 8 Karakter)</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Buat password baru" required>
+                        <i class="fa-solid fa-lock field-icon"></i>
+                        <span class="toggle-password" onclick="togglePasswordVisibility('inputPassword', 'togglePasswordIcon')">
+                            <i class="fa-regular fa-eye" id="togglePasswordIcon"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputPasswordConfirmation">Konfirmasi Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="inputPasswordConfirmation" name="password_confirmation" class="form-control" placeholder="Ulangi password baru" required>
+                        <i class="fa-solid fa-shield-halved field-icon"></i>
+                        <span class="toggle-password" onclick="togglePasswordVisibility('inputPasswordConfirmation', 'toggleConfirmPasswordIcon')">
+                            <i class="fa-regular fa-eye" id="toggleConfirmPasswordIcon"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    <span>Daftar Akun</span>
+                    <i class="fa-solid fa-user-plus"></i>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Sudah punya akun? <a href="/auth-login">Masuk ke Sistem</a>
+            </div>
         </div>
     </div>
 
     <script>
-        function togglePasswordVisibility(inputId, buttonElement) {
+        function togglePasswordVisibility(inputId, iconId) {
             const passwordInput = document.getElementById(inputId);
-            const icon = buttonElement.querySelector('.toggle-icon');
+            const toggleIcon = document.getElementById(iconId);
             
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-                // Berubah jadi warna primer cerah pas melek aktif
-                buttonElement.style.background = 'var(--primary)';
-                buttonElement.style.color = '#0f1d26';
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'fa-regular fa-eye-slash';
             } else {
-                passwordInput.type = "password";
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-                // Balikin ke warna redup semula
-                buttonElement.style.background = '#1b2e3c';
-                buttonElement.style.color = 'var(--primary)';
+                passwordInput.type = 'password';
+                toggleIcon.className = 'fa-regular fa-eye';
             }
         }
     </script>

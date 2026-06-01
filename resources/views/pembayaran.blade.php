@@ -91,71 +91,6 @@
         /* ─── Page Title ───────────────────────────────── */
         .page-title { font-size:1.75rem; font-weight:800; color:var(--text-primary); margin-top:10px; margin-bottom:6px; }
         .page-subtitle { font-size:.9rem; color:var(--text-muted); margin-bottom:28px; font-weight:500; }
-
-        /* ─── Info Rekening Banner ──────────────────────── */
-        .rekening-banner {
-            background: linear-gradient(135deg, #1B2B38 0%, #0c1a22 100%);
-            border: 1px solid rgba(59, 195, 189, 0.25);
-            border-left: 4px solid var(--primary);
-            border-radius: 18px;
-            padding: 24px 28px;
-            margin-bottom: 28px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-        }
-        .rekening-banner::before {
-            content: '';
-            position: absolute;
-            top: -60px; right: -40px;
-            width: 200px; height: 200px;
-            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-            filter: blur(50px);
-            opacity: 0.15;
-        }
-        .rekening-banner-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .rekening-banner-icon {
-            width: 38px; height: 38px;
-            background: rgba(59,195,189,0.15);
-            border-radius: 10px;
-            display: flex; align-items:center; justify-content:center;
-            color: var(--primary-bright);
-            font-size: 1rem;
-        }
-        .rekening-banner-title {
-            font-size: .8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--primary-bright);
-        }
-        .rekening-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-        }
-        .rekening-item { display: flex; flex-direction: column; gap: 4px; }
-        .rekening-label { font-size: .72rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
-        .rekening-value { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
-        .rekening-value.highlight { color: var(--primary-bright); font-size: 1.15rem; letter-spacing: .5px; }
-        .rekening-note {
-            margin-top: 14px;
-            padding: 10px 14px;
-            background: rgba(245,158,11,0.08);
-            border: 1px solid rgba(245,158,11,0.2);
-            border-radius: 10px;
-            font-size: .8rem;
-            color: #FBBF24;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
         /* ─── Table Card ───────────────────────────────── */
         .table-card {
             background: var(--bg-card);
@@ -532,33 +467,6 @@
         <!-- Page Title -->
         <h1 class="page-title">Pembayaran</h1>
         <p class="page-subtitle">Kelola pembayaran untuk naskah yang telah disetujui oleh admin.</p>
-
-        <!-- ─── Info Rekening Banner ──────────────────── -->
-        <div class="rekening-banner">
-            <div class="rekening-banner-header">
-                <div class="rekening-banner-icon"><i class="fa-solid fa-building-columns"></i></div>
-                <div class="rekening-banner-title">Informasi Rekening Tujuan Transfer</div>
-            </div>
-            <div class="rekening-grid">
-                <div class="rekening-item">
-                    <div class="rekening-label">Bank</div>
-                    <div class="rekening-value">Bank Central Asia (BCA)</div>
-                </div>
-                <div class="rekening-item">
-                    <div class="rekening-label">No. Rekening</div>
-                    <div class="rekening-value highlight">1234 5678 90</div>
-                </div>
-                <div class="rekening-item">
-                    <div class="rekening-label">Atas Nama</div>
-                    <div class="rekening-value">YPIK PAM JAYA</div>
-                </div>
-            </div>
-            <div class="rekening-note">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                Simpan bukti transfer Anda, lalu unggah melalui tombol <strong style="margin:0 4px;">Bayar Sekarang</strong> pada tabel di bawah.
-            </div>
-        </div>
-
         <!-- ─── Naskah Table Card ──────────────────────── -->
         <div class="table-card">
             <div class="card-header">
@@ -566,7 +474,6 @@
                     <i class="fa-solid fa-file-invoice-dollar"></i>
                     Daftar Naskah Disetujui
                 </div>
-                <span class="card-badge">3 Menunggu Pembayaran</span>
             </div>
 
             <div class="table-container">
