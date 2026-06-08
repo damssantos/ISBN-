@@ -3,6 +3,7 @@
 .env
 .env.backup
 .env.production
+# .env.vercel sengaja TIDAK di-ignore — ini template untuk Vercel
 .phpactor.json
 .phpunit.result.cache
 /.codex
@@ -19,7 +20,7 @@
 /public/storage
 /storage/*.key
 /storage/pail
-/vendor
+# /vendor  <-- JANGAN di-ignore! Vercel butuh vendor ter-commit
 _ide_helper.php
 Homestead.json
 Homestead.yaml
