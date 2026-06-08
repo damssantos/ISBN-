@@ -334,6 +334,8 @@
             25% { transform: translateX(-4px); }
             75% { transform: translateX(4px); }
         }
+
+
     </style>
 </head>
 <body>
@@ -367,6 +369,8 @@
 
             <form action="{{ route('login.store') }}" method="POST">
                 @csrf
+
+
                 <div class="form-group">
                     <label for="inputEmail">Email</label>
                     <div class="input-wrapper">
@@ -409,6 +413,8 @@
                 toggleIcon.className = 'fa-regular fa-eye';
             }
         }
+
+
     </script>
 </body>
 </html>

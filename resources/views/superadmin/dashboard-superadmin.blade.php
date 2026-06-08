@@ -130,7 +130,7 @@
         .user-dropdown-item.logout:hover { background:rgba(248,113,113,0.08); color:#f87171; }
 
         /* ─── Stats Grid ──────────────────────────────────────── */
-        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:10px; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:10px; margin-bottom:36px; }
 
         .stat-card { 
             background:var(--bg-card); 
@@ -148,22 +148,6 @@
             transform:translateY(-8px); 
             border-top-color:var(--primary); 
             box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 195, 189, 0.1); 
-        .stat-card {
-            background:var(--bg-card);
-            border:1px solid var(--border-color);
-            border-top:3px solid var(--primary-dim);
-            border-radius:18px;
-            padding:24px;
-            box-shadow:0 10px 25px rgba(0,0,0,0.2);
-            position:relative;
-            overflow:hidden;
-            transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .stat-card::after { content:''; position:absolute; inset:0; border-radius:18px; background:linear-gradient(145deg, rgba(59, 195, 189, 0.05), transparent 60%); pointer-events:none; }
-        .stat-card:hover {
-            transform:translateY(-8px);
-            border-top-color:var(--primary);
-            box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59, 195, 189, 0.1);
         }
         .stat-main { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
         .stat-info { display:flex; flex-direction:column; flex:1; }
@@ -181,81 +165,199 @@
         .stat-link { font-size:.75rem; color:var(--primary-bright); text-decoration:none; font-weight:700; display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
         .stat-link:hover { gap:10px; }
 
-        .stat-main { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
-        .stat-title { font-size:.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
-        .stat-value { font-size:2rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; }
-        .stat-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; transition: transform 0.3s; }
-        .stat-card:hover .stat-icon { transform: scale(1.1) rotate(5deg); }
-        
-        .stat-icon.teal   { background:rgba(59,195,189,0.15);  color:var(--primary-bright); box-shadow: 0 8px 20px rgba(59,195,189,0.1); }
-        .stat-icon.yellow { background:rgba(245,158,11,0.15);  color:#FBBF24; box-shadow: 0 8px 20px rgba(245,158,11,0.1); }
-        .stat-icon.red    { background:rgba(239,68,68,0.15);   color:#f87171; box-shadow: 0 8px 20px rgba(239,68,68,0.1); }
-        .stat-icon.purple { background:rgba(168,85,247,0.15);  color:#C084FC; box-shadow: 0 8px 20px rgba(168,85,247,0.1); }
-        .stat-icon.gray   { background:rgba(107,114,128,0.15); color:#D1D5DB; box-shadow: 0 8px 20px rgba(107,114,128,0.1); }
-
-        .stat-subtitle { font-size:.875rem; color:var(--text-secondary); margin-bottom:16px; font-weight: 500; }
-        .stat-link { font-size:.75rem; color:var(--primary-bright); text-decoration:none; font-weight:700; display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
-        .stat-link:hover { gap:10px; }
-
-        /* ─── Workflow Log Table ──────────────────────────────── */
-        .section-header { display:flex; align-items:center; justify-content:space-between; margin:32px 0 20px; }
-        .section-title { display:flex; align-items:center; gap:10px; font-size:1.15rem; font-weight:700; color:var(--text-primary); }
-        .section-title i { color:var(--primary); font-size:1rem; }
-        .section-actions { display:flex; gap:10px; }
-
-        .btn-filter { display:flex; align-items:center; gap:7px; padding:8px 16px; background:transparent; border:1px solid var(--border-color); border-radius:10px; color:var(--text-secondary); font-size:.85rem; font-weight:500; cursor:pointer; transition:all 0.2s; }
-        .btn-filter:hover { border-color:var(--primary-dim); color:var(--primary-bright); background:var(--primary-glow); }
-        .btn-export { display:flex; align-items:center; gap:7px; padding:8px 18px; background:var(--primary); border:none; border-radius:10px; color:#0f1d26; font-size:.85rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-        .btn-export:hover { background:var(--primary-bright); transform:translateY(-2px); box-shadow:0 4px 12px var(--primary-glow); }
-
-        .table-card {
+        /* ─── Transaksi Section ──────────────────────────────────── */
+        .section-card {
             background:var(--bg-card);
             border:1px solid var(--border-color);
             border-top:2px solid var(--primary-dim);
             border-radius:20px;
-            overflow:hidden;
+            padding:28px;
             box-shadow:0 10px 30px rgba(0,0,0,0.2);
             position:relative;
             transition:transform .25s, box-shadow .25s;
+            margin-top:12px;
         }
-        .table-card::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg,rgba(59, 195, 189,0.03),transparent 60%); pointer-events:none; }
-        .table-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(59, 195, 189,0.1); }
+        .section-card::after { content:''; position:absolute; inset:0; border-radius:20px; background:linear-gradient(145deg,rgba(59, 195, 189,0.03),transparent 60%); pointer-events:none; }
+        .section-card:hover { transform:translateY(-4px); border-top-color:var(--primary); box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 0 1px rgba(59, 195, 189,0.1); }
 
-        .log-table { width:100%; border-collapse:collapse; }
-        .log-table thead tr { background:#162230; }
-        .log-table th { padding:14px 20px; text-align:left; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); border-bottom:1px solid var(--border-color); }
-        .log-table td { padding:22px 20px; border-bottom:1px solid var(--border-light); vertical-align:middle; }
-        .log-table tbody tr:last-child td { border-bottom:none; }
-        .log-table tbody tr { transition:background 0.15s; }
-        .log-table tbody tr:hover { background:rgba(59,195,189,0.035); }
+        .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+        .section-title-group {}
+        .section-title { font-size:1.1rem; font-weight:700; color:var(--text-primary); }
+        .section-total { font-size:.85rem; color:var(--text-muted); margin-left:8px; }
+        .section-actions { display:flex; gap:8px; }
 
-        .col-no { font-size:.85rem; font-weight:700; color:var(--text-muted); }
-        .col-tahap { min-width:130px; }
-        .col-aksi { font-size:.875rem; color:var(--text-secondary); line-height:1.5; }
-        .col-respon { font-size:.875rem; line-height:1.5; }
-        .col-pengaturan { text-align:center; }
+        .btn-icon { width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border-color); background:transparent; color:var(--text-muted); border-radius:9px; cursor:pointer; transition:all 0.2s; font-size:.9rem; }
+        .btn-icon:hover { border-color:var(--primary-dim); color:var(--primary); background:var(--primary-glow); }
 
-        /* Tahap Badges */
-        .tahap-badge { display:inline-flex; align-items:center; padding:5px 12px; border-radius:20px; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
-        .tahap-badge.login       { background:rgba(59,195,189,0.15);  color:var(--primary-bright); border:1px solid rgba(59,195,189,0.25); }
-        .tahap-badge.cek-bayar   { background:rgba(245,158,11,0.15);  color:#FBBF24;               border:1px solid rgba(245,158,11,0.25); }
-        .tahap-badge.verifikasi  { background:rgba(168,85,247,0.15);  color:#C084FC;               border:1px solid rgba(168,85,247,0.25); }
-        .tahap-badge.proses-isbn { background:rgba(59,195,189,0.1);   color:#5CD9D4;               border:1px solid rgba(59,195,189,0.2); font-size:.65rem; }
-        .tahap-badge.finalisasi  { background:rgba(16,185,129,0.15);  color:#34D399;               border:1px solid rgba(16,185,129,0.25); }
+        /* ─── Table ──────────────────────────────────────────────── */
+        .table-container { width:100%; overflow-x:auto; }
+        table { width:100%; border-collapse:collapse; }
+        th { text-align:left; padding:12px 16px; font-size:.72rem; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:0.8px; border-bottom:1px solid var(--border-color); }
+        td { padding:12px 16px; border-bottom:1px solid rgba(46,68,89,0.35); vertical-align:middle; }
+        tbody tr:last-child td { border-bottom:none; }
+        tbody tr { transition:background 0.15s; }
+        tbody tr:hover { background:rgba(59,195,189,0.035); }
 
-        /* Respon Icons */
-        .respon-item { display:flex; align-items:flex-start; gap:7px; }
-        .respon-icon { margin-top:2px; font-size:.8rem; flex-shrink:0; }
-        .respon-icon.green  { color:#2dce89; }
-        .respon-icon.yellow { color:#FBBF24; }
-        .respon-icon.teal   { color:var(--primary-bright); }
-        .respon-icon.wait   { color:#C084FC; }
-        .respon-link { font-size:.875rem; font-weight:600; color:var(--primary-bright); text-decoration:none; line-height:1.45; }
-        .respon-link:hover { text-decoration:underline; }
-        .respon-text { font-size:.875rem; color:var(--text-secondary); line-height:1.45; }
+        .invoice-id { font-weight:700; font-size:.9rem; color:var(--primary-bright); }
+        .penulis-name { font-size:.875rem; color:var(--text-secondary); font-weight:500; }
+        .jumlah-text { font-size:.9rem; font-weight:600; color:var(--text-primary); }
+        .tanggal-text { font-size:.875rem; color:var(--text-secondary); }
+        .metode-text { font-size:.875rem; color:var(--text-muted); }
 
-        .settings-btn { width:32px; height:32px; display:flex; align-items:center; justify-content:center; background:transparent; border:1px solid var(--border-color); border-radius:8px; color:var(--text-muted); cursor:pointer; transition:all 0.2s; font-size:.9rem; margin:0 auto; }
-        .settings-btn:hover { border-color:var(--primary-dim); color:var(--primary); background:var(--primary-glow); }
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .status-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .status-badge.waiting {
+            background: rgba(122, 155, 170, 0.15);
+            color: #7A9BAA;
+        }
+        .status-badge.waiting::before { background: #7A9BAA; }
+        .status-badge.approved {
+            background: rgba(59, 195, 189, 0.15);
+            color: #3BC3BD;
+        }
+        .status-badge.approved::before { background: #3BC3BD; }
+        .status-badge.rejected {
+            background: rgba(239, 68, 68, 0.12);
+            color: #F87171;
+        }
+        .status-badge.rejected::before { background: #F87171; }
+
+        /* Action Icon Button */
+        .aksi-btn { width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; color:var(--primary); font-size:1.1rem; cursor:pointer; border-radius:8px; transition:all 0.2s; }
+        .aksi-btn:hover { background:var(--primary-glow); color:var(--primary-bright); }
+
+        /* ─── Table Footer / Pagination ─────────────────────────── */
+        .table-footer { display:flex; align-items:center; justify-content:space-between; margin-top:24px; padding:4px 0; }
+        .footer-text { font-size:.85rem; color:var(--text-muted); font-weight:500; }
+        .pagination-container { display:flex; align-items:center; gap:6px; }
+        .page-btn { width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid var(--border-color); background:transparent; color:var(--text-secondary); font-size:.85rem; font-weight:600; cursor:pointer; transition:all 0.2s; }
+        .page-btn:hover:not(.disabled):not(.active) { border-color:var(--primary); color:var(--primary); background:var(--primary-glow); }
+        .page-btn.active { background:var(--primary); color:var(--bg-body); border-color:var(--primary); font-weight:700; }
+        .page-btn.disabled { opacity:0.3; cursor:not-allowed; }
+
+        /* ─── Modal Overlay ─────────────────────────────────────── */
+        .modal-overlay {
+            display:none;
+            position:fixed; inset:0; z-index:999;
+            background:rgba(0,0,0,0.65);
+            backdrop-filter:blur(4px);
+            align-items:center;
+            justify-content:center;
+            padding:24px;
+        }
+        .modal-overlay.open { display:flex; }
+
+        .modal-box {
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:24px;
+            width:100%;
+            max-width:680px;
+            max-height:90vh;
+            display:flex;
+            flex-direction:column;
+            box-shadow:0 30px 60px rgba(0,0,0,0.5);
+            overflow:hidden;
+            animation:modalIn 0.28s cubic-bezier(0.16,1,0.3,1);
+        }
+        @keyframes modalIn {
+            from { opacity:0; transform:scale(0.94) translateY(16px); }
+            to   { opacity:1; transform:scale(1) translateY(0); }
+        }
+
+        /* Modal Header */
+        .modal-header {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:22px 28px 18px;
+            border-bottom:1px solid var(--border-color);
+        }
+        .modal-title { font-size:1.1rem; font-weight:700; color:var(--text-primary); }
+        .modal-subtitle { font-size:.8rem; color:var(--text-muted); margin-top:2px; }
+        .modal-close-btn {
+            width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+            background:transparent; border:1px solid var(--border-color); border-radius:9px;
+            color:var(--text-muted); cursor:pointer; font-size:1rem; transition:all 0.2s;
+        }
+        .modal-close-btn:hover { border-color:#f87171; color:#f87171; background:rgba(248,113,113,0.08); }
+
+        /* Modal Body */
+        .modal-body { padding:24px 28px; display:flex; flex-direction:column; gap:24px; overflow-y:auto; }
+
+        /* Invoice Section */
+        .modal-section-label {
+            font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+            color:var(--primary); margin-bottom:14px;
+        }
+        .invoice-grid {
+            display:grid; grid-template-columns:1fr 1fr; gap:14px 28px;
+        }
+        .inv-field { display:flex; flex-direction:column; gap:3px; }
+        .inv-label { font-size:.72rem; color:var(--text-muted); font-weight:600; }
+        .inv-value { font-size:.9rem; color:var(--text-primary); font-weight:600; }
+        .inv-value.highlight { color:var(--primary-bright); }
+
+        .inv-divider { height:1px; background:var(--border-light); margin:4px 0; }
+
+        /* Bukti Pembayaran */
+        .bukti-box {
+            background:var(--bg-elevated);
+            border:1px dashed var(--border-color);
+            border-radius:14px;
+            padding:18px;
+            display:flex; align-items:center; gap:14px;
+        }
+        .bukti-thumb {
+            width:56px; height:56px; border-radius:10px;
+            background:rgba(59,195,189,0.12);
+            display:flex; align-items:center; justify-content:center;
+            color:var(--primary); font-size:1.4rem; flex-shrink:0;
+        }
+        .bukti-info { flex:1; }
+        .bukti-name { font-size:.875rem; font-weight:600; color:var(--text-primary); }
+        .bukti-size { font-size:.75rem; color:var(--text-muted); margin-top:2px; }
+        .bukti-download {
+            display:inline-flex; align-items:center; gap:7px;
+            padding:8px 16px; background:transparent;
+            border:1px solid var(--primary-dim); border-radius:9px;
+            color:var(--primary); font-size:.8rem; font-weight:600;
+            cursor:pointer; transition:all 0.2s;
+        }
+        .bukti-download:hover { background:var(--primary-glow); border-color:var(--primary); }
+
+        /* Modal Footer Actions */
+        .modal-footer {
+            display:flex; align-items:center; justify-content:flex-end; gap:10px;
+            padding:16px 28px 24px;
+        }
+        .btn-modal-reject {
+            padding:10px 22px; background:transparent;
+            border:1px solid rgba(248,113,113,0.4); border-radius:12px;
+            color:#f87171; font-size:.875rem; font-weight:600; cursor:pointer; transition:all 0.2s;
+        }
+        .btn-modal-reject:hover { background:rgba(248,113,113,0.08); border-color:#f87171; }
+        .btn-modal-approve {
+            padding:10px 24px; background:var(--primary);
+            border:none; border-radius:12px;
+            color:var(--bg-body); font-size:.875rem; font-weight:700; cursor:pointer; transition:all 0.2s;
+        }
+        .btn-modal-approve:hover { background:var(--primary-bright); transform:translateY(-2px); box-shadow:0 6px 16px var(--primary-glow); }
     </style>
 </head>
 <body>
@@ -303,18 +405,7 @@
                         <span class="nav-link-text">Cek Pembayaran</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/superadmin/verifikasi" class="nav-link">
-                        <i class="fa-solid fa-check-circle"></i>
-                        <span class="nav-link-text">Verifikasi</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/superadmin/finalisasi" class="nav-link">
-                        <i class="fa-solid fa-flag-checkered"></i>
-                        <span class="nav-link-text">Finalisasi</span>
-                    </a>
-                </li>
+
             </ul>
 
         <div class="sidebar-footer">
@@ -364,44 +455,31 @@
 
         <!-- ─── Stats Grid ─── -->
         <section class="stats-grid">
+            <!-- Card 1 -->
             <div class="stat-card">
                 <div class="stat-main">
                     <div class="stat-info">
                         <div class="stat-title">Peninjauan</div>
                         <div class="stat-value">{{ $jumlahPeninjauan }}</div>
                         <div class="stat-subtitle">Naskah dalam peninjauan</div>
-                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                        <a href="/superadmin/verifikasi" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
                     </div>
                     <div class="stat-icon icon-purple"><i class="fa-regular fa-file-lines"></i></div>
                 </div>
-                    <div>
-                        <div class="stat-title">Peninjauan</div>
-                        <div class="stat-value">12</div>
-                    </div>
-                    <div class="stat-icon teal"><i class="fa-regular fa-file-lines"></i></div>
-                </div>
-                <div class="stat-subtitle">Naskah dalam peninjauan</div>
-                <a href="/superadmin/verifikasi" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
+            <!-- Card 2 -->
             <div class="stat-card">
                 <div class="stat-main">
                     <div class="stat-info">
                         <div class="stat-title">Diterbitkan</div>
                         <div class="stat-value">{{ $jumlahDiterbitkan }}</div>
                         <div class="stat-subtitle">Naskah telah diterbitkan</div>
-                        <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
+                        <a href="/superadmin/finalisasi" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
                     </div>
                     <div class="stat-icon icon-emerald"><i class="fa-solid fa-check-double"></i></div>
                 </div>
-                    <div>
-                        <div class="stat-title">Diterbitkan</div>
-                        <div class="stat-value">48</div>
-                    </div>
-                    <div class="stat-icon teal"><i class="fa-solid fa-circle-check"></i></div>
-                </div>
-                <div class="stat-subtitle">Naskah telah diterbitkan</div>
-                <a href="/superadmin/finalisasi" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
+            <!-- Card 3 -->
             <div class="stat-card">
                 <div class="stat-main">
                     <div class="stat-info">
@@ -412,15 +490,8 @@
                     </div>
                     <div class="stat-icon icon-orange"><i class="fa-regular fa-user"></i></div>
                 </div>
-                    <div>
-                        <div class="stat-title">Penulis</div>
-                        <div class="stat-value">07</div>
-                    </div>
-                    <div class="stat-icon yellow"><i class="fa-solid fa-user"></i></div>
-                </div>
-                <div class="stat-subtitle">Total penulis terdaftar</div>
-                <a href="/superadmin/verifikasi" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
+            <!-- Card 4 -->
             <div class="stat-card">
                 <div class="stat-main">
                     <div class="stat-info">
@@ -431,126 +502,197 @@
                     </div>
                     <div class="stat-icon icon-gray"><i class="fa-solid fa-inbox"></i></div>
                 </div>
-                    <div>
-                        <div class="stat-title">Draf</div>
-                        <div class="stat-value">03</div>
-                    </div>
-                    <div class="stat-icon gray"><i class="fa-regular fa-inbox"></i></div>
-                </div>
-                <div class="stat-subtitle">Total draf naskah</div>
-                <a href="/superadmin/dashboard" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
             </div>
         </section>
 
-        <!-- ─── Workflow Log ─── -->
-        <div class="section-header">
-            <div class="section-title">
-                <i class="fa-solid fa-list-check"></i>
-                Log Urutan Alur Kerja
+        <!-- Transaksi Pembayaran Table -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-title-group">
+                    <span class="section-title">Transaksi Pembayaran</span>
+                    <span class="section-total">(482 Total)</span>
+                </div>
+                <div class="section-actions">
+                    <button class="btn-icon" title="Filter"><i class="fa-solid fa-sliders"></i></button>
+                    <button class="btn-icon" title="Urutkan"><i class="fa-solid fa-sort"></i></button>
+                </div>
             </div>
-            <div class="section-actions">
-                <button class="btn-filter">
-                    <i class="fa-solid fa-sliders"></i> Filter
-                </button>
-                <button class="btn-export">
-                    <i class="fa-solid fa-download"></i> Ekspor
-                </button>
-            </div>
-        </div>
 
-        <div class="table-card">
-            <table class="log-table">
-                <thead>
-                    <tr>
-                        <th style="width:8%;">NO</th>
-                        <th style="width:18%;">TAHAP</th>
-                        <th style="width:26%;">AKSI ADMIN</th>
-                        <th style="width:28%;">RESPON SISTEM</th>
-                        <th style="width:10%; text-align:center;">PENGATURAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Row 1 -->
-                    <tr>
-                        <td class="col-no">01</td>
-                        <td class="col-tahap">
-                            <span class="tahap-badge login">Login</span>
-                        </td>
-                        <td class="col-aksi">Input Kredensial<br>Super Admin</td>
-                        <td class="col-respon">
-                            <div class="respon-item">
-                                <i class="respon-icon green fa-solid fa-circle-check"></i>
-                                <div>
-                                    <a href="#" class="respon-link">Akses Dashboard<br>Terbuka</a>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-pengaturan">
-                            <button class="settings-btn" title="Pengaturan"><i class="fa-solid fa-sliders"></i></button>
-                        </td>
-                    </tr>
-                    <!-- Row 2 -->
-                    <tr>
-                        <td class="col-no">02</td>
-                        <td class="col-tahap">
-                            <span class="tahap-badge cek-bayar">Cek Pembayaran</span>
-                        </td>
-                        <td class="col-aksi">Validasi Bukti Transfer<br>Bank</td>
-                        <td class="col-respon">
-                            <div class="respon-item">
-                                <i class="respon-icon yellow fa-solid fa-rotate"></i>
-                                <div>
-                                    <span class="respon-text">Update Status<br>"Lunas"</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-pengaturan">
-                            <button class="settings-btn" title="Pengaturan"><i class="fa-solid fa-sliders"></i></button>
-                        </td>
-                    </tr>
-                    <!-- Row 3 -->
-                    <tr>
-                        <td class="col-no">03</td>
-                        <td class="col-tahap">
-                            <span class="tahap-badge verifikasi">Verifikasi</span>
-                        </td>
-                        <td class="col-aksi">Review Kelengkapan<br>Naskah</td>
-                        <td class="col-respon">
-                            <div class="respon-item">
-                                <i class="respon-icon teal fa-solid fa-bolt"></i>
-                                <div>
-                                    <span class="respon-text">Notifikasi Email<br>Penulis</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-pengaturan">
-                            <button class="settings-btn" title="Pengaturan"><i class="fa-solid fa-sliders"></i></button>
-                        </td>
-                    </tr>
-                    <!-- Row 4 -->
-                    <tr>
-                        <td class="col-no">04</td>
-                        <td class="col-tahap">
-                            <span class="tahap-badge proses-isbn">Proses ISBN</span>
-                        </td>
-                        <td class="col-aksi">Submit Form<br>ke Perpusnas</td>
-                        <td class="col-respon">
-                            <div class="respon-item">
-                                <i class="respon-icon wait fa-solid fa-hourglass-half"></i>
-                                <div>
-                                    <a href="#" class="respon-link">Menunggu<br>Kode ISBN</a>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-pengaturan">
-                            <button class="settings-btn" title="Pengaturan"><i class="fa-solid fa-sliders"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Faktur</th>
+                            <th>Nama Penulis</th>
+                            <th>Jumlah</th>
+                            <th>Tanggal</th>
+                            <th>Metode</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentTableBody">
+                        <!-- Row 1 -->
+                        <tr data-status="cek-bayar">
+                            <td><span class="invoice-id">#INV-2023-0891</span></td>
+                            <td><span class="penulis-name">Dr. Ahmad Subagyo</span></td>
+                            <td><span class="jumlah-text">Rp 2.500.000</span></td>
+                            <td><span class="tanggal-text">24 Oct 2023</span></td>
+                            <td><span class="metode-text">Bank Transfer</span></td>
+                            <td><span class="status-badge waiting">Menunggu</span></td>
+                            <td>
+                                <button class="aksi-btn" title="Lihat Detail"
+                                    data-inv="#INV-2023-0891" data-penulis="Dr. Ahmad Subagyo"
+                                    data-jumlah="Rp 2.500.000" data-tanggal="24 Oktober 2023"
+                                    data-metode="Bank Transfer" data-status="Cek Pembayaran"
+                                    data-bank="BCA" data-norek="1234567890"
+                                    data-bukti="bukti_transfer_0891.pdf"
+                                    onclick="openModal(this)">
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Row 2 -->
+                        <tr data-status="published">
+                            <td><span class="invoice-id">#INV-2023-0890</span></td>
+                            <td><span class="penulis-name">Siti Aminah, M.Pd</span></td>
+                            <td><span class="jumlah-text">Rp 1.200.000</span></td>
+                            <td><span class="tanggal-text">23 Oct 2023</span></td>
+                            <td><span class="metode-text">E-Wallet</span></td>
+                            <td><span class="status-badge approved">Disetujui</span></td>
+                            <td>
+                                <button class="aksi-btn" title="Lihat Detail"
+                                    data-inv="#INV-2023-0890" data-penulis="Siti Aminah, M.Pd"
+                                    data-jumlah="Rp 1.200.000" data-tanggal="23 Oktober 2023"
+                                    data-metode="E-Wallet" data-status="Published"
+                                    data-bank="GoPay" data-norek="08123456789"
+                                    data-bukti="https://via.placeholder.com/600x400"
+                                    onclick="openModal(this)">
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Row 3 -->
+                        <tr data-status="proses-isbn">
+                            <td><span class="invoice-id">#INV-2023-0889</span></td>
+                            <td><span class="penulis-name">Budi Santoso</span></td>
+                            <td><span class="jumlah-text">Rp 3.750.000</span></td>
+                            <td><span class="tanggal-text">23 Oct 2023</span></td>
+                            <td><span class="metode-text">Credit Card</span></td>
+                            <td><span class="status-badge waiting">Menunggu</span></td>
+                            <td>
+                                <button class="aksi-btn" title="Lihat Detail"
+                                    data-inv="#INV-2023-0889" data-penulis="Budi Santoso"
+                                    data-jumlah="Rp 3.750.000" data-tanggal="23 Oktober 2023"
+                                    data-metode="Credit Card" data-status="Proses ISBN"
+                                    data-bank="Visa **** 4291" data-norek="-"
+                                    data-bukti="bukti_cc_0889.pdf"
+                                    onclick="openModal(this)">
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Table Footer / Pagination -->
+            <div class="table-footer">
+                <span class="footer-text">Menampilkan 1 sampai 10 dari 482 entri</span>
+                <div class="pagination-container">
+                    <button class="page-btn disabled"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
         </div>
 
     </main>
+
+    <!-- ═══════════════════ MODAL INVOICE ═══════════════════ -->
+    <div class="modal-overlay" id="invoiceModal" onclick="handleOverlayClick(event)">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-title" id="modalTitle">Detail Invoice</div>
+                    <div class="modal-subtitle" id="modalSubtitle">Informasi transaksi dan bukti pembayaran</div>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Invoice Info -->
+                <div>
+                    <div class="modal-section-label"><i class="fa-solid fa-file-invoice" style="margin-right:6px;"></i>Informasi Invoice</div>
+                    <div class="invoice-grid">
+                        <div class="inv-field">
+                            <span class="inv-label">ID Faktur</span>
+                            <span class="inv-value highlight" id="mInvId">-</span>
+                        </div>
+                        <div class="inv-field">
+                            <span class="inv-label">Status</span>
+                            <span class="inv-value" id="mStatus">-</span>
+                        </div>
+                        <div class="inv-field">
+                            <span class="inv-label">Nama Penulis</span>
+                            <span class="inv-value" id="mPenulis">-</span>
+                        </div>
+                        <div class="inv-field">
+                            <span class="inv-label">Tanggal Transaksi</span>
+                            <span class="inv-value" id="mTanggal">-</span>
+                        </div>
+                        <div class="inv-field">
+                            <span class="inv-label">Jumlah</span>
+                            <span class="inv-value highlight" id="mJumlah">-</span>
+                        </div>
+                        <div class="inv-field">
+                            <span class="inv-label">Metode Pembayaran</span>
+                            <span class="inv-value" id="mMetode">-</span>
+                        </div>
+                        <div class="inv-field">
+                            <span class="inv-label">Bank / Penyedia</span>
+                            <span class="inv-value" id="mBank">-</span>
+                        </div>
+                        <div class="inv-field">
+                            <span class="inv-label">No. Rekening / Akun</span>
+                            <span class="inv-value" id="mNorek">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inv-divider"></div>
+
+                <!-- Bukti Pembayaran -->
+                <div>
+                    <div class="modal-section-label"><i class="fa-solid fa-image" style="margin-right:6px;"></i>Bukti Pembayaran</div>
+                    <div class="bukti-box" style="flex-direction:column; align-items:flex-start; gap:12px;">
+                        <div style="display:flex; align-items:center; gap:10px; width:100%;">
+                            <div class="bukti-thumb">
+                                <i class="fa-solid fa-image"></i>
+                            </div>
+                            <div class="bukti-info">
+                                <div class="bukti-name" id="mBuktiName">bukti_transfer.pdf</div>
+                                <div class="bukti-size">PNG / JPG &bull; Diunggah oleh Penulis</div>
+                            </div>
+                        </div>
+                        <img id="buktiImg" src="" alt="Bukti Pembayaran"
+                             onerror="this.onerror=null; this.src='https://placehold.co/600x400/1B2B38/7A9BAA?text=Gambar+Tidak+Tersedia';"
+                             style="width:100%; max-height:320px; object-fit:contain; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-body);">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-modal-reject" onclick="closeModal()"><i class="fa-solid fa-xmark" style="margin-right:6px;"></i>Tolak</button>
+                <button class="btn-modal-approve" onclick="approvePayment()"><i class="fa-solid fa-check" style="margin-right:6px;"></i>Disetujui</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         const sidebar     = document.getElementById('sidebar');
@@ -564,6 +706,57 @@
         const userDropdown = document.getElementById('userDropdown');
         userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
         document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
+
+        let activeRow = null;
+
+        function openModal(btn) {
+            activeRow = btn.closest('tr');
+            const d = btn.dataset;
+            document.getElementById('mInvId').textContent    = d.inv;
+            document.getElementById('mPenulis').textContent  = d.penulis;
+            document.getElementById('mJumlah').textContent   = d.jumlah;
+            document.getElementById('mTanggal').textContent  = d.tanggal;
+            document.getElementById('mMetode').textContent   = d.metode;
+            document.getElementById('mStatus').textContent   = d.status;
+            document.getElementById('mBank').textContent     = d.bank;
+            document.getElementById('mNorek').textContent    = d.norek;
+            document.getElementById('mBuktiName').textContent= d.bukti;
+            document.getElementById('buktiImg').src = d.bukti;
+            document.getElementById('modalSubtitle').textContent = d.inv + ' · ' + d.penulis;
+            document.getElementById('invoiceModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('invoiceModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function handleOverlayClick(e) {
+            if (e.target === document.getElementById('invoiceModal')) closeModal();
+        }
+
+        function approvePayment() {
+            if (activeRow) {
+                const badge = activeRow.querySelector('.status-badge');
+                if (badge) {
+                    badge.className = 'status-badge approved';
+                    badge.textContent = 'Disetujui';
+                }
+                
+                const btn = activeRow.querySelector('.aksi-btn');
+                if (btn) {
+                    btn.dataset.status = 'Disetujui';
+                }
+
+                document.getElementById('mStatus').textContent = 'Disetujui';
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
     </script>
 </body>
 </html>

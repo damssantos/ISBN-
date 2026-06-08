@@ -293,6 +293,9 @@
             border-radius:24px;
             width:100%;
             max-width:680px;
+            max-height:90vh;
+            display:flex;
+            flex-direction:column;
             box-shadow:0 30px 60px rgba(0,0,0,0.5);
             overflow:hidden;
             animation:modalIn 0.28s cubic-bezier(0.16,1,0.3,1);
@@ -319,7 +322,7 @@
         .modal-close-btn:hover { border-color:#f87171; color:#f87171; background:rgba(248,113,113,0.08); }
 
         /* Modal Body */
-        .modal-body { padding:24px 28px; display:flex; flex-direction:column; gap:24px; }
+        .modal-body { padding:24px 28px; display:flex; flex-direction:column; gap:24px; overflow-y:auto; }
 
         /* Invoice Section */
         .modal-section-label {
@@ -411,18 +414,7 @@
                     <span class="nav-link-text">Cek Pembayaran</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="/superadmin/verifikasi" class="nav-link">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <span class="nav-link-text">Verifikasi</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/superadmin/finalisasi" class="nav-link">
-                    <i class="fa-solid fa-flag-checkered"></i>
-                    <span class="nav-link-text">Finalisasi</span>
-                </a>
-            </li>
+
         </ul>
 
         <div class="sidebar-footer">
@@ -476,45 +468,7 @@
             <p class="page-subtitle">Verifikasi transaksi penulis dan kelola alur kerja keuangan.</p>
         </div>
 
-        <!-- Stats Grid -->
-        <section class="stats-grid">
-            <!-- Card 1 -->
-            <div class="stat-card">
-                <div class="stat-main">
-                    <div class="stat-info">
-                        <div class="stat-title">Pembayaran Tertunda</div>
-                        <div class="stat-value">24</div>
-                        <div class="stat-subtitle">Menunggu konfirmasi pembayaran</div>
-                        <a href="/superadmin/cek-pembayaran" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
-                    </div>
-                    <div class="stat-icon icon-purple"><i class="fa-regular fa-calendar-check"></i></div>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="stat-card">
-                <div class="stat-main">
-                    <div class="stat-info">
-                        <div class="stat-title">Total Terverifikasi Hari Ini</div>
-                        <div class="stat-value">158</div>
-                        <div class="stat-subtitle">Pembayaran berhasil diverifikasi</div>
-                        <a href="/superadmin/cek-pembayaran" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
-                    </div>
-                    <div class="stat-icon icon-orange"><i class="fa-solid fa-circle-check"></i></div>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="stat-card">
-                <div class="stat-main">
-                    <div class="stat-info">
-                        <div class="stat-title">Masalah Pembayaran</div>
-                        <div class="stat-value danger">03</div>
-                        <div class="stat-subtitle">Transaksi bermasalah atau ditolak</div>
-                        <a href="/superadmin/cek-pembayaran" class="stat-link">Lihat Detail <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
-                    </div>
-                    <div class="stat-icon icon-red"><i class="fa-solid fa-circle-exclamation"></i></div>
-                </div>
-            </div>
-        </section>
+
 
         <!-- Transaksi Pembayaran Table -->
         <div class="section-card">
@@ -603,26 +557,7 @@
                                 </button>
                             </td>
                         </tr>
-                        <!-- Row 4 -->
-                        <tr data-status="rejected">
-                            <td><span class="invoice-id">#INV-2023-0888</span></td>
-                            <td><span class="penulis-name">Prof. Laila Sari</span></td>
-                            <td><span class="jumlah-text">Rp 2.000.000</span></td>
-                            <td><span class="tanggal-text">22 Oct 2023</span></td>
-                            <td><span class="metode-text">Bank Transfer</span></td>
-                            <td><span class="status-badge rejected">Ditolak</span></td>
-                            <td>
-                                <button class="aksi-btn" title="Lihat Detail"
-                                    data-inv="#INV-2023-0888" data-penulis="Prof. Laila Sari"
-                                    data-jumlah="Rp 2.000.000" data-tanggal="22 Oktober 2023"
-                                    data-metode="Bank Transfer" data-status="Rejected"
-                                    data-bank="Mandiri" data-norek="9876543210"
-                                    data-bukti="bukti_transfer_0888.pdf"
-                                    onclick="openModal(this)">
-                                    <i class="fa-regular fa-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -711,6 +646,7 @@
                             </div>
                         </div>
                         <img id="buktiImg" src="" alt="Bukti Pembayaran"
+                             onerror="this.onerror=null; this.src='https://placehold.co/600x400/1B2B38/7A9BAA?text=Gambar+Tidak+Tersedia';"
                              style="width:100%; max-height:320px; object-fit:contain; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-body);">
                     </div>
                 </div>
@@ -718,7 +654,7 @@
 
             <div class="modal-footer">
                 <button class="btn-modal-reject" onclick="closeModal()"><i class="fa-solid fa-xmark" style="margin-right:6px;"></i>Tolak</button>
-                <button class="btn-modal-approve"><i class="fa-solid fa-check" style="margin-right:6px;"></i>Verifikasi & Setujui</button>
+                <button class="btn-modal-approve" onclick="approvePayment()"><i class="fa-solid fa-check" style="margin-right:6px;"></i>Disetujui</button>
             </div>
         </div>
     </div>
@@ -736,7 +672,10 @@
         userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
         document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
 
+        let activeRow = null;
+
         function openModal(btn) {
+            activeRow = btn.closest('tr');
             const d = btn.dataset;
             document.getElementById('mInvId').textContent    = d.inv;
             document.getElementById('mPenulis').textContent  = d.penulis;
@@ -760,6 +699,24 @@
 
         function handleOverlayClick(e) {
             if (e.target === document.getElementById('invoiceModal')) closeModal();
+        }
+
+        function approvePayment() {
+            if (activeRow) {
+                const badge = activeRow.querySelector('.status-badge');
+                if (badge) {
+                    badge.className = 'status-badge approved';
+                    badge.textContent = 'Disetujui';
+                }
+                
+                const btn = activeRow.querySelector('.aksi-btn');
+                if (btn) {
+                    btn.dataset.status = 'Disetujui';
+                }
+
+                document.getElementById('mStatus').textContent = 'Disetujui';
+                closeModal();
+            }
         }
 
         document.addEventListener('keydown', (e) => {

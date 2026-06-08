@@ -121,4 +121,48 @@ class AdminController extends Controller
 
         return view('admin.pengguna', compact('users', 'totalPengguna', 'search'));
     }
+
+    // 7. PROFIL ADMIN
+    public function profile()
+    {
+        $adminId = session('user_id');
+        if (!$adminId) {
+            return redirect()->route('login');
+        }
+        $admin = DB::table('akun_pengguna')->where('id', $adminId)->first();
+        if (!$admin) {
+            return redirect()->route('login');
+        }
+        return view('admin.profile-admin', compact('admin'));
+    }
+
+    // 8. UPDATE PROFIL ADMIN
+    public function updateProfile(Request $request)
+    {
+        $adminId = session('user_id');
+        if (!$adminId) {
+            return redirect()->route('login');
+        }
+
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'no_hp'    => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:6|confirmed',
+        ]);
+
+        $updateData = [
+            'name'  => $request->name,
+            'no_hp' => $request->no_hp,
+        ];
+
+        if ($request->filled('password')) {
+            $updateData['password'] = bcrypt($request->password);
+        }
+
+        DB::table('akun_pengguna')->where('id', $adminId)->update($updateData);
+
+        session(['user_name' => $request->name]);
+
+        return redirect()->back()->with('status', 'Profil admin berhasil diperbarui!');
+    }
 }

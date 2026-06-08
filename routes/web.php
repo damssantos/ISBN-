@@ -82,6 +82,10 @@ Route::get('/admin/buku-terbit', [AdminController::class, 'bukuTerbit'])->name('
 // Admin Pengguna page
 Route::get('/admin/pengguna', [AdminController::class, 'pengguna'])->name('admin.pengguna');
 
+// Admin Profile page
+Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+Route::post('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+
 // Superadmin Dashboard
 Route::get('/superadmin/dashboard', function () {
     return view('superadmin.dashboard-superadmin');

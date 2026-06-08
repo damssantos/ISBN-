@@ -26,11 +26,29 @@ class AuthController extends Controller
         $user = DB::table('akun_pengguna')->where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
-            session(['user_id' => $user->id, 'user_name' => $user->name]);
-            return redirect()->route('dashboard')->with('status', 'Selamat Datang Kembali, Penulis Hebat!');
+            // Tentukan role (default: penulis jika tidak diset)
+            $role = $user->role ?? 'penulis';
+
+            // Simpan session lengkap dengan role
+            session([
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+                'user_role' => $role,
+            ]);
+
+            // Redirect berdasarkan role
+            if ($role === 'superadmin') {
+                return redirect()->route('superadmin.dashboard')->with('status', 'Selamat Datang, Super Admin!');
+            } elseif ($role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('status', 'Selamat Datang, Admin!');
+            } else {
+                return redirect()->route('dashboard')->with('status', 'Selamat Datang Kembali, Penulis Hebat!');
+            }
         }
 
-        return redirect()->back()->withErrors(['error' => 'Aduh, Email atau Password kamu salah nih!']);
+        return redirect()->back()
+            ->withInput($request->only('email'))
+            ->withErrors(['error' => 'Email atau Password salah!']);
     }
 
     // 3. TAMPILKAN FORM DAFTAR
@@ -63,7 +81,7 @@ class AuthController extends Controller
     // 5. PROSES KELUAR SISTEM
     public function logout()
     {
-        session()->forget(['user_id', 'user_name']);
+        session()->forget(['user_id', 'user_name', 'user_role']);
         return redirect()->route('login');
     }
 }

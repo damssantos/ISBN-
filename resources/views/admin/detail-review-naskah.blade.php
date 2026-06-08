@@ -363,18 +363,12 @@
         }
         .doc-viewer-body {
             flex: 1;
-            overflow-y: auto;
             background: #09131a;
-            padding: 36px 16px;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 24px;
-            scroll-behavior: smooth;
-        }
-        .doc-page-wrapper {
-            transition: transform 0.2s ease;
-            transform-origin: top center;
+            align-items: stretch;
+            overflow: hidden;
         }
         /* Simulated Page Style */
         .doc-page {
@@ -565,14 +559,14 @@
                 <div class="info-item">
                     <span class="label-muted">File Naskah</span>
                     @if($naskah->file_naskah)
-                    <div class="naskah-card" onclick="openDocViewer()">
+                    <div class="naskah-card" onclick="window.open('{{ asset('storage/' . $naskah->file_naskah) }}', '_blank')">
                         <div class="naskah-info">
                             <div class="naskah-icon-wrapper">
                                 <i class="fa-regular fa-file-pdf"></i>
                             </div>
                             <div class="naskah-name-group">
                                 <span class="naskah-filename">{{ basename($naskah->file_naskah) }}</span>
-                                <span class="naskah-meta">PDF • Klik untuk Pratinjau</span>
+                                <span class="naskah-meta">PDF • Klik untuk Membuka</span>
                             </div>
                         </div>
                         <a href="{{ asset('storage/' . $naskah->file_naskah) }}" download class="naskah-link" title="Unduh File Naskah" onclick="event.stopPropagation();">
@@ -611,105 +605,6 @@
             </div>
         </div>
     </main>
-
-    <!-- Document Viewer Modal -->
-    <div class="doc-viewer-backdrop" id="docViewerModal" onclick="closeDocViewerOnBackdrop(event)">
-        <div class="doc-viewer-container">
-            <div class="doc-viewer-header">
-                <div class="doc-viewer-title">
-                    <i class="fa-regular fa-file-pdf"></i>
-                    <span>Pratinjau Dokumen - {{ $naskah->file_naskah ? basename($naskah->file_naskah) : '' }}</span>
-                </div>
-                <div class="doc-viewer-controls">
-                    <button class="control-btn" onclick="zoomOut()" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
-                    <span class="zoom-text" id="zoomVal">100%</span>
-                    <button class="control-btn" onclick="zoomIn()" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
-                    <button class="control-btn" onclick="resetZoom()" title="Reset Zoom"><i class="fa-solid fa-arrows-to-eye"></i></button>
-                </div>
-                <div class="doc-viewer-actions">
-                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin-right: 12px;" id="pageIndicator">Halaman 1 dari 3</span>
-                    @if($naskah->file_naskah)
-                    <a href="{{ asset('storage/' . $naskah->file_naskah) }}" download class="control-btn" title="Unduh Dokumen"><i class="fa-solid fa-download"></i></a>
-                    @endif
-                    <button class="btn-close-viewer" onclick="closeDocViewer()"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-            </div>
-            <div class="doc-viewer-body" id="docViewerBody" onscroll="updatePageIndicator()">
-                <div class="doc-page-wrapper" id="pageWrapper">
-                    
-                    <!-- Page 1 -->
-                    <div class="doc-page" id="docPage1" style="margin-bottom: 24px;">
-                        <div class="doc-page-header">
-                            <span>ISBN YPIK PAM JAYA Manuscript</span>
-                            <span>Halaman 1</span>
-                        </div>
-                        <div class="doc-page-content">
-                            <h2 class="doc-page-title">{{ $naskah->judul }}</h2>
-                            <h3 class="doc-page-subtitle">{{ $naskah->sub_judul }}</h3>
-                            <p class="doc-page-p">
-                                <strong>Sinopsis:</strong><br>
-                                {{ $naskah->sinopsis }}
-                            </p>
-                            <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 16px 0;">
-                            <h3 class="doc-page-subtitle">Detail Dokumen</h3>
-                            <p class="doc-page-p">
-                                Dokumen ini merupakan manuskrip digital yang diunggah oleh penulis <strong>{{ $naskah->penuliss->pluck('nama')->implode(', ') ?: 'Anonim' }}</strong> untuk proses pengajuan ISBN di YPIK PAM JAYA.
-                            </p>
-                        </div>
-                        <div class="doc-page-footer">
-                            <span>{{ $naskah->judul }}</span>
-                            <span>1 / 3</span>
-                        </div>
-                    </div>
-
-                    <!-- Page 2 -->
-                    <div class="doc-page" id="docPage2" style="margin-bottom: 24px;">
-                        <div class="doc-page-header">
-                            <span>ISBN YPIK PAM JAYA Manuscript</span>
-                            <span>Halaman 2</span>
-                        </div>
-                        <div class="doc-page-content">
-                            <h2 class="doc-page-title">BAB I: Pendahuluan</h2>
-                            <h3 class="doc-page-subtitle">1.1 Latar Belakang</h3>
-                            <p class="doc-page-p">
-                                Latar belakang dari penulisan buku ini didasari oleh pentingnya penyebaran pengetahuan yang komprehensif terkait topik ini kepada masyarakat luas. Dengan adanya platform pengajuan ISBN dari YPIK PAM JAYA, diharapkan naskah-naskah berkualitas tinggi dapat terbit dengan identitas resmi nasional.
-                            </p>
-                            <p class="doc-page-p">
-                                Manuskrip ini menjelaskan secara sistematis poin-poin utama secara mendalam agar mudah dipahami baik oleh akademisi maupun praktisi di bidang terkait.
-                            </p>
-                        </div>
-                        <div class="doc-page-footer">
-                            <span>{{ $naskah->judul }}</span>
-                            <span>2 / 3</span>
-                        </div>
-                    </div>
-
-                    <!-- Page 3 -->
-                    <div class="doc-page" id="docPage3">
-                        <div class="doc-page-header">
-                            <span>ISBN YPIK PAM JAYA Manuscript</span>
-                            <span>Halaman 3</span>
-                        </div>
-                        <div class="doc-page-content">
-                            <h2 class="doc-page-title">BAB II: Pembahasan Utama</h2>
-                            <p class="doc-page-p">
-                                Bagian ini berisi analisis detail dan metodologi yang digunakan dalam penyusunan isi buku. Penulis memaparkan temuan penting, data pendukung, serta referensi yang relevan untuk memperkuat keandalan isi naskah.
-                            </p>
-                            <p class="doc-page-p">
-                                Kesimpulan dan rekomendasi disajikan di bagian akhir untuk memberikan nilai tambah yang praktis bagi para pembaca.
-                            </p>
-                        </div>
-                        <div class="doc-page-footer">
-                            <span>{{ $naskah->judul }}</span>
-                            <span>3 / 3</span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Sidebar collapse logic
         const sidebar = document.getElementById('sidebar');
@@ -718,90 +613,6 @@
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         });
-
-        // Document Viewer Logic
-        const docViewerModal = document.getElementById('docViewerModal');
-        const docViewerBody = document.getElementById('docViewerBody');
-        const pageWrapper = document.getElementById('pageWrapper');
-        const zoomVal = document.getElementById('zoomVal');
-        const pageIndicator = document.getElementById('pageIndicator');
-        
-        let currentZoom = 1.0;
-        const zoomStep = 0.1;
-        const maxZoom = 1.8;
-        const minZoom = 0.6;
-
-        function openDocViewer() {
-            docViewerModal.style.display = 'flex';
-            // Force redraw/reflow for transition
-            setTimeout(() => {
-                docViewerModal.classList.add('show');
-                document.body.style.overflow = 'hidden'; // Lock background scrolling
-            }, 10);
-        }
-
-        function closeDocViewer() {
-            docViewerModal.classList.remove('show');
-            document.body.style.overflow = ''; // Unlock background scrolling
-            setTimeout(() => {
-                docViewerModal.style.display = 'none';
-            }, 300);
-        }
-
-        function closeDocViewerOnBackdrop(e) {
-            if (e.target === docViewerModal) {
-                closeDocViewer();
-            }
-        }
-
-        function zoomIn() {
-            if (currentZoom < maxZoom) {
-                currentZoom += zoomStep;
-                applyZoom();
-            }
-        }
-
-        function zoomOut() {
-            if (currentZoom > minZoom) {
-                currentZoom -= zoomStep;
-                applyZoom();
-            }
-        }
-
-        function resetZoom() {
-            currentZoom = 1.0;
-            applyZoom();
-        }
-
-        function applyZoom() {
-            pageWrapper.style.transform = `scale(${currentZoom})`;
-            zoomVal.textContent = `${Math.round(currentZoom * 100)}%`;
-            
-            // Adjust margin bottom to avoid layout issues with scaling
-            // Since scale() doesn't affect document flow layout space
-            const pages = pageWrapper.querySelectorAll('.doc-page');
-            pages.forEach((page, index) => {
-                if (index < pages.length - 1) {
-                    page.style.marginBottom = `${24 * currentZoom}px`;
-                }
-            });
-        }
-
-        function updatePageIndicator() {
-            const pages = document.querySelectorAll('.doc-page');
-            const containerTop = docViewerBody.getBoundingClientRect().top;
-            let activePage = 1;
-            
-            pages.forEach((page, index) => {
-                const rect = page.getBoundingClientRect();
-                // If page top is above or near the container top
-                if (rect.top - containerTop <= 150) {
-                    activePage = index + 1;
-                }
-            });
-            
-            pageIndicator.textContent = `Halaman ${activePage} dari ${pages.length}`;
-        }
     </script>
 </body>
 </html>
