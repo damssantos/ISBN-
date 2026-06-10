@@ -475,10 +475,10 @@
         <header class="top-header">
             <div class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="search-input" id="searchInput" placeholder="Cari buku, penulis, atau ISBN...">
+                <input type="text" class="search-input" id="searchInput" value="{{ request('q') }}" placeholder="Cari buku, penulis, atau ISBN...">
             </div>
             <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
+                <button class="header-icon-btn" id="notificationBtn" title="Notifikasi">
                     <i class="fa-regular fa-bell"></i>
                     <span class="notif-dot"></span>
                 </button>
@@ -534,53 +534,22 @@
 
         <!-- Grid View Layout -->
         <div class="books-grid" id="gridView">
-            <!-- Book 1 -->
-            <div class="book-card" data-title="Arsitektur Digital Masa Depan" data-isbn="978-602-433-123-4">
+            @foreach ($bukus as $buku)
+            <div class="book-card" data-title="{{ $buku->judul }}" data-author="{{ $buku->penulis }}" data-isbn="{{ $buku->isbn }}" data-date="{{ $buku->tanggal_terbit->format('Y-m-d') }}">
                 <div class="book-cover-wrapper">
-                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&fit=crop&q=80" alt="Cover Buku">
+                    <img src="{{ $buku->cover_url }}" alt="Cover Buku">
                 </div>
                 <div class="book-details">
-                    <div class="book-title">Arsitektur Digital Masa Depan</div>
-                    <div class="book-author">Dr. Ahmad Subarjo</div>
+                    <div class="book-title">{{ $buku->judul }}</div>
+                    <div class="book-author">{{ $buku->penulis }}</div>
                     <div class="book-meta-row">
-                        <span class="book-isbn">978-602-433-123-4</span>
-                        <span class="book-date">12 Okt 2023</span>
+                        <span class="book-isbn">{{ $buku->isbn }}</span>
+                        <span class="book-date">{{ $buku->tanggal_terbit->locale('id')->translatedFormat('d M Y') }}</span>
                     </div>
                 </div>
-                <a href="/user/detail-buku?id=1" class="btn-detail">Lihat Detail Buku</a>
+                <a href="{{ route('user.detail-buku', $buku) }}" class="btn-detail">Lihat Detail Buku</a>
             </div>
-
-            <!-- Book 2 -->
-            <div class="book-card" data-title="Logika Pemrograman Lanjut" data-isbn="978-623-111-567-8">
-                <div class="book-cover-wrapper">
-                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&fit=crop&q=80" alt="Cover Buku">
-                </div>
-                <div class="book-details">
-                    <div class="book-title">Logika Pemrograman Lanjut</div>
-                    <div class="book-author">Siti Aminah, M.Kom</div>
-                    <div class="book-meta-row">
-                        <span class="book-isbn">978-623-111-567-8</span>
-                        <span class="book-date">10 Okt 2023</span>
-                    </div>
-                </div>
-                <a href="/user/detail-buku?id=2" class="btn-detail">Lihat Detail Buku</a>
-            </div>
-
-            <!-- Book 3 -->
-            <div class="book-card" data-title="Seni Menulis Kreatif" data-isbn="978-602-000-888-0">
-                <div class="book-cover-wrapper">
-                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&fit=crop&q=80" alt="Cover Buku">
-                </div>
-                <div class="book-details">
-                    <div class="book-title">Seni Menulis Kreatif</div>
-                    <div class="book-author">Budi Darmawan</div>
-                    <div class="book-meta-row">
-                        <span class="book-isbn">978-602-000-888-0</span>
-                        <span class="book-date">08 Okt 2023</span>
-                    </div>
-                </div>
-                <a href="/user/detail-buku?id=3" class="btn-detail">Lihat Detail Buku</a>
-            </div>
+            @endforeach
         </div>
 
         <!-- Table View Layout -->
@@ -596,55 +565,29 @@
                         </tr>
                     </thead>
                     <tbody id="tableBody">
-                        <tr>
+                        @foreach ($bukus as $buku)
+                        <tr data-date="{{ $buku->tanggal_terbit->format('Y-m-d') }}">
                             <td>
-                                <div class="judul-naskah-terbit">Arsitektur Digital Masa Depan</div>
+                                <div class="judul-naskah-terbit">{{ $buku->judul }}</div>
                             </td>
                             <td>
-                                <div class="penulis-naskah-terbit">Dr. Ahmad Subarjo</div>
+                                <div class="penulis-naskah-terbit">{{ $buku->penulis }}</div>
                             </td>
                             <td>
-                                <div class="waktu-naskah-terbit">12 Okt 2023</div>
+                                <div class="waktu-naskah-terbit">{{ $buku->tanggal_terbit->locale('id')->translatedFormat('d M Y') }}</div>
                             </td>
                             <td>
-                                <div class="isbn-naskah-terbit">978-602-433-123-4</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Logika Pemrograman Lanjut</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Siti Aminah, M.Kom</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">10 Okt 2023</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-623-111-567-8</div>
+                                <div class="isbn-naskah-terbit">{{ $buku->isbn }}</div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="judul-naskah-terbit">Seni Menulis Kreatif</div>
-                            </td>
-                            <td>
-                                <div class="penulis-naskah-terbit">Budi Darmawan</div>
-                            </td>
-                            <td>
-                                <div class="waktu-naskah-terbit">08 Okt 2023</div>
-                            </td>
-                            <td>
-                                <div class="isbn-naskah-terbit">978-602-000-888-0</div>
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
 
             <!-- Table Footer -->
             <div class="table-footer">
-                <span class="footer-text" id="footerText">Menampilkan 3 buku</span>
+                <span class="footer-text" id="footerText">Menampilkan {{ $bukus->count() }} buku</span>
                 <div class="pagination-container">
                     <button class="page-btn disabled" title="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
                     <button class="page-btn active">1</button>
@@ -718,16 +661,23 @@
         const searchInput = document.getElementById('searchInput');
         const bookCards = document.querySelectorAll('.book-card');
         const tableRows = document.querySelectorAll('#tableBody tr');
+        const footerText = document.getElementById('footerText');
+        document.getElementById('notificationBtn').addEventListener('click', () => {
+            alert('Belum ada notifikasi baru.');
+        });
 
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
+            let visibleBooks = 0;
 
             // Grid filter
             bookCards.forEach(card => {
                 const title = card.getAttribute('data-title').toLowerCase();
+                const author = card.getAttribute('data-author').toLowerCase();
                 const isbn = card.getAttribute('data-isbn').toLowerCase();
-                if (title.includes(query) || isbn.includes(query)) {
+                if (title.includes(query) || author.includes(query) || isbn.includes(query)) {
                     card.style.display = 'flex';
+                    visibleBooks++;
                 } else {
                     card.style.display = 'none';
                 }
@@ -744,7 +694,30 @@
                     row.style.display = 'none';
                 }
             });
+
+            footerText.textContent = `Menampilkan ${visibleBooks} buku`;
         });
+
+        document.querySelectorAll('.filter-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                const direction = option.getAttribute('data-sort') === 'oldest' ? 1 : -1;
+                const sortedCards = [...bookCards].sort((a, b) =>
+                    a.getAttribute('data-date').localeCompare(b.getAttribute('data-date')) * direction
+                );
+                const sortedRows = [...tableRows].sort((a, b) =>
+                    a.getAttribute('data-date').localeCompare(b.getAttribute('data-date')) * direction
+                );
+
+                sortedCards.forEach(card => gridView.appendChild(card));
+                sortedRows.forEach(row => document.getElementById('tableBody').appendChild(row));
+                filterDropdown.classList.remove('show');
+            });
+        });
+
+        if (searchInput.value) {
+            searchInput.dispatchEvent(new Event('input'));
+        }
     </script>
 </body>
 </html>

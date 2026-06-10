@@ -174,7 +174,7 @@
             <li class="nav-item"><a href="/table-penulis" class="nav-link"><i class="fa-solid fa-users-viewfinder"></i><span class="nav-link-text">Daftar Penulis</span></a></li>
         </ul>
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+            <a href="/auth-login" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
         </div>
     </aside>
 
@@ -191,9 +191,9 @@
                     <div class="header-divider"></div>
                     <div class="user-wrapper">
                         <div class="user-header" id="userToggle">
-                            <div class="user-avatar">{{ substr($user->name ?? 'P', 0, 1) }}</div>
+                            <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'A'), 0, 1)) }}</div>
                             <div class="user-header-info">
-                                <div class="user-header-name">{{ $user->name ?? 'User' }}</div>
+                                <div class="user-header-name">{{ session('user_name', 'Audrey') }}</div>
                                 <div class="user-header-role">Kontributor</div>
                             </div>
                             <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
@@ -203,7 +203,7 @@
                             <a href="/id-akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
                             <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
                             <div class="user-dropdown-divider"></div>
-                            <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                            <a href="/auth-login" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                         </div>
                     </div>
                 </div>
@@ -211,9 +211,9 @@
 
             <div class="profile-header">
                 <div class="profile-header-left">
-                    <div class="profile-avatar">{{ substr($user->name ?? 'P', 0, 1) }}</div>
+                    <div class="profile-avatar">{{ strtoupper(substr(session('user_name', 'A'), 0, 1)) }}</div>
                     <div>
-                        <div class="profile-name">{{ $user->name ?? 'Informasi Penulis' }}</div>
+                        <div class="profile-name">{{ session('user_name', 'Nama Penulis') }}</div>
                         <div class="profile-role">Kelola detail informasi profil Anda secara realtime</div>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Penulis</label>
-                        <input type="text" name="name" class="form-control" value="{{ $user->name ?? '' }}" required placeholder="Masukkan nama penulis...">
+                        <input type="text" name="name" class="form-control" value="{{ session('user_name', '') }}" required placeholder="Masukkan nama penulis">
                     </div>
                 </div>
                 <div class="form-grid form-grid-3" style="margin-bottom:20px;">
@@ -287,7 +287,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Sesuai KTP</label>
-                        <input type="text" class="form-control" value="{{ $user->name ?? '' }}" placeholder="Nama sesuai KTP..." disabled style="opacity:0.6;">
+                        <input type="text" class="form-control" value="{{ session('user_name', '') }}" placeholder="Nama sesuai KTP..." disabled style="opacity:0.6;">
                     </div>
                 </div>
                 <div class="form-grid form-grid-1" style="margin-bottom:20px;">
@@ -340,7 +340,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama NPWP</label>
-                        <input type="text" class="form-control" value="{{ $user->name ?? 'Pradama Wijaya' }}" disabled style="opacity: 0.5;">
+                        <input type="text" class="form-control" value="{{ session('user_name', 'Nama Penulis') }}" disabled style="opacity: 0.5;">
                     </div>
                 </div>
                 <div class="form-grid form-grid-1">
@@ -360,7 +360,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Rekening</label>
-                        <input type="text" class="form-control" value="{{ $user->name ?? 'Pradama Wijaya' }}" disabled style="opacity: 0.5;">
+                        <input type="text" class="form-control" value="{{ session('user_name', 'Nama Penulis') }}" disabled style="opacity: 0.5;">
                     </div>
                 </div>
                 <div class="form-grid form-grid-3">

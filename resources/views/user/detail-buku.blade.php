@@ -355,7 +355,7 @@
                 <input type="text" class="search-input" id="searchInput" placeholder="Cari buku, penulis, atau ISBN...">
             </div>
             <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
+                <button class="header-icon-btn" id="notificationBtn" title="Notifikasi">
                     <i class="fa-regular fa-bell"></i>
                     <span class="notif-dot"></span>
                 </button>
@@ -388,7 +388,7 @@
             <i class="fa-solid fa-chevron-right"></i>
             <a href="/user/buku-terbit">Buku Terbit</a>
             <i class="fa-solid fa-chevron-right"></i>
-            <span class="active" id="breadcrumbTitle">Detail Buku</span>
+            <span class="active" id="breadcrumbTitle">{{ $buku->judul }}</span>
         </div>
 
         <!-- Back Button -->
@@ -402,16 +402,16 @@
             <div class="cover-section">
                 <div class="cover-card">
                     <div class="cover-wrapper">
-                        <img src="" alt="Cover Buku" id="bookCover">
+                        <img src="{{ $buku->cover_url }}" alt="Cover Buku" id="bookCover">
                     </div>
                 </div>
 
                 <div class="action-card">
                     <h3>Aksi Dokumen</h3>
-                    <a href="#" class="btn-action-outline">
+                    <a href="{{ route('user.detail-buku.sertifikat', $buku) }}" class="btn-action-outline">
                         <i class="fa-solid fa-file-pdf"></i> Unduh Sertifikat ISBN
                     </a>
-                    <a href="#" class="btn-action-outline">
+                    <a href="{{ route('user.detail-buku.cover', $buku) }}" class="btn-action-outline">
                         <i class="fa-solid fa-download"></i> Unduh Mockup Cover
                     </a>
                 </div>
@@ -427,7 +427,7 @@
                     <!-- Judul Buku -->
                     <div class="metadata-item full-width">
                         <div class="metadata-label">Judul Buku</div>
-                        <div class="metadata-value" id="detailTitle" style="font-size: 1.4rem; color: #FFFFFF; font-weight: 800; line-height: 1.3;"></div>
+                        <div class="metadata-value" id="detailTitle" style="font-size: 1.4rem; color: #FFFFFF; font-weight: 800; line-height: 1.3;">{{ $buku->judul }}</div>
                     </div>
 
                     <!-- Kode ISBN -->
@@ -435,44 +435,44 @@
                         <div class="metadata-label">Nomor ISBN Resmi</div>
                         <div class="isbn-badge">
                             <i class="fa-solid fa-barcode"></i>
-                            <span id="detailIsbn"></span>
+                            <span id="detailIsbn">{{ $buku->isbn }}</span>
                         </div>
                     </div>
 
                     <!-- Tanggal Terbit -->
                     <div class="metadata-item">
                         <div class="metadata-label">Tanggal Terbit</div>
-                        <div class="metadata-value" id="detailDate"></div>
+                        <div class="metadata-value" id="detailDate">{{ $buku->tanggal_terbit->locale('id')->translatedFormat('d M Y') }}</div>
                     </div>
 
                     <!-- Penulis Utama -->
                     <div class="metadata-item">
                         <div class="metadata-label">Penulis Utama</div>
-                        <div class="metadata-value" id="detailAuthor"></div>
+                        <div class="metadata-value" id="detailAuthor">{{ $buku->penulis }}</div>
                     </div>
 
                     <!-- Kategori / Genre -->
                     <div class="metadata-item">
                         <div class="metadata-label">Kategori Buku</div>
-                        <div class="metadata-value" id="detailCategory">Sains & Teknologi</div>
+                        <div class="metadata-value" id="detailCategory">{{ $buku->kategori }}</div>
                     </div>
 
                     <!-- Penerbit -->
                     <div class="metadata-item">
                         <div class="metadata-label">Penerbit</div>
-                        <div class="metadata-value">YPIK PAM JAYA Press</div>
+                        <div class="metadata-value">{{ $buku->penerbit }}</div>
                     </div>
 
                     <!-- Halaman -->
                     <div class="metadata-item">
                         <div class="metadata-label">Jumlah Halaman</div>
-                        <div class="metadata-value">256 Halaman</div>
+                        <div class="metadata-value">{{ $buku->jumlah_halaman }} Halaman</div>
                     </div>
 
                     <!-- Sinopsis -->
                     <div class="metadata-item full-width" style="margin-top: 10px; border-top: 1px solid var(--border-light); padding-top: 20px;">
                         <div class="metadata-label" style="margin-bottom: 8px;">Sinopsis Buku</div>
-                        <div class="synopsis-value" id="detailSynopsis"></div>
+                        <div class="synopsis-value" id="detailSynopsis">{{ $buku->sinopsis }}</div>
                     </div>
                 </div>
             </div>
@@ -487,51 +487,14 @@
             mainContent.classList.toggle('expanded');
         });
 
-        // Mock data loading based on URL parameter id
-        const urlParams = new URLSearchParams(window.location.search);
-        const bookId = urlParams.get('id') || '1';
-
-        const booksData = {
-            '1': {
-                title: 'Arsitektur Digital Masa Depan',
-                author: 'Dr. Ahmad Subarjo',
-                isbn: '978-602-433-123-4',
-                date: '12 Okt 2023',
-                cover: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&fit=crop&q=80',
-                synopsis: 'Buku ini membahas perkembangan teknologi arsitektur digital terkini dan bagaimana ia merevolusi cara manusia mendesain serta membangun lingkungan sekitar. Mulai dari pemodelan parametrik, simulasi lingkungan berbasis komputasi, hingga integrasi kecerdasan buatan dalam merancang kota pintar (smart city) masa depan yang berkelanjutan.',
-                category: 'Teknologi & Konstruksi'
-            },
-            '2': {
-                title: 'Logika Pemrograman Lanjut',
-                author: 'Siti Aminah, M.Kom',
-                isbn: '978-623-111-567-8',
-                date: '10 Okt 2023',
-                cover: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&fit=crop&q=80',
-                synopsis: 'Ditujukan untuk para mahasiswa teknik informatika dan programmer profesional, buku ini mengupas tuntas algoritma tingkat lanjut, struktur data kompleks, serta paradigma pemrograman modern. Dilengkapi studi kasus industri nyata untuk mempercepat pemahaman dalam memecahkan masalah komputasional berskala besar.',
-                category: 'Komputer & IT'
-            },
-            '3': {
-                title: 'Seni Menulis Kreatif',
-                author: 'Budi Darmawan',
-                isbn: '978-602-000-888-0',
-                date: '08 Okt 2023',
-                cover: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&fit=crop&q=80',
-                synopsis: 'Sebuah panduan komprehensif bagi siapa saja yang ingin mengasah keterampilan bercerita dan menulis fiksi maupun non-fiksi secara kreatif. Buku ini mengulik rahasia pembangunan karakter yang kuat, penyusunan plot dramatis yang memikat pembaca, hingga teknik swasunting sebelum mengirimkan karya ke penerbit nasional.',
-                category: 'Bahasa & Sastra'
+        document.getElementById('searchInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                window.location.href = '/user/buku-terbit?q=' + encodeURIComponent(e.target.value);
             }
-        };
-
-        const currentBook = booksData[bookId] || booksData['1'];
-
-        // Populate detail views
-        document.getElementById('breadcrumbTitle').textContent = currentBook.title;
-        document.getElementById('bookCover').src = currentBook.cover;
-        document.getElementById('detailTitle').textContent = currentBook.title;
-        document.getElementById('detailIsbn').textContent = currentBook.isbn;
-        document.getElementById('detailDate').textContent = currentBook.date;
-        document.getElementById('detailAuthor').textContent = currentBook.author;
-        document.getElementById('detailSynopsis').textContent = currentBook.synopsis;
-        document.getElementById('detailCategory').textContent = currentBook.category;
+        });
+        document.getElementById('notificationBtn').addEventListener('click', () => {
+            alert('Belum ada notifikasi baru.');
+        });
         // User dropdown toggle
         const userToggle = document.getElementById('userToggle');
         const userDropdown = document.getElementById('userDropdown');

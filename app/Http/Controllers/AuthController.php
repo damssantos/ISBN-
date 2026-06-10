@@ -57,7 +57,7 @@ class AuthController extends Controller
         ]);
 
         // KUNCI SAKTI: Mengarah ke 'login' kustom dan membawa pesan sukses untuk Maria!
-        return redirect()->route('login')->with('status', 'MANTAP MARIA! Akun kamu berhasil terdaftar di DB, silakan masuk!');
+        return redirect()->route('login')->with('status', 'MANTAP! Akun kamu berhasil terdaftar di DB, silakan masuk!');
     }
 
     // 5. PROSES KELUAR SISTEM

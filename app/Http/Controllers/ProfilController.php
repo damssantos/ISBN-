@@ -9,12 +9,16 @@ class ProfilController extends Controller
 {
     // 1. MENAMPILKAN DATA PROFIL DARI TABEL BARU
     public function index()
-    {
-        // Ambil data profil baris pertama (ID: 1) yang tadi kita insert
-        $user = DB::table('profil_penulis')->where('id', 1)->first();
+{
+    // Ambil user_id dari session
+    $userId = session('user_id');
 
-        return view('informasi', compact('user'));
-    }
+    // Ambil data user dari database berdasarkan ID tersebut
+    $user = DB::table('akun_pengguna')->where('id', $userId)->first();
+
+    // Kirim data $user ke view informasi.blade.php
+    return view('informasi', compact('user'));
+}
 
     // 2. MEMPROSES UPDATE PROFIL SECARA NYATA KE DATABASE
     public function update(Request $request)
