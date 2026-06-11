@@ -62,7 +62,7 @@
             <span class="brand-text">ISBN YPIK PAM JAYA</span>
         </div>
         <ul class="nav-menu">
-            <li class="nav-item"><a href="/" class="nav-link"><i class="fa-solid fa-border-all"></i>Dashboard</a></li>
+            <li class="nav-item"><a href="/dashboard" class="nav-link"><i class="fa-solid fa-border-all"></i>Dashboard</a></li>
             <li class="nav-item"><a href="/pengajuan" class="nav-link active"><i class="fa-regular fa-file-lines"></i>Pengajuan</a></li>
             <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link"><i class="fa-solid fa-list-check"></i>Daftar Naskah</a></li>
             <li class="nav-item"><a href="/draf" class="nav-link"><i class="fa-solid fa-inbox"></i>Draf Naskah</a></li>

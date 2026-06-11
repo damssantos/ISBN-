@@ -61,8 +61,40 @@
         .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid var(--border-color); background:var(--bg-card); border-radius:10px; color:var(--text-primary); outline:none; }
         
         .header-actions { display:flex; align-items:center; background: rgba(15, 29, 38, 0.7); border: 1px solid var(--border-color); padding: 4px 12px 4px 4px; border-radius: 16px; }
-        .user-header { display:flex; align-items:center; gap:12px; cursor:pointer; }
-        .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; }
+        .user-wrapper { position:relative; }
+        .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
+        .user-header:hover { background:rgba(255,255,255,0.05); }
+        .user-avatar { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(59, 195, 189,0.3); }
+        .user-header-info { display:flex; flex-direction:column; gap:0; }
+        .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
+        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
+
+        .user-dropdown {
+            position:absolute;
+            top:calc(100% + 12px);
+            right:0;
+            width:240px;
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(59, 195, 189,0.08);
+            display:none;
+            flex-direction:column;
+            z-index:1000;
+            overflow:hidden;
+            transform-origin: top right;
+            animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes dropdownFadeIn { from{opacity:0;transform:scale(.95) translateY(-10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+        .user-dropdown.show { display:flex; }
+        .user-dropdown-item { padding:14px 20px; display:flex; align-items:center; gap:16px; color:var(--text-secondary); text-decoration:none; font-size:.875rem; font-weight:500; transition:all .2s; cursor:pointer; }
+        .user-dropdown-item:hover { background:var(--bg-card-hover); color:var(--primary); padding-left:24px; }
+        .user-dropdown-item i { width:20px; font-size:1.1rem; text-align:center; color:var(--text-muted); transition:color .2s; }
+        .user-dropdown-item:hover i { color:var(--primary); }
+        .user-dropdown-divider { height:1px; background:var(--border-color); margin:8px 0; }
+        .user-dropdown-item.logout { color:#f87171; }
+        .user-dropdown-item.logout i { color:#f87171; }
+        .user-dropdown-item.logout:hover { background:rgba(248,113,113,0.08); color:#f87171; }
 
         .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; margin-top: 10px; }
         .page-title-section h1 { font-size:1.75rem; font-weight:700; }
@@ -102,7 +134,7 @@
             <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
         </div>
         <ul class="nav-menu">
-            <li class="nav-item"><a href="/" class="nav-link"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="/dashboard" class="nav-link"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
             <li class="nav-item"><a href="/pengajuan" class="nav-link"><i class="fa-regular fa-file-lines"></i><span class="nav-link-text">Pengajuan</span></a></li>
             <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link"><i class="fa-solid fa-list-check"></i><span class="nav-link-text">Daftar Naskah</span></a></li>
             <li class="nav-item"><a href="/draf" class="nav-link active"><i class="fa-solid fa-inbox"></i><span class="nav-link-text">Draf Naskah</span></a></li>
@@ -114,6 +146,12 @@
             </li>
             <li class="nav-item"><a href="/table-penulis" class="nav-link"><i class="fa-solid fa-users-viewfinder"></i><span class="nav-link-text">Daftar Penulis</span></a></li>
         </ul>
+        <div class="sidebar-footer">
+            <a href="/logout" class="logout-btn">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Keluar</span>
+            </a>
+        </div>
     </aside>
 
     <main class="main-content" id="mainContent">
@@ -123,9 +161,19 @@
                 <input type="text" class="search-input" id="searchInput" placeholder="Cari draf naskah...">
             </div>
             <div class="header-actions">
-                <div class="user-header">
-                    <div class="user-avatar">P</div>
-                    <div class="user-header-name" style="padding-right: 10px;">Pradama</div>
+                <div class="user-wrapper">
+                    <div class="user-header" id="userToggle">
+                        <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'P'), 0, 1)) }}</div>
+                        <div class="user-header-info">
+                            <div class="user-header-name" style="padding-right: 10px;">{{ session('user_name', 'Pradama') }}</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                    </div>
                 </div>
             </div>
         </header>
@@ -201,6 +249,12 @@
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         });
+        
+        // User Dropdown logic
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
+        document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
 
         // Search logic
         const searchInput = document.getElementById('searchInput');

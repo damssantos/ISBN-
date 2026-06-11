@@ -419,7 +419,7 @@
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-item"><a href="/" class="nav-link"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="/dashboard" class="nav-link"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
             <li class="nav-item"><a href="/pengajuan" class="nav-link"><i class="fa-regular fa-file-lines"></i><span class="nav-link-text">Pengajuan</span></a></li>
             <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link"><i class="fa-solid fa-list-check"></i><span class="nav-link-text">Daftar Naskah</span></a></li>
             <li class="nav-item"><a href="/draf" class="nav-link"><i class="fa-solid fa-inbox"></i><span class="nav-link-text">Draf Naskah</span></a></li>
@@ -428,7 +428,7 @@
         </ul>
 
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+            <a href="/logout" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
         </div>
     </aside>
 
@@ -447,16 +447,16 @@
                 <div class="header-divider"></div>
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
-                        <div class="user-avatar">P</div>
+                        <div class="user-avatar">{{ strtoupper(substr(session('user_name', 'P'), 0, 1)) }}</div>
                         <div class="user-header-info">
-                            <div class="user-header-name">Pradama</div>
+                            <div class="user-header-name">{{ session('user_name', 'Pradama') }}</div>
                         </div>
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
                         <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
                         <div class="user-dropdown-divider"></div>
-                        <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                        <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
                 </div>
             </div>
