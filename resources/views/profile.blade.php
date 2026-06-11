@@ -223,24 +223,16 @@
     <main class="main-content" id="mainContent">
         <header class="top-header" style="display: flex; justify-content: flex-end; padding: 12px 0;">
             <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </button>
-                <div class="header-divider"></div>
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
-                        <div class="user-avatar-sm">P</div>
+                        <div class="user-avatar-sm">{{ substr($user->name ?? 'User', 0, 1) }}</div>
                         <div class="user-header-info">
-                            <div class="user-header-name">Pradama</div>
-                            <div class="user-header-role">Kontributor</div>
+                            <div class="user-header-name">{{ $user->name ?? 'User' }}</div>
                         </div>
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
                         <a href="/profile" class="user-dropdown-item active"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
-                        <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
-                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
                         <div class="user-dropdown-divider"></div>
                         <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
@@ -248,34 +240,18 @@
             </div>
         </header>
 
-
-
         <div class="profile-grid">
             <!-- Left Column -->
             <div class="profile-sidebar-col">
                 <div class="profile-card">
-                    <div class="profile-avatar-lg" id="avatarPreview">P</div>
+                    <div class="profile-avatar-lg" id="avatarPreview">{{ substr($user->name ?? 'User', 0, 1) }}</div>
                     <input type="file" id="avatarInput" accept="image/*" style="display:none">
-                    <h2 class="profile-name">Pradama Wijaya</h2>
-                    <p class="profile-username">@pradama_wj</p>
-                    <div class="profile-badge">
-                        <i class="fa-solid fa-award"></i> Kontributor Ahli
-                    </div>
+                    <h2 class="profile-name">{{ $user->name ?? 'User' }}</h2>
                     
-                    <div class="profile-stats">
-                        <div class="stat-box">
-                            <div class="stat-val">24</div>
-                            <div class="stat-lbl">Naskah</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val">18</div>
-                            <div class="stat-lbl">Published</div>
-                        </div>
-                    </div>
+
                     
                     <div class="profile-actions">
                         <button class="btn-profile-action" id="changeAvatarBtn"><i class="fa-solid fa-camera"></i> Ubah Foto</button>
-                        <a href="/akun" class="btn-profile-action" style="text-decoration: none;"><i class="fa-solid fa-key"></i> Ganti Password</a>
                         <button class="btn-profile-action logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar</button>
                     </div>
                 </div>
@@ -283,57 +259,51 @@
 
             <!-- Right Column -->
             <div class="settings-container">
-                <!-- Personal Info -->
-                <div class="settings-section">
-                    <div class="section-header">
-                        <h2 class="section-title"><i class="fa-solid fa-user-gear"></i> Pengaturan Akun</h2>
+                @if(session('status'))
+                    <div style="background: rgba(59, 195, 189, 0.15); border: 1px solid var(--primary); color: var(--primary-bright); padding: 14px; border-radius: 10px; margin-bottom: 24px; font-weight: 600; display:flex; align-items:center; gap:8px; position:relative; z-index:1;">
+                        <i class="fa-solid fa-circle-check"></i> {{ session('status') }}
                     </div>
-                    
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Nama Lengkap</label>
-                            <div class="input-wrapper">
-                                <i class="fa-regular fa-user"></i>
-                                <input type="text" class="form-control" value="Pradama Wijaya">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Email Utama</label>
-                            <div class="input-wrapper">
-                                <i class="fa-regular fa-envelope"></i>
-                                <input type="email" class="form-control" value="pradama.wijaya@gmail.com">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Username</label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-at"></i>
-                                <input type="text" class="form-control" value="pradama_wj">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Nomor Telepon</label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-phone"></i>
-                                <input type="text" class="form-control" value="0812-3456-7890">
-                            </div>
-                        </div>
-                        <div class="form-group full">
-                            <label>Bio Singkat</label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-pen-nib"></i>
-                                <input type="text" class="form-control" value="Penulis dan Akademisi di Universitas Indonesia. Fokus pada Arsitektur Berkelanjutan.">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button class="btn-save" id="btnSave">
-                        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
-                    </button>
-                </div>
+                @endif
 
-                </div>
+                <!-- Personal Info -->
+                <form action="{{ route('profile.update') }}" method="POST" style="height: 100%;">
+                    @csrf
+                    <div class="settings-section">
+                        <div class="section-header">
+                            <h2 class="section-title"><i class="fa-solid fa-user-gear"></i> Pengaturan Akun</h2>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nama Lengkap</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-regular fa-user"></i>
+                                    <input type="text" name="name" class="form-control" value="{{ $user->name ?? '' }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Utama</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-regular fa-envelope"></i>
+                                    <input type="email" class="form-control" value="{{ $user->email ?? '' }}" disabled style="opacity: 0.6;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Nomor Telepon</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-phone"></i>
+                                    <input type="text" name="no_hp" class="form-control" value="{{ $user->no_hp ?? '' }}">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-save" id="btnSave">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
             </div>
+        </div>
     </main>
 
     <script>
@@ -344,17 +314,7 @@
             mainContent.classList.toggle('expanded');
         });
 
-        // Save feedback
-        document.getElementById('btnSave').addEventListener('click', () => {
-            const btn = document.getElementById('btnSave');
-            const orig = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> Berhasil Disimpan!';
-            btn.style.background = 'var(--primary-dim)';
-            setTimeout(() => {
-                btn.innerHTML = orig;
-                btn.style.background = '';
-            }, 2000);
-        });
+
 
         // User Dropdown
         const userToggle = document.getElementById('userToggle');

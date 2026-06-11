@@ -328,7 +328,51 @@
             opacity: 0.3;
             cursor: not-allowed;
         }
-    </style>
+    
+        /* User Wrapper & Dropdown from User Profile */
+        .user-wrapper { position:relative; }
+        .user-header { display:flex; align-items:center; gap:12px; padding:4px 8px; border-radius:12px; cursor:pointer; transition:all 0.2s; }
+        .user-header:hover { background:rgba(255,255,255,0.05); }
+        .user-avatar-sm { width:40px; height:40px; background:linear-gradient(135deg, var(--primary), var(--primary-dim)); color:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; box-shadow: 0 4px 12px rgba(59, 195, 189,0.3); }
+        .user-header-info { display:flex; flex-direction:column; gap:0; }
+        .user-header-name { font-weight:700; font-size:.9375rem; color:var(--text-primary); line-height:1.2; }
+        .user-header-role { font-size:.75rem; color:var(--text-muted); line-height:1.2; font-weight: 500; }
+        .user-dropdown {
+            position:absolute;
+            top:calc(100% + 12px);
+            right:0;
+            width:240px;
+            background:var(--bg-card);
+            border:1px solid var(--border-color);
+            border-radius:16px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(59, 195, 189,0.08);
+            display:none;
+            flex-direction:column;
+            z-index:1000;
+            overflow:hidden;
+            transform-origin: top right;
+            animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes dropdownFadeIn {
+            from { opacity:0; transform:scale(0.95) translateY(-10px); }
+            to { opacity:1; transform:scale(1) translateY(0); }
+        }
+        .user-dropdown-item {
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:12px 18px;
+            color:var(--text-secondary);
+            text-decoration:none;
+            font-size:.875rem;
+            font-weight:600;
+            transition:all 0.15s ease;
+        }
+        .user-dropdown-item:hover { background:rgba(59, 195, 189, 0.08); color:var(--primary-bright); }
+        .user-dropdown-item.active { background:var(--primary-glow); color:var(--primary-bright); }
+        .user-dropdown-item i { font-size:1.05rem; width:20px; text-align:center; }
+        .user-dropdown-divider { height:1px; background:var(--border-color); margin:4px 0; }
+</style>
 </head>
 <body>
 
@@ -390,35 +434,29 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" class="search-input" id="searchInput" placeholder="Cari naskah atau ISBN...">
             </div>
-            <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </button>
-                <div class="header-divider"></div>
-                <div class="user-avatar-circle">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80" alt="Admin Avatar">
-                </div>
-                <span class="user-name" style="margin-left:8px;color:var(--text-primary);font-size:0.9rem;">{{ session('user_name', 'Admin') }}</span>
-            </div>
-        </header>
-
-        <!-- Header Section -->
-        <div class="page-header">
-            <div>
-                <h1>Buku Terbit</h1>
-                <p>Daftar naskah yang telah disetujui dan mendapatkan ISBN secara resmi melalui sistem registrasi.</p>
-            </div>
-            <div class="action-buttons">
-                <div class="dropdown">
-                    <button class="btn-filter" id="filterBtn">
-                        <i class="fa-solid fa-filter"></i> Filter <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; margin-left: 4px;"></i>
-                    </button>
-                    <div id="filterDropdown" class="dropdown-content">
-                        <a href="/admin/buku-terbit?sort=newest">Urutkan dari terbaru</a>
-                        <a href="/admin/buku-terbit?sort=oldest">Urutkan dari terlama</a>
+            <div class="header-actions" style="padding: 4px; border-radius: 16px;">
+                <div class="user-wrapper">
+                    @php
+                        $db_user_name = Illuminate\Support\Facades\DB::table('akun_pengguna')->where('id', session('user_id'))->value('name') ?? session('user_name') ?? 'Admin';
+                    @endphp
+                    <div class="user-header" id="userToggle">
+                        <div class="user-avatar-sm">{{ substr($db_user_name, 0, 1) }}</div>
+                        <div class="user-header-info">
+                            <div class="user-header-name">{{ $db_user_name }}</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/admin/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#" class="user-dropdown-item logout" onclick="event.preventDefault(); document.getElementById('logout-form-header').submit();"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
                 </div>
+                <form id="logout-form-header" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+
                 <button class="btn-export" onclick="alert('Fitur ekspor data dalam pengembangan')">
                     <i class="fa-solid fa-download"></i> Ekspor Data
                 </button>
@@ -517,6 +555,21 @@
                 }
             }
         });
+    </script>
+
+    <script>
+        // Toggle user dropdown
+        const userToggle = document.getElementById('userToggle');
+        const userDropdown = document.getElementById('userDropdown');
+        if (userToggle && userDropdown) {
+            userToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdown.style.display = userDropdown.style.display === 'flex' ? 'none' : 'flex';
+            });
+            document.addEventListener('click', () => {
+                userDropdown.style.display = 'none';
+            });
+        }
     </script>
 </body>
 </html>

@@ -333,7 +333,6 @@
                     <i class="fa-solid fa-book-bookmark"></i>
                 </div>
                 <h1>ISBN YPIK PAM JAYA</h1>
-                <p>Buat akun baru untuk mulai mengajukan naskah</p>
             </div>
 
             @if ($errors->any())

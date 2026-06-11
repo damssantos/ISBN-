@@ -350,15 +350,9 @@
                     <i class="fa-solid fa-book-bookmark"></i>
                 </div>
                 <h1>ISBN YPIK PAM JAYA</h1>
-                <p>Silakan masuk untuk mengakses dashboard Anda</p>
             </div>
 
-            @if (session('status'))
-                <div class="alert-success">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <span>{{ session('status') }}</span>
-                </div>
-            @endif
+
 
             @if ($errors->any())
                 <div class="alert-error">

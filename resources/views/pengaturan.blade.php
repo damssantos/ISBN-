@@ -72,7 +72,7 @@
 
     <main class="main-content">
         <header class="top-header">
-            <div style="color:var(--text-secondary)">Kontributor / <b>Pradama</b></div>
+            <div style="color:var(--text-secondary)"><b>Pradama</b></div>
         </header>
 
         <form action="{{ route('naskah.store') }}" method="POST" enctype="multipart/form-data">

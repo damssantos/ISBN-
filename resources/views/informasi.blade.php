@@ -185,23 +185,16 @@
 
             <header class="top-header">
                 <div class="header-actions">
-                    <button type="button" class="header-icon-btn" title="Notifikasi">
-                        <i class="fa-regular fa-bell"></i><span class="notif-dot"></span>
-                    </button>
-                    <div class="header-divider"></div>
                     <div class="user-wrapper">
                         <div class="user-header" id="userToggle">
                             <div class="user-avatar">{{ substr($user->name ?? 'P', 0, 1) }}</div>
                             <div class="user-header-info">
                                 <div class="user-header-name">{{ $user->name ?? 'User' }}</div>
-                                <div class="user-header-role">Kontributor</div>
                             </div>
                             <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                         </div>
                         <div class="user-dropdown" id="userDropdown">
                             <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
-                            <a href="/id-akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
-                            <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
                             <div class="user-dropdown-divider"></div>
                             <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                         </div>
@@ -214,19 +207,12 @@
                     <div class="profile-avatar">{{ substr($user->name ?? 'P', 0, 1) }}</div>
                     <div>
                         <div class="profile-name">{{ $user->name ?? 'Informasi Penulis' }}</div>
-                        <div class="profile-role">Kelola detail informasi profil Anda secara realtime</div>
                     </div>
                 </div>
                 <button type="submit" class="btn-save" id="btnSave" style="padding: 10px 24px; border-radius: 8px; font-weight: 600; border:none; cursor:pointer;">
                     <i class="fa-solid fa-pen-to-square"></i> Perbarui Data
                 </button>
             </div>
-
-            @if(session('status'))
-                <div style="background: rgba(59, 195, 189, 0.15); border: 1px solid var(--primary); color: var(--primary-bright); padding: 14px; border-radius: 10px; margin-bottom: 24px; font-weight: 600; display:flex; align-items:center; gap:8px;">
-                    <i class="fa-solid fa-circle-check"></i> {{ session('status') }}
-                </div>
-            @endif
 
             <div class="profile-section">
                 <h2 class="section-title"><i class="fa-solid fa-user-circle"></i> Informasi Pribadi</h2>

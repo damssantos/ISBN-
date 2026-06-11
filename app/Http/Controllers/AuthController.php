@@ -74,8 +74,8 @@ class AuthController extends Controller
             'password' => Hash::make($request->password), // Enkripsi password aman
         ]);
 
-        // KUNCI SAKTI: Mengarah ke 'login' kustom dan membawa pesan sukses untuk Maria!
-        return redirect()->route('login')->with('status', 'MANTAP MARIA! Akun kamu berhasil terdaftar di DB, silakan masuk!');
+        // Mengarah ke 'login' kustom
+        return redirect()->route('login');
     }
 
     // 5. PROSES KELUAR SISTEM

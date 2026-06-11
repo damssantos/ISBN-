@@ -212,24 +212,16 @@
     <main class="main-content" id="mainContent">
         <header class="top-header">
             <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </button>
-                <div class="header-divider"></div>
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
-                        <div class="user-avatar-sm">P</div>
+                        <div class="user-avatar-sm">{{ substr($akun->name ?? 'User', 0, 1) }}</div>
                         <div class="user-header-info">
-                            <div class="user-header-name">Pradama</div>
-                            <div class="user-header-role">Kontributor</div>
+                            <div class="user-header-name">{{ $akun->name ?? 'User' }}</div>
                         </div>
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
                         <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
-                        <a href="/akun" class="user-dropdown-item active"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
-                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
                         <div class="user-dropdown-divider"></div>
                         <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
@@ -244,17 +236,17 @@
                         <i class="fa-solid fa-user-shield"></i>
                     </div>
                     <div class="status-label">AKUN TERVERIFIKASI</div>
-                    <h2 style="font-size:1.25rem; margin-bottom:8px;">Akun Pradama</h2>
+                    <h2 style="font-size:1.25rem; margin-bottom:8px;">Akun {{ $akun->name ?? 'User' }}</h2>
                     <p class="status-text">Terdaftar sejak 12 Januari 2024. Status akun Anda dalam keadaan baik dan aman.</p>
                     
                     <div class="info-list" style="text-align:left;">
                         <div class="info-item">
                             <span class="info-label">ID Akun</span>
-                            <span class="info-value">#TJ-88421</span>
+                            <span class="info-value">#TJ-{{ str_pad($akun->id ?? 1, 5, '0', STR_PAD_LEFT) }}</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Tipe Akun</span>
-                            <span class="info-value">Kontributor</span>
+                            <span class="info-value">-</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Batas Naskah</span>
@@ -269,12 +261,11 @@
                     <div class="card">
                         <div class="section-header">
                             <h2 class="section-title"><i class="fa-solid fa-key"></i> Keamanan Akun</h2>
-                            <button class="btn-action" id="editBtn">Ubah</button>
                         </div>
                         <div class="info-list" id="accountInfoList">
                             <div class="info-item">
                                 <span class="info-label">Email</span>
-                                <span class="info-value" id="emailValue">pradama.wijaya@gmail.com</span>
+                                <span class="info-value" id="emailValue">{{ $akun->email ?? '' }}</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Password</span>
@@ -331,32 +322,34 @@
         const passwordValue = document.getElementById('passwordValue');
         let isEditing = false;
 
-        editBtn.addEventListener('click', () => {
-            if (!isEditing) {
-                // Switch to Edit Mode
-                const currentEmail = emailValue.innerText;
-                emailValue.innerHTML = `<input type="email" id="emailInput" class="form-control" value="${currentEmail}" style="padding: 4px 8px; font-size: 0.875rem; background: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; width: 200px;">`;
-                passwordValue.innerHTML = `<input type="password" id="passwordInput" class="form-control" value="password" style="padding: 4px 8px; font-size: 0.875rem; background: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; width: 200px;">`;
-                editBtn.innerText = 'Simpan';
-                isEditing = true;
-            } else {
-                // Switch to View Mode (Save)
-                const newEmail = document.getElementById('emailInput').value;
-                emailValue.innerText = newEmail;
-                passwordValue.innerText = '••••••••••••';
-                
-                // Show feedback
-                const origText = editBtn.innerText;
-                editBtn.innerText = 'Berhasil!';
-                editBtn.style.color = 'var(--primary)';
-                setTimeout(() => {
-                    editBtn.innerText = 'Ubah';
-                    editBtn.style.color = '';
-                }, 2000);
-                
-                isEditing = false;
-            }
-        });
+        if (editBtn) {
+            editBtn.addEventListener('click', () => {
+                if (!isEditing) {
+                    // Switch to Edit Mode
+                    const currentEmail = emailValue.innerText;
+                    emailValue.innerHTML = `<input type="email" id="emailInput" class="form-control" value="${currentEmail}" style="padding: 4px 8px; font-size: 0.875rem; background: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; width: 200px;">`;
+                    passwordValue.innerHTML = `<input type="password" id="passwordInput" class="form-control" value="password" style="padding: 4px 8px; font-size: 0.875rem; background: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; width: 200px;">`;
+                    editBtn.innerText = 'Simpan';
+                    isEditing = true;
+                } else {
+                    // Switch to View Mode (Save)
+                    const newEmail = document.getElementById('emailInput').value;
+                    emailValue.innerText = newEmail;
+                    passwordValue.innerText = '••••••••••••';
+                    
+                    // Show feedback
+                    const origText = editBtn.innerText;
+                    editBtn.innerText = 'Berhasil!';
+                    editBtn.style.color = 'var(--primary)';
+                    setTimeout(() => {
+                        editBtn.innerText = 'Ubah';
+                        editBtn.style.color = '';
+                    }, 2000);
+                    
+                    isEditing = false;
+                }
+            });
+        }
     </script>
 </body>
 </html>

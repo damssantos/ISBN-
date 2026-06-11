@@ -65,8 +65,92 @@ Route::redirect('/informasi', '/informasi-penulis');
 // ==========================================
 // 5. COMPONENT PORTAL STATIS SUB-MENU FE
 // ==========================================
-Route::get('/profile', function () { return view('profile'); });
-Route::get('/akun', function () { return view('akun'); });
+Route::get('/profile', function () {
+    $userId = session('user_id');
+    if (!$userId) {
+        return redirect()->route('login');
+    }
+
+    $akun = Illuminate\Support\Facades\DB::table('akun_pengguna')->where('id', $userId)->first();
+    if (!$akun) {
+        return redirect()->route('login');
+    }
+
+    $user = Illuminate\Support\Facades\DB::table('profil_penulis')->where('user_id', $userId)->first();
+    if (!$user) {
+        Illuminate\Support\Facades\DB::table('profil_penulis')->insert([
+            'user_id' => $userId,
+            'name' => $akun->name,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $user = Illuminate\Support\Facades\DB::table('profil_penulis')->where('user_id', $userId)->first();
+    }
+
+    $user->email = $akun->email;
+    $user->no_hp = $akun->no_hp;
+
+    return view('profile', compact('user'));
+})->name('profile');
+
+Route::post('/profile', function (Illuminate\Http\Request $request) {
+    $userId = session('session_id') ?? session('user_id');
+    if (!$userId) {
+        return redirect()->route('login');
+    }
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'no_hp' => 'nullable|string|max:20',
+    ]);
+
+    // Update profil_penulis
+    Illuminate\Support\Facades\DB::table('profil_penulis')->where('user_id', $userId)->update([
+        'name' => $request->name,
+        'updated_at' => now(),
+    ]);
+
+    // Update akun_pengguna
+    Illuminate\Support\Facades\DB::table('akun_pengguna')->where('id', $userId)->update([
+        'name' => $request->name,
+        'no_hp' => $request->no_hp,
+    ]);
+
+    // Perbarui session name
+    session(['user_name' => $request->name]);
+
+    return redirect()->route('profile')->with('status', 'Profil berhasil diperbarui!');
+})->name('profile.update');
+Route::get('/akun', function () {
+    $userId = session('user_id');
+    if (!$userId) {
+        return redirect()->route('login');
+    }
+
+    $akun = Illuminate\Support\Facades\DB::table('akun_pengguna')->where('id', $userId)->first();
+    if (!$akun) {
+        return redirect()->route('login');
+    }
+
+    return view('akun', compact('akun'));
+})->name('akun');
+
+Route::post('/akun/update', function (Illuminate\Http\Request $request) {
+    $userId = session('user_id');
+    if (!$userId) {
+        return redirect()->route('login');
+    }
+
+    $request->validate([
+        'email' => 'required|email|unique:akun_pengguna,email,' . $userId,
+    ]);
+
+    Illuminate\Support\Facades\DB::table('akun_pengguna')->where('id', $userId)->update([
+        'email' => $request->email,
+    ]);
+
+    return redirect()->route('akun')->with('status', 'Email berhasil diperbarui!');
+})->name('akun.update');
 Route::get('/pengaturan', function () { return view('pengaturan'); });
 Route::get('/table-penulis', function () { return view('table-penulis'); });
 Route::get('/pengajuan/detail', function () { return view('table-pengajuan'); });
@@ -95,6 +179,40 @@ Route::get('/superadmin/dashboard', function () {
 Route::get('/superadmin/cek-pembayaran', function () {
     return view('superadmin.cek-pembayaran');
 })->name('superadmin.cek-pembayaran');
+
+// Superadmin Profile
+Route::get('/superadmin/profile', function () {
+    $superadminId = session('user_id');
+    if (!$superadminId) {
+        return redirect()->route('login');
+    }
+    $superadmin = Illuminate\Support\Facades\DB::table('akun_pengguna')->where('id', $superadminId)->first();
+    if (!$superadmin) {
+        return redirect()->route('login');
+    }
+    return view('superadmin.profile-superadmin', compact('superadmin'));
+})->name('superadmin.profile');
+
+Route::post('/superadmin/profile/update', function (Illuminate\Http\Request $request) {
+    $superadminId = session('user_id');
+    if (!$superadminId) {
+        return redirect()->route('login');
+    }
+
+    $request->validate([
+        'name'     => 'required|string|max:255',
+        'no_hp'    => 'nullable|string|max:20',
+    ]);
+
+    Illuminate\Support\Facades\DB::table('akun_pengguna')->where('id', $superadminId)->update([
+        'name'  => $request->name,
+        'no_hp' => $request->no_hp,
+    ]);
+
+    session(['user_name' => $request->name]);
+
+    return redirect()->back()->with('status', 'Profil super admin berhasil diperbarui!');
+})->name('superadmin.profile.update');
 
 // User routes
 Route::get('/user/buku-terbit', function () {

@@ -77,6 +77,6 @@ class ProfilController extends Controller
         // Perbarui session name
         session(['user_name' => $request->name]);
 
-        return redirect()->back()->with('status', 'MANTAP! Informasi profil Anda berhasil diperbarui secara permanen di database!');
+        return redirect()->back();
     }
 }

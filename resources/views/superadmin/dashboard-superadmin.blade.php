@@ -426,26 +426,21 @@
                 <input type="text" class="search-input" placeholder="Cari naskah atau ISBN...">
             </div>
             <div class="header-actions">
-                <button class="header-icon-btn" title="Notifikasi">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </button>
-                <div class="header-divider"></div>
                 <div class="user-wrapper">
+                    @php
+                        $db_super_name = Illuminate\Support\Facades\DB::table('akun_pengguna')->where('id', session('user_id'))->value('name') ?? 'Superadmin';
+                    @endphp
                     <div class="user-header" id="userToggle">
                         <div class="user-avatar">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&fit=crop&q=80" alt="Super Admin" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+                            {{ substr($db_super_name, 0, 1) }}
                         </div>
                         <div class="user-header-info">
-                            <div class="user-header-name">Super Admin</div>
-                            <div class="user-header-role">Super Admin</div>
+                            <div class="user-header-name">{{ $db_super_name }}</div>
                         </div>
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
-                        <a href="/akun" class="user-dropdown-item"><i class="fa-regular fa-id-badge"></i><span>Informasi Akun</span></a>
-                        <a href="/pengaturan" class="user-dropdown-item"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+                        <a href="/superadmin/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
                         <div class="user-dropdown-divider"></div>
                         <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
