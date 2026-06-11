@@ -276,6 +276,29 @@
             transition:all 0.2s; 
         }
         .btn-outline:hover { background:rgba(248, 113, 113, 0.08); color:#f87171; border-color:rgba(248, 113, 113, 0.4); }
+
+        /* Notifications Dropdown */
+        .notif-dropdown {
+            position: absolute; top: calc(100% + 12px); right: 0; width: 320px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(59, 195, 189, 0.08); display: none; flex-direction: column; z-index: 1000; overflow: hidden;
+            transform-origin: top right; animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .notif-dropdown.show { display: flex; }
+        .notif-dropdown-header { padding: 14px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .notif-dropdown-header span { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); }
+        .notif-count { font-size: 0.75rem; background: var(--primary-glow); color: var(--primary-bright); padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+        .notif-dropdown-body { max-height: 280px; overflow-y: auto; }
+        .notif-dropdown-item { padding: 14px 20px; display: flex; gap: 14px; border-bottom: 1px solid var(--border-light); transition: background 0.2s; }
+        .notif-dropdown-item:last-child { border-bottom: none; }
+        .notif-dropdown-item:hover { background: var(--bg-card-hover); }
+        .notif-dropdown-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+        .notif-dropdown-content { display: flex; flex-direction: column; gap: 4px; }
+        .notif-dropdown-text { font-size: 0.825rem; color: var(--text-secondary); line-height: 1.35; }
+        .notif-dropdown-text span.highlight-activity { color: var(--primary-bright); font-weight: 700; }
+        .notif-dropdown-time { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; }
+        .notif-dropdown-empty { padding: 30px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-muted); }
+        .notif-dropdown-empty i { font-size: 1.5rem; color: var(--text-muted); }
+        .notif-dropdown-empty span { font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -292,7 +315,7 @@
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-item"><a href="/" class="nav-link active"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="/dashboard" class="nav-link active"><i class="fa-solid fa-border-all"></i><span class="nav-link-text">Dashboard</span></a></li>
             <li class="nav-item"><a href="/pengajuan" class="nav-link"><i class="fa-regular fa-file-lines"></i><span class="nav-link-text">Pengajuan</span></a></li>
             <li class="nav-item"><a href="/daftar-pengajuan" class="nav-link"><i class="fa-solid fa-list-check"></i><span class="nav-link-text">Daftar Naskah</span></a></li>
             <li class="nav-item"><a href="/draf" class="nav-link"><i class="fa-solid fa-inbox"></i><span class="nav-link-text">Draf Naskah</span></a></li>
@@ -328,7 +351,37 @@
                 </div>
             </div>
             <div class="header-actions">
-                <button class="header-icon-btn" id="notifToggle"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></button>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <button class="header-icon-btn" id="notifToggle">
+                        <i class="fa-regular fa-bell"></i>
+                        @if(count($aktivitas) > 0)
+                            <span class="notif-dot"></span>
+                        @endif
+                    </button>
+                    <!-- Dropdown Notifikasi -->
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-dropdown-header">
+                            <span>Notifikasi</span>
+                            <span class="notif-count">{{ count($aktivitas) }} Baru</span>
+                        </div>
+                        <div class="notif-dropdown-body">
+                            @forelse($aktivitas as $act)
+                                <div class="notif-dropdown-item">
+                                    <div class="notif-dropdown-icon {{ $act['class'] }}"><i class="fa-solid {{ $act['icon'] }}"></i></div>
+                                    <div class="notif-dropdown-content">
+                                        <div class="notif-dropdown-text">{!! $act['content'] !!}</div>
+                                        <div class="notif-dropdown-time">{{ $act['time'] }}</div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="notif-dropdown-empty">
+                                    <i class="fa-regular fa-bell-slash"></i>
+                                    <span>Tidak ada notifikasi baru</span>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
                 <div class="header-divider"></div>
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
@@ -341,7 +394,7 @@
                     <div class="user-dropdown" id="userDropdown">
                         <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
                         <div class="user-dropdown-divider"></div>
-                        <a href="/auth-login" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                        <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
                 </div>
             </div>
@@ -453,22 +506,24 @@
             <div class="card">
                 <div class="card-header"><h2 class="card-title">Aktivitas Terbaru</h2></div>
                 <div class="activity-feed">
-                    <div class="activity-item">
-                        <div class="activity-icon icon-purple"><i class="fa-solid fa-file-export"></i></div>
-                        <div class="activity-body">
-                            <div class="activity-content">Naskah <span class="highlight-activity">Analisis Perubahan</span> telah dikirim ke peninjau.</div>
-                            <div class="activity-time">2 jam yang lalu</div>
+                    @forelse($aktivitas as $act)
+                        <div class="activity-item">
+                            <div class="activity-icon {{ $act['class'] }}"><i class="fa-solid {{ $act['icon'] }}"></i></div>
+                            <div class="activity-body">
+                                <div class="activity-content">{!! $act['content'] !!}</div>
+                                <div class="activity-time">{{ $act['time'] }}</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon icon-emerald"><i class="fa-solid fa-circle-check"></i></div>
-                        <div class="activity-body">
-                            <div class="activity-content">ISBN untuk <span class="highlight-activity">Metodologi Medan</span> telah diterbitkan.</div>
-                            <div class="activity-time">5 jam yang lalu</div>
+                    @empty
+                        <div style="text-align: center; padding: 20px 0; color: var(--text-muted);">
+                            <i class="fa-regular fa-bell-slash" style="font-size: 1.5rem; margin-bottom: 8px; display: block;"></i>
+                            Belum ada aktivitas terbaru.
                         </div>
-                    </div>
+                    @endforelse
                 </div>
-                <button class="btn-outline">Hapus Semua Notifikasi</button>
+                @if(count($aktivitas) > 0)
+                    <button class="btn-outline" id="clearNotifBtn">Hapus Semua Notifikasi</button>
+                @endif
             </div>
         </section>
     </main>
@@ -486,7 +541,16 @@
             mainContent.classList.toggle('expanded');
         });
 
-        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
+        userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); notifDropdown.classList.remove('show'); });
+
+        const notifToggle = document.getElementById('notifToggle');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        notifToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notifDropdown.classList.toggle('show');
+            userDropdown.classList.remove('show');
+        });
 
         searchInput.addEventListener('input', (e) => {
             if (e.target.value.length > 0) searchResults.classList.add('show');
@@ -495,8 +559,42 @@
 
         document.addEventListener('click', (e) => {
             if (!userDropdown.contains(e.target) && !userToggle.contains(e.target)) userDropdown.classList.remove('show');
+            if (!notifDropdown.contains(e.target) && !notifToggle.contains(e.target)) notifDropdown.classList.remove('show');
             if (!searchResults.contains(e.target) && e.target !== searchInput) searchResults.classList.remove('show');
         });
+
+        const clearNotifBtn = document.getElementById('clearNotifBtn');
+        if (clearNotifBtn) {
+            clearNotifBtn.addEventListener('click', () => {
+                const notifDot = document.querySelector('.notif-dot');
+                if (notifDot) notifDot.remove();
+                
+                const notifCount = document.querySelector('.notif-count');
+                if (notifCount) notifCount.textContent = '0 Baru';
+                
+                const notifDropdownBody = document.querySelector('.notif-dropdown-body');
+                if (notifDropdownBody) {
+                    notifDropdownBody.innerHTML = `
+                        <div class="notif-dropdown-empty">
+                            <i class="fa-regular fa-bell-slash"></i>
+                            <span>Tidak ada notifikasi baru</span>
+                        </div>
+                    `;
+                }
+
+                const activityFeed = document.querySelector('.activity-feed');
+                if (activityFeed) {
+                    activityFeed.innerHTML = `
+                        <div style="text-align: center; padding: 20px 0; color: var(--text-muted);">
+                            <i class="fa-regular fa-bell-slash" style="font-size: 1.5rem; margin-bottom: 8px; display: block;"></i>
+                            Belum ada aktivitas terbaru.
+                        </div>
+                    `;
+                }
+
+                clearNotifBtn.remove();
+            });
+        }
     </script>
 </body>
 </html>

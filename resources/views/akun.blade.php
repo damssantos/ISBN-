@@ -165,7 +165,7 @@
 
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="/" class="nav-link">
+                <a href="/dashboard" class="nav-link">
                     <i class="fa-solid fa-border-all"></i>
                     <span class="nav-link-text">Dashboard</span>
                 </a>
@@ -202,28 +202,28 @@
             </li>
         </ul>
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn">
+            <a href="/logout" class="logout-btn">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <span>Keluar</span>
             </a>
         </div>
     </aside>
-
+ 
     <main class="main-content" id="mainContent">
         <header class="top-header">
             <div class="header-actions">
                 <div class="user-wrapper">
                     <div class="user-header" id="userToggle">
-                        <div class="user-avatar-sm">{{ substr($akun->name ?? 'User', 0, 1) }}</div>
+                        <div class="user-avatar-sm">{{ strtoupper(substr(session('user_name', 'P'), 0, 1)) }}</div>
                         <div class="user-header-info">
-                            <div class="user-header-name">{{ $akun->name ?? 'User' }}</div>
+                            <div class="user-header-name">{{ session('user_name', 'Pradama') }}</div>
                         </div>
                         <i class="fa-solid fa-chevron-down" style="font-size:.625rem;color:var(--text-muted);margin-left:4px"></i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
                         <a href="/profile" class="user-dropdown-item"><i class="fa-regular fa-user"></i><span>Profil Saya</span></a>
                         <div class="user-dropdown-divider"></div>
-                        <a href="#" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
+                        <a href="/logout" class="user-dropdown-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Keluar</span></a>
                     </div>
                 </div>
             </div>
