@@ -155,8 +155,8 @@
         /* ─── Responsive ───────────────────────────────────────── */
         @media (max-width:1024px) {
             .form-layout { grid-template-columns:1fr; }
-            .main-content { padding:0 20px 48px; }
         }
+        @include('partials.responsive-css')
     </style>
 </head>
 <body>

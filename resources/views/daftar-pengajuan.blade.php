@@ -157,6 +157,7 @@
         .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(59, 195, 189,.3); }
         
         .empty-state { padding:40px; text-align:center; color:var(--text-muted); display:none; }
+        @include('partials.responsive-css')
     </style>
 </head>
 <body>

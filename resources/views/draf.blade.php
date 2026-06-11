@@ -121,6 +121,7 @@
 
         .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-dim)); color:#ffffff; border:none; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
         .empty-state { padding:40px; text-align:center; color:var(--text-muted); }
+        @include('partials.responsive-css')
     </style>
 </head>
 <body>

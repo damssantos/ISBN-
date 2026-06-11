@@ -299,6 +299,7 @@
         .notif-dropdown-empty { padding: 30px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-muted); }
         .notif-dropdown-empty i { font-size: 1.5rem; color: var(--text-muted); }
         .notif-dropdown-empty span { font-size: 0.85rem; }
+        @include('partials.responsive-css')
     </style>
 </head>
 <body>
