@@ -57,8 +57,11 @@ Route::delete('/pengajuan/{id}', [NaskahController::class, 'destroy'])->name('na
 // ==========================================
 // 4. MODUL INFORMASI PENULIS (TABEL: profil_penulis)
 // ==========================================
-Route::get('/informasi-penulis', [ProfilController::class, 'index'])->name('profil.informasi');
-Route::post('/informasi-penulis/update', [ProfilController::class, 'update'])->name('profil.update');
+Route::get('/informasi-penulis', [ProfilController::class, 'create'])->name('profil.informasi');
+Route::post('/informasi-penulis', [ProfilController::class, 'store'])->name('profil.store');
+Route::get('/informasi-penulis/{id}/edit', [ProfilController::class, 'edit'])->name('profil.edit');
+Route::post('/informasi-penulis/{id}/update', [ProfilController::class, 'update'])->name('profil.update');
+Route::delete('/informasi-penulis/{id}', [ProfilController::class, 'destroy'])->name('profil.destroy');
 Route::redirect('/informasi', '/informasi-penulis');
 
 
@@ -76,15 +79,16 @@ Route::get('/profile', function () {
         return redirect()->route('login');
     }
 
-    $user = Illuminate\Support\Facades\DB::table('profil_penulis')->where('user_id', $userId)->first();
+    $user = Illuminate\Support\Facades\DB::table('profil_penulis')->where('user_id', $userId)->where('is_self', true)->first();
     if (!$user) {
         Illuminate\Support\Facades\DB::table('profil_penulis')->insert([
             'user_id' => $userId,
             'name' => $akun->name,
+            'is_self' => true,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        $user = Illuminate\Support\Facades\DB::table('profil_penulis')->where('user_id', $userId)->first();
+        $user = Illuminate\Support\Facades\DB::table('profil_penulis')->where('user_id', $userId)->where('is_self', true)->first();
     }
 
     $user->email = $akun->email;
@@ -105,7 +109,7 @@ Route::post('/profile', function (Illuminate\Http\Request $request) {
     ]);
 
     // Update profil_penulis
-    Illuminate\Support\Facades\DB::table('profil_penulis')->where('user_id', $userId)->update([
+    Illuminate\Support\Facades\DB::table('profil_penulis')->where('user_id', $userId)->where('is_self', true)->update([
         'name' => $request->name,
         'updated_at' => now(),
     ]);
@@ -152,7 +156,7 @@ Route::post('/akun/update', function (Illuminate\Http\Request $request) {
     return redirect()->route('akun')->with('status', 'Email berhasil diperbarui!');
 })->name('akun.update');
 Route::get('/pengaturan', function () { return view('pengaturan'); });
-Route::get('/table-penulis', function () { return view('table-penulis'); });
+Route::get('/table-penulis', [ProfilController::class, 'list'])->name('profil.list');
 Route::get('/pengajuan/detail', function () { return view('table-pengajuan'); });
 
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');

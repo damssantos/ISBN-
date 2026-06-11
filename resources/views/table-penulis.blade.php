@@ -172,36 +172,114 @@
 
     <!-- Detail Modal -->
     <div class="modal-overlay" id="detailModal">
-        <div class="modal-card">
+        <div class="modal-card" style="max-width: 650px;">
             <div class="modal-header">
                 <h2 class="section-title"><i class="fa-solid fa-address-card"></i> Detail Penulis</h2>
                 <i class="fa-solid fa-xmark close-modal" onclick="closeModal()"></i>
             </div>
-            <div class="modal-body">
-                <div class="detail-grid">
+            <div class="modal-body" style="max-height: 480px; overflow-y: auto;">
+                <div class="detail-grid" style="grid-template-columns: 1fr 1fr; row-gap: 16px;">
+                    <!-- Section: Identitas & Kontak -->
+                    <div style="grid-column: span 2; border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 10px; font-weight: 600; color: var(--primary);">
+                        <i class="fa-solid fa-user-tag"></i> Identitas & Kontak
+                    </div>
                     <div class="detail-item">
                         <div class="detail-label">Nama Lengkap</div>
-                        <div class="detail-val" id="detNama">Dr. Pradama Wijaya, M.Kom</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Email</div>
-                        <div class="detail-val" id="detEmail">pradama.w@univ.ac.id</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Afiliasi</div>
-                        <div class="detail-val" id="detAfiliasi">Universitas Teknologi Indonesia</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Telepon</div>
-                        <div class="detail-val" id="detTelp">08123456789</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Identitas</div>
-                        <div class="detail-val">KTP TERVERIFIKASI</div>
+                        <div class="detail-val" id="detNama">-</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">ID Penulis</div>
-                        <div class="detail-val">AUTH-7729</div>
+                        <div class="detail-val" id="detId">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Nama Sesuai KTP</div>
+                        <div class="detail-val" id="detNamaKtp">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">NIK</div>
+                        <div class="detail-val" id="detNik">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Jenis Kelamin</div>
+                        <div class="detail-val" id="detGender">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Agama</div>
+                        <div class="detail-val" id="detAgama">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Tempat & Tanggal Lahir</div>
+                        <div class="detail-val" id="detLahir">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-val" id="detEmail">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Nomor HP</div>
+                        <div class="detail-val" id="detTelp">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Nomor Telepon</div>
+                        <div class="detail-val" id="detNoTelepon">-</div>
+                    </div>
+                    <div class="detail-item" style="grid-column: span 2;">
+                        <div class="detail-label">Alamat Sesuai KTP</div>
+                        <div class="detail-val" id="detAlamat">-</div>
+                    </div>
+
+                    <!-- Section: Institusi & Pajak -->
+                    <div style="grid-column: span 2; border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 10px; font-weight: 600; color: var(--primary);">
+                        <i class="fa-solid fa-building"></i> Institusi & Pajak
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Nama Kantor</div>
+                        <div class="detail-val" id="detKantor">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Tempat Mengajar</div>
+                        <div class="detail-val" id="detMengajar">-</div>
+                    </div>
+                    <div class="detail-item" style="grid-column: span 2;">
+                        <div class="detail-label">Alamat Surat Menyurat</div>
+                        <div class="detail-val" id="detAlamatSurat">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">NPWP</div>
+                        <div class="detail-val" id="detNpwp">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Nama NPWP</div>
+                        <div class="detail-val" id="detNamaNpwp">-</div>
+                    </div>
+                    <div class="detail-item" style="grid-column: span 2;">
+                        <div class="detail-label">Alamat NPWP</div>
+                        <div class="detail-val" id="detAlamatNpwp">-</div>
+                    </div>
+
+                    <!-- Section: Rekening -->
+                    <div style="grid-column: span 2; border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-top: 10px; font-weight: 600; color: var(--primary);">
+                        <i class="fa-solid fa-credit-card"></i> Informasi Rekening
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Nama Bank</div>
+                        <div class="detail-val" id="detNamaBank">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Nomor Rekening</div>
+                        <div class="detail-val" id="detNoRekening">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Nama Pemilik Rekening</div>
+                        <div class="detail-val" id="detNamaRekening">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Cabang Bank</div>
+                        <div class="detail-val" id="detCabangBank">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Kota Bank</div>
+                        <div class="detail-val" id="detKotaBank">-</div>
                     </div>
                 </div>
             </div>
@@ -292,19 +370,25 @@
             </div>
         </header>
 
+        @if(session('status'))
+        <div style="background:rgba(59,195,189,0.12); border:1px solid var(--primary-dim); border-radius:10px; padding:14px 20px; margin-bottom:20px; display:flex; align-items:center; gap:10px; color:var(--primary-bright); font-weight:600; font-size:.875rem;">
+            <i class="fa-solid fa-circle-check"></i> {{ session('status') }}
+        </div>
+        @endif
+
         <div class="content-header">
             <div>
                 <h1 class="page-title">Daftar Penulis Terdaftar</h1>
                 <p style="color:var(--text-muted); font-size:.875rem; margin-top:4px;">Kelola dan pantau data penulis yang telah Anda daftarkan.</p>
             </div>
-            <a href="/informasi" class="btn-add">
+            <a href="{{ route('profil.informasi') }}" class="btn-add">
                 <i class="fa-solid fa-plus"></i> Tambah Penulis
             </a>
         </div>
 
         <div class="table-card">
             <div class="table-responsive">
-                <table id="authorTable">
+                <table id="authorTable" @if($penuliss->isEmpty()) style="display:none;" @endif>
                     <thead>
                         <tr>
                             <th>No</th>
@@ -316,78 +400,87 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($penuliss as $index => $penulis)
+                        @php
+                            $namaLengkap = trim(($penulis->gelar_depan ?? '') . ' ' . $penulis->name . ' ' . ($penulis->gelar_belakang ?? ''));
+                            $initials = collect(explode(' ', $penulis->name))->map(fn($w) => strtoupper(substr($w,0,1)))->take(2)->join('');
+                        @endphp
                         <tr>
-                            <td>1</td>
+                            <td>{{ $index + 1 }}</td>
                             <td>
                                 <div class="author-info">
-                                    <div class="author-avatar">PW</div>
+                                    <div class="author-avatar">{{ $initials }}</div>
                                     <div>
-                                        <div class="author-name">Dr. Pradama Wijaya, M.Kom</div>
-                                        <div class="author-meta">ID: AUTH-001</div>
+                                        <div class="author-name">{{ $namaLengkap }}</div>
+                                        <div class="author-meta">ID: AUTH-{{ str_pad($penulis->id, 3, '0', STR_PAD_LEFT) }}</div>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="contact-text" style="font-size:.8125rem;">
-                                    <i class="fa-regular fa-envelope" style="width:16px;"></i> <span class="author-email">pradama.w@univ.ac.id</span><br>
-                                    <i class="fa-solid fa-phone" style="width:16px; margin-top:4px;"></i> 08123456789
+                                    <i class="fa-regular fa-envelope" style="width:16px;"></i> <span class="author-email">{{ $penulis->email ?? '-' }}</span><br>
+                                    <i class="fa-solid fa-phone" style="width:16px; margin-top:4px;"></i> {{ $penulis->no_hp ?? '-' }}
                                 </div>
                             </td>
                             <td>
-                                <div style="font-weight:500;">Universitas Teknologi Indonesia</div>
-                                <div class="author-meta">Fakultas Ilmu Komputer</div>
+                                <div style="font-weight:500;">{{ $penulis->nama_kantor ?? '-' }}</div>
+                                <div class="author-meta">{{ $penulis->tempat_mengajar ?? '-' }}</div>
                             </td>
                             <td>
-                                <a href="#" class="file-link"><i class="fa-solid fa-id-card"></i> KTP_Pradama.pdf</a>
+                                @if($penulis->file_ktp)
+                                    <a href="{{ asset('storage/' . $penulis->file_ktp) }}" target="_blank" class="file-link"><i class="fa-solid fa-id-card"></i> Lihat KTP</a>
+                                @else
+                                    <span style="color:var(--text-muted); font-size:.8125rem;">Belum diupload</span>
+                                @endif
                             </td>
                             <td>
                                 <div class="action-btns">
-                                    <button class="action-btn" title="Detail" onclick="viewDetail('Dr. Pradama Wijaya, M.Kom', 'pradama.w@univ.ac.id', 'Universitas Teknologi Indonesia', '08123456789')"><i class="fa-solid fa-eye"></i></button>
-                                    <button class="action-btn" title="Edit" onclick="editAuthor()"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="action-btn delete" title="Hapus" onclick="deleteRow(this)"><i class="fa-solid fa-trash-can"></i></button>
+                                    <button class="action-btn" title="Detail" onclick="viewDetail({{ json_encode([
+                                        'nama' => $namaLengkap,
+                                        'id' => 'AUTH-' . str_pad($penulis->id, 3, '0', STR_PAD_LEFT),
+                                        'nama_ktp' => $penulis->nama_ktp ?? ($penulis->name ?? '-'),
+                                        'nik' => $penulis->nik ?? '-',
+                                        'gender' => $penulis->jenis_kelamin ?? '-',
+                                        'agama' => $penulis->agama ?? '-',
+                                        'lahir' => trim(($penulis->tempat_lahir ?? '') . ', ' . ($penulis->tanggal_lahir ?? ''), ', ') ?: '-',
+                                        'email' => $penulis->email ?? '-',
+                                        'telp' => $penulis->no_hp ?? '-',
+                                        'no_telepon' => $penulis->no_telepon ?? '-',
+                                        'alamat' => $penulis->alamat_ktp ?? '-',
+                                        'kantor' => $penulis->nama_kantor ?? '-',
+                                        'mengajar' => $penulis->tempat_mengajar ?? '-',
+                                        'alamat_surat' => $penulis->alamat_surat ?? '-',
+                                        'npwp' => $penulis->npwp ?? '-',
+                                        'nama_npwp' => $penulis->nama_npwp ?? '-',
+                                        'alamat_npwp' => $penulis->alamat_npwp ?? '-',
+                                        'nama_bank' => $penulis->nama_bank ?? '-',
+                                        'no_rekening' => $penulis->no_rekening ?? '-',
+                                        'nama_rekening' => $penulis->nama_rekening ?? '-',
+                                        'cabang_bank' => $penulis->cabang_bank ?? '-',
+                                        'kota_bank' => $penulis->kota_bank ?? '-',
+                                    ]) }})"><i class="fa-solid fa-eye"></i></button>
+                                    <button class="action-btn" title="Edit" onclick="editAuthor({{ $penulis->id }})"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="action-btn delete" title="Hapus" onclick="deleteAuthor({{ $penulis->id }})"><i class="fa-solid fa-trash-can"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                <div class="author-info">
-                                    <div class="author-avatar" style="background:rgba(59, 195, 189,0.05);">SS</div>
-                                    <div>
-                                        <div class="author-name">Siti Sarah, M.Pd</div>
-                                        <div class="author-meta">ID: AUTH-002</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="contact-text" style="font-size:.8125rem;">
-                                    <i class="fa-regular fa-envelope" style="width:16px;"></i> <span class="author-email">siti.sarah@gmail.com</span><br>
-                                    <i class="fa-solid fa-phone" style="width:16px; margin-top:4px;"></i> 08987654321
-                                </div>
-                            </td>
-                            <td>
-                                <div style="font-weight:500;">SMA Negeri 1 Jakarta</div>
-                                <div class="author-meta">Guru Bahasa Indonesia</div>
-                            </td>
-                            <td>
-                                <a href="#" class="file-link"><i class="fa-solid fa-id-card"></i> KTP_Siti_Sarah.jpg</a>
-                            </td>
-                            <td>
-                                <div class="action-btns">
-                                    <button class="action-btn" title="Detail" onclick="viewDetail('Siti Sarah, M.Pd', 'siti.sarah@gmail.com', 'SMA Negeri 1 Jakarta', '08987654321')"><i class="fa-solid fa-eye"></i></button>
-                                    <button class="action-btn" title="Edit" onclick="editAuthor()"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="action-btn delete" title="Hapus" onclick="deleteRow(this)"><i class="fa-solid fa-trash-can"></i></button>
-                                </div>
-                            </td>
-                        </tr>
+                        @empty
+                        @endforelse
                     </tbody>
                 </table>
-                <div id="emptyState" class="empty-state">
-                    <i class="fa-solid fa-magnifying-glass" style="font-size: 2rem; margin-bottom: 12px; display: block;"></i>
-                    Penulis tidak ditemukan.
+                <div id="emptyState" class="empty-state" @if($penuliss->isEmpty()) style="display:block;" @endif>
+                    <i class="fa-solid fa-user-plus" style="font-size: 2.5rem; margin-bottom: 16px; display: block; color:var(--primary-dim);"></i>
+                    <div style="font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px;">Belum Ada Penulis Terdaftar</div>
+                    <div style="font-size: .875rem;">Klik tombol <strong>"+ Tambah Penulis"</strong> untuk menambahkan penulis baru.</div>
                 </div>
             </div>
         </div>
+
+        <!-- Hidden Delete Form -->
+        <form id="deleteForm" method="POST" style="display:none;">
+            @csrf
+            @method('DELETE')
+        </form>
     </main>
 
     <script>
@@ -406,16 +499,22 @@
         const searchInput = document.getElementById('searchInput');
         const table = document.getElementById('authorTable');
         const emptyState = document.getElementById('emptyState');
-        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const rows = tbody ? tbody.getElementsByTagName('tr') : [];
 
         searchInput.addEventListener('input', function() {
             const query = searchInput.value.toLowerCase();
             let hasResults = false;
 
             for (let i = 0; i < rows.length; i++) {
-                const name = rows[i].querySelector('.author-name').textContent.toLowerCase();
-                const id = rows[i].querySelector('.author-meta').textContent.toLowerCase();
-                const email = rows[i].querySelector('.author-email').textContent.toLowerCase();
+                const nameEl = rows[i].querySelector('.author-name');
+                const metaEl = rows[i].querySelector('.author-meta');
+                const emailEl = rows[i].querySelector('.author-email');
+                if (!nameEl) continue;
+
+                const name = nameEl.textContent.toLowerCase();
+                const id = metaEl ? metaEl.textContent.toLowerCase() : '';
+                const email = emailEl ? emailEl.textContent.toLowerCase() : '';
                 
                 if (name.includes(query) || id.includes(query) || email.includes(query)) {
                     rows[i].style.display = '';
@@ -425,16 +524,39 @@
                 }
             }
 
-            table.style.display = hasResults ? '' : 'none';
-            emptyState.style.display = hasResults ? 'none' : 'block';
+            if (rows.length === 0) {
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+            } else {
+                table.style.display = hasResults ? '' : 'none';
+                emptyState.style.display = hasResults ? 'none' : 'block';
+            }
         });
 
-        // Action Functions
-        function viewDetail(nama, email, afiliasi, telp) {
-            document.getElementById('detNama').textContent = nama;
-            document.getElementById('detEmail').textContent = email;
-            document.getElementById('detAfiliasi').textContent = afiliasi;
-            document.getElementById('detTelp').textContent = telp;
+        // View Detail Modal
+        function viewDetail(data) {
+            document.getElementById('detNama').textContent = data.nama;
+            document.getElementById('detId').textContent = data.id;
+            document.getElementById('detNamaKtp').textContent = data.nama_ktp;
+            document.getElementById('detNik').textContent = data.nik;
+            document.getElementById('detGender').textContent = data.gender;
+            document.getElementById('detAgama').textContent = data.agama;
+            document.getElementById('detLahir').textContent = data.lahir;
+            document.getElementById('detEmail').textContent = data.email;
+            document.getElementById('detTelp').textContent = data.telp;
+            document.getElementById('detNoTelepon').textContent = data.no_telepon;
+            document.getElementById('detAlamat').textContent = data.alamat;
+            document.getElementById('detKantor').textContent = data.kantor;
+            document.getElementById('detMengajar').textContent = data.mengajar;
+            document.getElementById('detAlamatSurat').textContent = data.alamat_surat;
+            document.getElementById('detNpwp').textContent = data.npwp;
+            document.getElementById('detNamaNpwp').textContent = data.nama_npwp;
+            document.getElementById('detAlamatNpwp').textContent = data.alamat_npwp;
+            document.getElementById('detNamaBank').textContent = data.nama_bank;
+            document.getElementById('detNoRekening').textContent = data.no_rekening;
+            document.getElementById('detNamaRekening').textContent = data.nama_rekening;
+            document.getElementById('detCabangBank').textContent = data.cabang_bank;
+            document.getElementById('detKotaBank').textContent = data.kota_bank;
             document.getElementById('detailModal').classList.add('show');
         }
 
@@ -442,20 +564,22 @@
             document.getElementById('detailModal').classList.remove('show');
         }
 
-        function editAuthor() {
-            window.location.href = '/informasi';
+        // Close modal on overlay click
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Edit Author
+        function editAuthor(id) {
+            window.location.href = '/informasi-penulis/' + id + '/edit';
         }
 
-        function deleteRow(btn) {
-            if (confirm('Apakah Anda yakin ingin menghapus data penulis ini?')) {
-                const row = btn.closest('tr');
-                row.style.opacity = '0';
-                row.style.transform = 'translateX(20px)';
-                row.style.transition = 'all .3s ease';
-                setTimeout(() => {
-                    row.remove();
-                    alert('Data penulis berhasil dihapus.');
-                }, 300);
+        // Delete Author
+        function deleteAuthor(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus data penulis ini? Data tidak dapat dikembalikan.')) {
+                const form = document.getElementById('deleteForm');
+                form.action = '/informasi-penulis/' + id;
+                form.submit();
             }
         }
     </script>

@@ -245,13 +245,9 @@
             <div class="profile-sidebar-col">
                 <div class="profile-card">
                     <div class="profile-avatar-lg" id="avatarPreview">{{ substr($user->name ?? 'User', 0, 1) }}</div>
-                    <input type="file" id="avatarInput" accept="image/*" style="display:none">
                     <h2 class="profile-name">{{ $user->name ?? 'User' }}</h2>
                     
-
-                    
-                    <div class="profile-actions">
-                        <button class="btn-profile-action" id="changeAvatarBtn"><i class="fa-solid fa-camera"></i> Ubah Foto</button>
+                    <div class="profile-actions" style="margin-top: 14px;">
                         <button class="btn-profile-action logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar</button>
                     </div>
                 </div>
@@ -270,7 +266,7 @@
                     @csrf
                     <div class="settings-section">
                         <div class="section-header">
-                            <h2 class="section-title"><i class="fa-solid fa-user-gear"></i> Pengaturan Akun</h2>
+                            <h2 class="section-title"><i class="fa-solid fa-user-gear"></i> Profil Saya</h2>
                         </div>
                         
                         <div class="form-grid">
@@ -322,42 +318,7 @@
         userToggle.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
         document.addEventListener('click', (e) => { if(!userDropdown.contains(e.target)&&!userToggle.contains(e.target)) userDropdown.classList.remove('show'); });
 
-        // Profile Photo Change Logic
-        const changeAvatarBtn = document.getElementById('changeAvatarBtn');
-        const avatarInput = document.getElementById('avatarInput');
-        const avatarPreview = document.getElementById('avatarPreview');
 
-        changeAvatarBtn.addEventListener('click', () => {
-            avatarInput.click();
-        });
-
-        avatarInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Update main profile avatar
-                    avatarPreview.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">`;
-                    
-                    // Update small header avatar if it exists
-                    const headerAvatar = document.querySelector('.user-avatar-sm');
-                    if (headerAvatar) {
-                        headerAvatar.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">`;
-                    }
-
-                    // Optional: Show success notification
-                    const btn = document.getElementById('btnSave');
-                    const orig = btn.innerHTML;
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Foto Diperbarui!';
-                    btn.style.background = 'var(--primary-dim)';
-                    setTimeout(() => {
-                        btn.innerHTML = orig;
-                        btn.style.background = '';
-                    }, 2000);
-                }
-                reader.readAsDataURL(file);
-            }
-        });
     </script>
 </body>
 </html>

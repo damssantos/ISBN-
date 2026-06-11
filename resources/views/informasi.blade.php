@@ -180,7 +180,17 @@
 
     <main class="main-content" id="mainContent">
         
-        <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
+        @if($errors->any())
+        <div style="background:rgba(248,113,113,0.12); border:1px solid #f87171; border-radius:10px; padding:14px 20px; margin-bottom:20px; color:#f87171; font-weight:600; font-size:.875rem;">
+            <ul style="margin: 0; padding-left: 20px;">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        
+        <form action="{{ isset($user->id) ? route('profil.update', $user->id) : route('profil.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <header class="top-header">
@@ -206,11 +216,11 @@
                 <div class="profile-header-left">
                     <div class="profile-avatar">{{ substr($user->name ?? 'P', 0, 1) }}</div>
                     <div>
-                        <div class="profile-name">{{ $user->name ?? 'Informasi Penulis' }}</div>
+                        <div class="profile-name">{{ $user->name ?? 'Tambah Penulis Baru' }}</div>
                     </div>
                 </div>
                 <button type="submit" class="btn-save" id="btnSave" style="padding: 10px 24px; border-radius: 8px; font-weight: 600; border:none; cursor:pointer;">
-                    <i class="fa-solid fa-pen-to-square"></i> Perbarui Data
+                    <i class="fa-solid fa-floppy-disk"></i> {{ isset($user->id) ? 'Perbarui Data' : 'Simpan Penulis' }}
                 </button>
             </div>
 
@@ -273,7 +283,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Sesuai KTP</label>
-                        <input type="text" class="form-control" value="{{ $user->name ?? '' }}" placeholder="Nama sesuai KTP..." disabled style="opacity:0.6;">
+                        <input type="text" id="namaKtpInput" name="nama_ktp" class="form-control" value="{{ $user->nama_ktp ?? ($user->name ?? '') }}" placeholder="Nama sesuai KTP...">
                     </div>
                 </div>
                 <div class="form-grid form-grid-1" style="margin-bottom:20px;">
@@ -285,7 +295,7 @@
                 <div class="form-grid form-grid-2" style="margin-bottom:20px;">
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" value="{{ $user->email ?? '' }}" disabled style="opacity: 0.6;">
+                        <input type="email" name="email" class="form-control" value="{{ $user->email ?? '' }}" required placeholder="Masukkan alamat email penulis...">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nomor HP</label>
@@ -295,7 +305,7 @@
                 <div class="form-grid form-grid-2">
                     <div class="form-group">
                         <label class="form-label">Nomor Telepon</label>
-                        <input type="text" class="form-control" value="0215550123" disabled style="opacity: 0.5;">
+                        <input type="text" name="no_telepon" class="form-control" value="{{ $user->no_telepon ?? '' }}" placeholder="Masukkan nomor telepon rumah/kantor...">
                     </div>
                     <div class="form-group"></div>
                 </div>
@@ -306,33 +316,33 @@
                 <div class="form-grid form-grid-2" style="margin-bottom:20px;">
                     <div class="form-group">
                         <label class="form-label">Nama Kantor</label>
-                        <input type="text" class="form-control" value="Universitas Indonesia" disabled style="opacity: 0.5;">
+                        <input type="text" name="nama_kantor" class="form-control" value="{{ $user->nama_kantor ?? '' }}" placeholder="Masukkan nama kantor/universitas...">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Tempat Mengajar</label>
-                        <input type="text" class="form-control" value="Depok, Jawa Barat" disabled style="opacity: 0.5;">
+                        <input type="text" name="tempat_mengajar" class="form-control" value="{{ $user->tempat_mengajar ?? '' }}" placeholder="Masukkan departemen/fakultas/tempat mengajar...">
                     </div>
                 </div>
                 <div class="form-grid form-grid-1" style="margin-bottom:20px;">
                     <div class="form-group">
                         <label class="form-label">Alamat Surat Menyurat</label>
-                        <input type="text" class="form-control" value="Gedung Dekanat Lt. 2, Kampus UI Depok" disabled style="opacity: 0.5;">
+                        <input type="text" name="alamat_surat" class="form-control" value="{{ $user->alamat_surat ?? '' }}" placeholder="Masukkan alamat surat menyurat lengkap...">
                     </div>
                 </div>
                 <div class="form-grid form-grid-2" style="margin-bottom:20px;">
                     <div class="form-group">
                         <label class="form-label">NPWP</label>
-                        <input type="text" class="form-control" value="01.234.567.8-901.000" disabled style="opacity: 0.5;">
+                        <input type="text" name="npwp" class="form-control" value="{{ $user->npwp ?? '' }}" placeholder="Masukkan Nomor Pokok Wajib Pajak...">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama NPWP</label>
-                        <input type="text" class="form-control" value="{{ $user->name ?? 'Pradama Wijaya' }}" disabled style="opacity: 0.5;">
+                        <input type="text" name="nama_npwp" class="form-control" value="{{ $user->nama_npwp ?? ($user->name ?? '') }}" placeholder="Masukkan nama wajib pajak...">
                     </div>
                 </div>
                 <div class="form-grid form-grid-1">
                     <div class="form-group">
                         <label class="form-label">Alamat NPWP</label>
-                        <input type="text" class="form-control" value="Jl. Kebon Jeruk No. 45, Jakarta Barat" disabled style="opacity: 0.5;">
+                        <input type="text" name="alamat_npwp" class="form-control" value="{{ $user->alamat_npwp ?? '' }}" placeholder="Masukkan alamat sesuai NPWP...">
                     </div>
                 </div>
             </div>
@@ -342,25 +352,25 @@
                 <div class="form-grid form-grid-2" style="margin-bottom:20px;">
                     <div class="form-group">
                         <label class="form-label">Nomor Rekening</label>
-                        <input type="text" class="form-control" value="1234567890" disabled style="opacity: 0.5;">
+                        <input type="text" name="no_rekening" class="form-control" value="{{ $user->no_rekening ?? '' }}" placeholder="Masukkan nomor rekening...">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Rekening</label>
-                        <input type="text" class="form-control" value="{{ $user->name ?? 'Pradama Wijaya' }}" disabled style="opacity: 0.5;">
+                        <input type="text" name="nama_rekening" class="form-control" value="{{ $user->nama_rekening ?? ($user->name ?? '') }}" placeholder="Masukkan nama pemilik rekening...">
                     </div>
                 </div>
                 <div class="form-grid form-grid-3">
                     <div class="form-group">
                         <label class="form-label">Nama Bank</label>
-                        <input type="text" class="form-control" value="Bank Mandiri" disabled style="opacity: 0.5;">
+                        <input type="text" name="nama_bank" class="form-control" value="{{ $user->nama_bank ?? '' }}" placeholder="Masukkan nama bank...">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Cabang Bank</label>
-                        <input type="text" class="form-control" value="Jakarta Thamrin" disabled style="opacity: 0.5;">
+                        <input type="text" name="cabang_bank" class="form-control" value="{{ $user->cabang_bank ?? '' }}" placeholder="Masukkan kantor cabang bank...">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Kota Bank</label>
-                        <input type="text" class="form-control" value="Jakarta Pusat" disabled style="opacity: 0.5;">
+                        <input type="text" name="kota_bank" class="form-control" value="{{ $user->kota_bank ?? '' }}" placeholder="Masukkan kota lokasi bank...">
                     </div>
                 </div>
             </div>
@@ -370,29 +380,37 @@
                 <div class="form-grid form-grid-2">
                     <div class="upload-group">
                         <label class="form-label">Upload KTP</label>
-                        <input type="file" class="upload-file-input" id="uploadKtp" accept="image/jpeg,image/png">
+                        <input type="file" name="file_ktp" class="upload-file-input" id="uploadKtp" accept="image/jpeg,image/png">
                         <div class="upload-area" id="uploadKtpArea">
                             <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.25rem;color:var(--primary);margin-bottom:6px;"></i>
                             <div><span class="upload-link">Pilih berkas atau tarik ke sini</span></div>
                             <div class="upload-hint">Format JPG, PNG (Maks 5MB)</div>
                         </div>
-                        <div class="upload-preview" id="previewKtp">
-                            <i class="fa-solid fa-id-card"></i>
+                        <div class="upload-preview {{ isset($user->file_ktp) ? 'has-image' : '' }}" id="previewKtp">
+                            @if(isset($user->file_ktp))
+                                <img src="{{ asset('storage/' . $user->file_ktp) }}" alt="Preview KTP">
+                            @else
+                                <i class="fa-solid fa-id-card"></i>
+                            @endif
                         </div>
-                        <div class="upload-filename" id="filenameKtp"></div>
+                        <div class="upload-filename" id="filenameKtp">{{ isset($user->file_ktp) ? basename($user->file_ktp) : '' }}</div>
                     </div>
                     <div class="upload-group">
                         <label class="form-label">Upload Foto Penulis</label>
-                        <input type="file" class="upload-file-input" id="uploadFoto" accept="image/jpeg,image/png">
+                        <input type="file" name="foto_penulis" class="upload-file-input" id="uploadFoto" accept="image/jpeg,image/png">
                         <div class="upload-area" id="uploadFotoArea">
                             <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.25rem;color:var(--primary);margin-bottom:6px;"></i>
                             <div><span class="upload-link">Pilih berkas atau tarik ke sini</span></div>
                             <div class="upload-hint">Format JPG, PNG (Maks 5MB)</div>
                         </div>
-                        <div class="upload-preview" id="previewFoto">
-                            <i class="fa-solid fa-camera"></i>
+                        <div class="upload-preview {{ isset($user->foto_penulis) ? 'has-image' : '' }}" id="previewFoto">
+                            @if(isset($user->foto_penulis))
+                                <img src="{{ asset('storage/' . $user->foto_penulis) }}" alt="Preview Foto">
+                            @else
+                                <i class="fa-solid fa-camera"></i>
+                            @endif
                         </div>
-                        <div class="upload-filename" id="filenameFoto"></div>
+                        <div class="upload-filename" id="filenameFoto">{{ isset($user->foto_penulis) ? basename($user->foto_penulis) : '' }}</div>
                     </div>
                 </div>
             </div>
@@ -446,6 +464,23 @@
 
         setupUpload('uploadKtpArea', 'uploadKtp', 'previewKtp', 'filenameKtp');
         setupUpload('uploadFotoArea', 'uploadFoto', 'previewFoto', 'filenameFoto');
+
+        // Sync Nama Penulis to Nama Sesuai KTP
+        const nameInput = document.querySelector('input[name="name"]');
+        const namaKtpInput = document.getElementById('namaKtpInput');
+        let ktpManuallyEdited = false;
+        if (namaKtpInput) {
+            namaKtpInput.addEventListener('input', () => {
+                ktpManuallyEdited = true;
+            });
+        }
+        if (nameInput && namaKtpInput) {
+            nameInput.addEventListener('input', () => {
+                if (!ktpManuallyEdited) {
+                    namaKtpInput.value = nameInput.value;
+                }
+            });
+        }
 
         // User Dropdown logic
         const userToggle = document.getElementById('userToggle');

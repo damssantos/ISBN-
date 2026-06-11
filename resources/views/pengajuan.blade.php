@@ -104,9 +104,11 @@
         .btn-outline-action:hover { border-color:var(--primary-dim); color:var(--primary); background:rgba(59,195,189,0.05); }
 
         /* ─── Form Layout ──────────────────────────────────────── */
-        .form-layout { display:grid; grid-template-columns:1.6fr 1fr; gap:24px; align-items:start; }
+        .form-layout { display:grid; grid-template-columns:1.6fr 1fr; gap:24px; }
         .form-main { display:flex; flex-direction:column; gap:24px; }
-        .form-sidebar { display:flex; flex-direction:column; gap:24px; }
+        .form-sidebar { display:flex; flex-direction:column; gap:24px; height:100%; }
+        .form-sidebar .form-card { flex:1; display:flex; flex-direction:column; }
+        .form-sidebar .upload-area { flex:1; }
 
         /* ─── Form Card ────────────────────────────────────────── */
         .form-card { background:var(--bg-card); border:1px solid var(--border-color); border-top:2px solid var(--primary-dim); border-radius:16px; padding:28px; position:relative; box-shadow:0 4px 16px rgba(0,0,0,.15); transition:transform 0.2s,box-shadow 0.2s; }
@@ -270,11 +272,6 @@
                         </div>
                     </div>
 
-                </div>
-
-                <!-- ── Kolom Kanan ── -->
-                <div class="form-sidebar">
-
                     <!-- Informasi Penulis -->
                     <div class="form-card" id="authorCard">
                         <div class="section-header">
@@ -286,31 +283,40 @@
 
                         <div id="authorsContainer">
                             <div class="author-item">
-                                <div class="form-group">
-                                    <label>Nama Lengkap</label>
-                                    <input type="text" name="penulis[0][nama]" class="form-control" placeholder="Nama sesuai identitas..." required>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Nama Lengkap</label>
+                                        <input type="text" name="penulis[0][nama]" class="form-control" placeholder="Nama sesuai identitas..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" name="penulis[0][email]" class="form-control" placeholder="Alamat email aktif..." required>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" name="penulis[0][email]" class="form-control" placeholder="Alamat email aktif..." required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Urutan Penulis</label>
-                                    <select name="penulis[0][urutan]" class="form-control">
-                                        <option value="1">Utama (1)</option>
-                                        <option value="2">Kedua (2)</option>
-                                        <option value="3">Ketiga (3)</option>
-                                        <option value="4">Keempat (4)</option>
-                                        <option value="5">Kelima (5)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Biodata Singkat</label>
-                                    <textarea name="penulis[0][biodata]" class="form-control" style="min-height:80px;" placeholder="Profil singkat penulis..."></textarea>
+                                <div class="form-row">
+                                    <div class="form-group" style="flex:0 0 160px;">
+                                        <label>Urutan Penulis</label>
+                                        <select name="penulis[0][urutan]" class="form-control">
+                                            <option value="1">Utama (1)</option>
+                                            <option value="2">Kedua (2)</option>
+                                            <option value="3">Ketiga (3)</option>
+                                            <option value="4">Keempat (4)</option>
+                                            <option value="5">Kelima (5)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Biodata Singkat</label>
+                                        <textarea name="penulis[0][biodata]" class="form-control" style="min-height:80px;" placeholder="Profil singkat penulis..."></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                </div>
+
+                <!-- ── Kolom Kanan ── -->
+                <div class="form-sidebar">
 
                     <!-- Unggah Sampul -->
                     <div class="form-card">
